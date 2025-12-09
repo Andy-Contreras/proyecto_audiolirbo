@@ -1,0 +1,31 @@
+.resultado-content {
+  max-width: 22rem;
+  margin: 16px auto;
+  background: #111827;
+  padding: 2rem 1.5rem;
+  border-radius: 20px;
+  text-align: center;
+  color: #e5e7eb;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.35);
+}
+
+.resultado-titulo {
+  font-size: 1.1rem;
+  color: #b0bbd1;
+  margin-bottom: 1.2rem;
+  letter-spacing: 0.5px;
+}
+
+.resultado-puntaje {
+  font-size: 2rem;
+  font-weight: bold;
+  color: white;
+}
+
+/* -------- RESPONSIVE -------- */
+@media (max-width: 600px) {
+  .resultado-content {
+    width: 90%;
+    padding: 1.5rem;
+  }
+}

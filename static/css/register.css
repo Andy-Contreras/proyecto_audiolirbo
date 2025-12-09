@@ -1,0 +1,121 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+body {
+  background: #0f172a;
+  font-family: "Inter", sans-serif;
+  border: 1px solid rgb(167, 157, 157);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 0;
+}
+body > div {
+  width: 420px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #111827;
+  padding: 30px 28px;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.35);
+}
+.cabecera-registro {
+  text-align: start;
+  /* margin-bottom: 25px; */
+  width: 100%;
+}
+
+.cabecera-registro svg {
+  margin-bottom: 10px;
+}
+
+.cabecera-registro h1 {
+  color: white;
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+
+.cabecera-registro p {
+  color: #cbd5e1;
+  font-size: 15px;
+  text-align: start;
+}
+
+/* formulario de registro */
+.registro-container {
+  padding: 30px 28px;
+  width: 100%;
+  border-radius: 16px;
+}
+
+.registro-container form {
+  display: flex;
+  flex-direction: column;
+}
+
+.registro-container label {
+  font-size: 14px;
+  margin-bottom: 6px;
+  color: #cbd5e1;
+}
+
+.registro-container input {
+  padding: 12px;
+  border: 1px solid #334155;
+  background: #0f172a;
+  border-radius: 10px;
+  margin-bottom: 18px;
+  color: white;
+  font-size: 15px;
+  outline: none;
+}
+
+.registro-container input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25);
+}
+
+/* texto politicas  */
+.registro-container p {
+  color: white;
+  font-size: 13px;
+  margin-bottom: 18px;
+  text-align: center;
+}
+
+.registro-container small {
+  color: blue;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.registro-container button {
+  background: #3b82f6;
+  width: 100%;
+  padding: 12px 0;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.login-cabecera button:hover {
+  background: #2563eb;
+}
+
+p {
+  text-align: center;  margin-top: 10px;
+  color: #cbd5e1;
+
+  a {
+    color: #3b82f6;
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

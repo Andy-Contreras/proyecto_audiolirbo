@@ -1,0 +1,101 @@
+.vocabulario {
+  max-width: 60rem;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  color: white;
+}
+
+.acordeon-btn {
+  width: 100%;
+  background: #161b22;
+  color: white;
+  border-radius: 10px;
+  padding: 15px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: 0.3s ease;
+  margin-bottom: 10px;
+}
+
+.acordeon-content {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.4s ease, opacity 0.3s ease;
+}
+
+.acordeon-content.abierto {
+  max-height: 1000px; /* suficiente para mostrar contenido */
+  opacity: 1;
+}
+
+.vocab-box {
+  padding: 15px;
+  border-bottom: 1px solid #ccc;
+  background: #161b22;
+  border-radius: 15px;
+}
+
+.vocab-palabra {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.vocab-definicion {
+  margin-top: 5px;
+}
+
+.vocab-ejemplo {
+  margin-top: 5px;
+  font-style: italic;
+}
+
+.indicaciones {
+  margin-top: 20px;
+  max-width: 60rem;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  color: white;
+  margin-bottom: 10px;
+}
+
+.indicaciones-btn {
+  width: 100%;
+  background: #161b22;
+  color: white;
+  border-radius: 10px;
+  padding: 15px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.indicaciones-content {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.4s ease, opacity 0.3s ease;
+}
+
+.indicaciones-content.abierto {
+  max-height: 500px;
+  opacity: 1;
+}
+
+.indicaciones-box {
+  padding: 15px;
+  color: white;
+  background: #161b22;
+  border-radius: 15px;
+}
+
+.indicaciones-flecha {
+  transition: transform 0.3s ease;
+}

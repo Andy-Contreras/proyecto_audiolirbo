@@ -1,0 +1,192 @@
+/* ====== ESTILOS GENERALES ====== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+body {
+  background-color: #0d1117; /* Fondo azul oscuro */
+  padding: 20px;
+}
+
+/* ====== HEADER ====== */
+.header {
+  display: flex;
+  justify-content: center; /* igual que section */
+  margin-bottom: 25px;
+  width: 100%;
+}
+
+.header > div {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: 10px;
+  width: 100%;
+  max-width: 60rem;
+}
+
+.header-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+.header svg {
+  width: 32px;
+  height: 32px;
+}
+
+.header h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+}
+
+/* ====== BUSCADOR ====== */
+main section {
+  display: flex;
+  justify-content: center;
+}
+
+main form {
+  width: 100%;
+  max-width: 60rem;
+}
+
+main form div {
+  background-color: #161b22;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 15px;
+  border-radius: 10px;
+  margin-bottom: 25px;
+}
+
+main form input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #ffffff;
+  font-size: 1rem;
+}
+
+main form svg {
+  width: 22px;
+  height: 22px;
+  stroke: #6b7280;
+}
+
+/* ====== TÍTULO DE SECCIÓN ====== */
+main h2 {
+  font-size: 1.3rem;
+  margin-bottom: 15px;
+  color: white;
+}
+
+/* ====== CARRUSEL DE LIBROS ====== */
+.audiolibros-container {
+  display: flex;
+  gap: 15px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+}
+
+/* Ocultar scroll en navegadores */
+.audiolibros-container::-webkit-scrollbar {
+  display: none;
+}
+
+.book-card {
+  min-width: 200px;
+  background-color: #161b22;
+  padding: 10px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.book-card:hover {
+  transform: translateY(-5px) scale(1.03);
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.35);
+}
+
+.book-card img {
+  width: 100%;
+  height: 230px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.book-card h3 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.book-card p {
+  font-size: 0.8rem;
+  color: #9ca3af;
+}
+
+/* botone detalle */
+.book-card .detalle {
+  text-decoration: none;
+  border-radius: 5px;
+  background: #3b82f6;
+  color: white;
+  text-align: center;
+  padding: 4px 0;
+}
+
+.book-card .detalle:hover {
+  background: #2563eb;
+}
+
+/* seccion del audiolibro */
+main .seccion-audiolibro {
+  width: 100%;
+  max-width: 60rem;
+  margin: 0 auto;
+}
+
+/* Móviles */
+@media (max-width: 600px) {
+  .header > div {
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .header h1 {
+    font-size: 1.2rem;
+  }
+
+  main form div {
+    padding: 10px;
+  }
+
+  .book-card {
+    min-width: 150px;
+  }
+
+  .book-card img {
+    height: 180px;
+  }
+}
+
+/* Tablets */
+@media (max-width: 900px) {
+  .header h1 {
+    font-size: 1.3rem;
+  }
+
+  .book-card {
+    min-width: 170px;
+  }
+}

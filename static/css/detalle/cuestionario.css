@@ -1,0 +1,310 @@
+/* boton del acordeon */
+.acordeon-btn {
+  width: 100%;
+  background: #111827;
+  color: white;
+  border-radius: 10px;
+  padding: 15px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: 0.3s ease;
+  margin-bottom: 10px;
+}
+.acordeon-btn:hover {
+  background: #333e57;
+}
+.acordeon-btn .flecha {
+  transition: transform 0.3s ease;
+} /* Contenido del acordeon */
+.acordeon-content {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.4s ease, opacity 0.3s ease;
+}
+.acordeon-content.activo {
+  max-height: 2000px;
+  opacity: 1;
+} /* Rotar flecha */
+.acordeon-btn.activo .flecha {
+  transform: rotate(180deg);
+} /* .acordeon-btn { border: 1px solid #374151; } /* Estilos para el cuestionario */
+.test {
+  max-width: 60rem;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+.encabezado-test h2 {
+  color: white;
+  margin-bottom: 1rem;
+}
+.detalle-pregunta {
+  color: white;
+} /* Cada pregunta */
+.pregunta-box {
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.pregunta-titulo {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+} /* Contenedor de opciones */
+.opciones {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+} /* Caja de cada opción */
+.opcion {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #111827;
+  padding: 12px 15px;
+  border-radius: 10px;
+  border: 1px solid #1f2937;
+  cursor: pointer;
+  transition: 0.25s;
+} /* Ocultar radio real */
+.opcion input[type="radio"] {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #6b7280;
+  border-radius: 50%;
+  position: relative;
+  cursor: pointer;
+}
+
+/* Indicador del radio cuando está seleccionado */
+.opcion input[type="radio"]:checked {
+  border-color: #3b82f6;
+}
+.opcion input[type="radio"]:checked::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  background: #3b82f6;
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+}
+
+.opcion input[type="radio"]:checked + .texto-opcion,
+.opcion:has(input[type="radio"]:checked) {
+  background-color: #1e3a8a;
+  border-color: #3b82f6;
+  color: white;
+}
+/* Hover */
+.opcion:hover {
+  background: #1f2937;
+} /* Botón */
+.enviar-respuesta {
+  margin-top: 15px;
+  background: #3b82f6;
+  color: white;
+  border-radius: 8px;
+  padding: 10px 10px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+.enviar-respuesta:hover {
+  background: #2563eb;
+}
+
+.error {
+  color: #ff4d4d;
+  font-size: 14px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+/* Estilo para el modal */
+
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  background: #111827;
+  padding: 20px;
+  width: 400px;
+  border-radius: 10px;
+  gap: 7px;
+}
+
+.modal-content h3 {
+  color: white;
+  font-size: 15px;
+  text-align: center;
+}
+.modal-content label {
+  color: white;
+  font-size: 15px;
+}
+
+.modal-content input {
+  border-radius: 5px;
+  padding: 10px;
+  outline: none;
+  border: none;
+}
+
+.boton-modal {
+  display: flex;
+  flex-direction: row;
+  gap: 3px;
+}
+
+.boton-modal button {
+  margin-top: 15px;
+  color: white;
+  cursor: pointer;
+  width: 100%;
+  background: rgb(59, 130, 246);
+  border-radius: 8px;
+  padding: 10px;
+  border: none;
+}
+
+.boton-modal button:hover {
+  background: #2563eb;
+}
+
+#modalError {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 9999;
+}
+
+#modalError .modal-content {
+  background: rgba(0, 0, 0, 0.6);
+  padding: 25px;
+  width: 90%;
+  max-width: 350px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+  animation: aparecer 0.25s ease-in-out;
+}
+
+#modalError .modal-content.error h3 {
+  color: #d9534f;
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+#modalError .modal-content p {
+  margin-bottom: 20px;
+  font-size: 15px;
+  color: white;
+}
+
+#modalError .modal-content button {
+  font-size: 15px;
+  background: rgb(59, 130, 246);
+  border-radius: 8px;
+  border: none;
+  color: white;
+  padding: 10px;
+}
+
+#modalError .modal-content button:hover {
+  background: #2563eb;
+}
+@keyframes aparecer {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 480px) {
+  .test {
+    padding: 0 10px;
+  }
+
+  .pregunta-titulo {
+    font-size: 1rem;
+    line-height: 1.3;
+  }
+
+  .opcion {
+    padding: 10px 12px;
+    gap: 8px;
+  }
+
+  .opcion input[type="radio"] {
+    width: 16px;
+    height: 16px;
+  }
+
+  .opcion input[type="radio"]:checked::before {
+    width: 8px;
+    height: 8px;
+    top: 2px;
+    left: 2px;
+  }
+
+  .texto-opcion {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .test {
+    padding: 0 15px;
+  }
+
+  .pregunta-box {
+    margin-bottom: 1.5rem;
+  }
+
+  .opcion {
+    padding: 12px;
+  }
+
+  .texto-opcion {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .test {
+    max-width: 95%;
+  }
+
+  .pregunta-titulo {
+    font-size: 1.05rem;
+  }
+}

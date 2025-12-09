@@ -1,0 +1,32 @@
+.no-resultados {
+    display: none; /* JS lo controla */
+    text-align: center;
+    width: 100%;
+    padding: 25px;
+    margin-top: 20px;
+
+    background: rgba(255, 255, 255, 0.05);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+
+    border-radius: 12px;
+    font-size: 1.2rem;
+    font-weight: 500;
+
+    backdrop-filter: blur(6px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+
+    animation: aparecer 0.3s ease-out;
+}
+
+/* Animación suave */
+@keyframes aparecer {
+    from {
+        opacity: 0;
+        transform: scale(0.97);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}

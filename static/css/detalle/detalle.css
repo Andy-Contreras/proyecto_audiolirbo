@@ -1,0 +1,192 @@
+.detalle-container {
+  max-width: 60rem;
+  margin: 0 auto;
+  width: 100%;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.35);
+  border-radius: 20px;
+}
+.detalle-encabezado {
+  display: flex;
+  position: relative;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 0;
+}
+
+.detalle-encabezado a {
+  position: absolute;
+  left: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.detalle-encabezado h1 {
+  color: white;
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+.reproductor-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 60rem;
+  margin: 0 auto;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.35);
+  border-radius: 20px;
+  background-color: #111827;
+  padding: 25px;
+  margin-bottom: 20px !important;
+  gap: 20px;
+}
+
+.libro-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  img {
+    width: 100px;
+    height: 100px;
+    border-radius: 10px;
+    object-fit: cover;
+  }
+  h3 {
+    color: white;
+    font-size: 1.1rem;
+    margin-bottom: 4px;
+  }
+  p {
+    font-size: 0.9rem;
+    color: #9ca3af;
+  }
+}
+
+.audio-progreso input {
+  width: 17rem;
+}
+
+.audio-progreso input[type="range"] {
+  appearance: none;
+  height: 4px;
+  background: #2563eb;
+  border-radius: 5px;
+}
+
+.audio-progreso input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  background: #60a5fa;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.tiempo {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+  font-size: 0.85rem;
+  color: #9ca3af;
+}
+
+.controles {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.icon-btn {
+  width: 45px;
+  height: 45px;
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.play-btn {
+  width: 45px;
+  height: 45px;
+  background: #3b82f6;
+  border-radius: 50%;
+  color: white;
+  font-size: 2rem;
+  cursor: pointer;
+  box-shadow: 0px 0px 18px #1d4ed8;
+  border: none;
+}
+.play-btn:hover {
+  background: #2563eb;
+}
+
+
+@media (max-width: 768px) {
+  .detalle-encabezado h1 {
+    font-size: 1rem;
+  }
+
+  .libro-info {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .libro-info img {
+    width: 120px;
+    height: 120px;
+  }
+
+  .audio-progreso input {
+    width: 100%;
+  }
+
+  .controles {
+    gap: 20px;
+  }
+}
+
+/* Móviles pequeños */
+@media (max-width: 480px) {
+  .detalle-encabezado {
+    padding: 0.5rem 0;
+  }
+
+  .detalle-encabezado h1 {
+    font-size: 0.9rem;
+  }
+
+  .detalle-encabezado a {
+    left: 0.5rem;
+  }
+
+  .libro-info img {
+    width: 90px;
+    height: 90px;
+  }
+
+  .libro-info h3 {
+    font-size: 1rem;
+  }
+
+  .libro-info p {
+    font-size: 0.8rem;
+  }
+
+  .audio-progreso input {
+    width: 100%;
+  }
+
+  .icon-btn,
+  .play-btn {
+    width: 38px;
+    height: 38px;
+  }
+
+  .play-btn {
+    font-size: 1.5rem;
+  }
+}

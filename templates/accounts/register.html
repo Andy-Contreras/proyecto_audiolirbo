@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Cuenta - AudioPractice</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/register.css' %}">
+
+</head>
+
+<body>
+    <div>
+        <div class="cabecera-registro">
+            <a href="{% url 'login' %}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-left">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M5 12l14 0" />
+                    <path d="M5 12l6 6" />
+                    <path d="M5 12l6 -6" />
+                </svg>
+            </a>
+            <h1> Crear cuenta</h1>
+            <p>Únete a AudioPractice para empezar a aprender</p>
+        </div>
+        <div class="registro-container">
+            <form method="POST" action="{% url 'register' %}">
+                {% csrf_token %}
+                <label>Nombre Completo</label>
+                <input type="text" name="full_name"  placeholder="Ingrese tu nombre completo ">
+                <label>Correo Electrónico</label>
+                <input type="email" name="email" placeholder="tu@correo.com">
+                <label>Contraseña</label>
+                <input type="password" name="password" placeholder="Ingrese su contraseña">
+                <label for="">Confirmar Contraseña</label>
+                <input type="password" name="confirm" placeholder="Vuelve a escribir la contraseña">
+                <p>Al crear una cuenta, aceptas nuestro
+                    <small>Términos de Servicio</small> y
+                    <small>Política de Privcaidad</small>.
+                </p>
+                <button type="submit">Crear Cuenta</button>
+            </form>
+        </div>
+        <p>¿Ya tienes una cuenta <a href="{% url 'login' %}">Inicio sesión</a></p>
+    </div>
+</body>
+
+</html>

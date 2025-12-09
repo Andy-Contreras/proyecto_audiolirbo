@@ -1,0 +1,63 @@
+.revision-respuesta {
+  color: white;
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: 12px 12px;
+  background: #111827;
+  border-radius: 10px;
+}
+
+.revision-container h2 {
+  padding-top: 10px;
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+}
+
+.pregunta-item {
+  margin-bottom: 20px;
+}
+
+.pregunta-titulo {
+  margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.respuesta {
+  padding: 12px 15px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  font-size: 16px;
+}
+
+/* Correcta */
+.respuesta.correcta {
+  background: #0f8152;
+  border: 1px solid #19c37d;
+}
+
+/* Incorrecta */
+.respuesta.incorrecta {
+  background: #4a0e0e;
+  border: 2px solid #d93030;
+}
+/* Iconos */
+.icono {
+  font-size: 15px;
+}
+
+/* Tachado para respuesta incorrecta */
+.tachado {
+  text-decoration: line-through;
+}
+
+/* -------- RESPONSIVE ---------- */
+@media (max-width: 600px) {
+  .respuesta {
+    flex-direction: column;
+    text-align: center;
+  }
+}

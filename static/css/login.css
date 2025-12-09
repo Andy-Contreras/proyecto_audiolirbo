@@ -1,0 +1,111 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: #0f172a; /* azul oscuro */
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #ffffff;
+}
+.main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* cabecera login */
+.login-cabecera{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.login-cabecera h1{
+    font-size: 26px;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+/* formulario */
+.login-container{
+    background: #111827;
+    padding: 40px 45px;
+    border-radius: 14px;
+    width: 380px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.35);
+    text-align: left;
+}
+
+.login-container h2{
+    text-align: center;
+    font-size: 22px;
+    margin-bottom: 30px;
+    font-weight: 700;
+    color: white;
+}
+
+/* input */
+
+.login-container label{
+    display: block;
+    color: #cbd5e1;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.login-container input{
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 8px;
+    border: 1px solid #334155;
+    background: transparent;
+    color: #e2e8f0;
+    font-size: 15px;
+    outline: none;
+    margin-bottom: 18px;
+}
+
+.login-container input::placeholder{
+    color: #64748b;
+}
+
+input:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25);
+}
+
+/* boton */
+.login-container button{
+    background: #3b82f6;
+    width: 100%;
+    padding: 12px 0;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.login-cabecera button:hover{
+    background: #2563eb;
+}
+
+/* parrafo final */
+.login-container p{
+    text-align: center;
+    margin-top: 15px;
+    color: #cbd5e1;
+}
+
+.login-container a {
+    color: #3b82f6;
+    text-decoration: none;
+    &:hover{
+        text-decoration: underline;
+    }
+}
+

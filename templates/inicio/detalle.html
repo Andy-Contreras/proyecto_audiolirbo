@@ -1,0 +1,254 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'css/detalle/detalle.css' %}">
+<link rel="stylesheet" href="{% static 'css/detalle/cuestionario.css' %}">
+<link rel="stylesheet" href="{% static 'css/detalle/resultado.css' %}">
+<link rel="stylesheet" href="{% static 'css/detalle/revision.css' %}">
+<link rel="stylesheet" href="{% static 'css/detalle/acordeon-vocabulary.css' %}">
+
+
+{% endblock %}
+
+{% block content %}
+<section class="detalle-container">
+    <div class="detalle-encabezado">
+        <a href="{% url 'dashboard' %}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-left">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M5 12l14 0" />
+                <path d="M5 12l6 6" />
+                <path d="M5 12l6 -6" />
+            </svg>
+        </a>
+        <h1>Prática de Audio</h1>
+    </div>
+</section>
+
+<!-- Esta seccion le pertenece al reproductor -->
+<section class="reproductor-card">
+    <div class="libro-info">
+        <img src="{{ libro.cover_image.url }}" alt="{{ libro.title }}">
+        <div>
+            <h3>{{ libro.title }}</h3>
+            <p>{{ libro.author_name }}</p>
+        </div>
+    </div>
+
+    <audio id="player" src="{{ libro.audio_file.url }}"></audio>
+
+    <div class="audio-progreso">
+        <input id="progreso-bar" type="range" min="0" max="100" value="0">
+        <div class="tiempo">
+            <span id="currentTime">00:00</span>
+            <span id="durationTime">00:00</span>
+        </div>
+    </div>
+
+    <div class="controles">
+        <button class="icon-btn" id="rewindBtn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="icon icon-tabler icons-tabler-outline icon-tabler-rewind-backward-10">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M7 9l-3 -3l3 -3" />
+                <path d="M15.997 17.918a6.002 6.002 0 0 0 -.997 -11.918h-11" />
+                <path d="M6 14v6" />
+                <path d="M9 15.5v3a1.5 1.5 0 0 0 3 0v-3a1.5 1.5 0 0 0 -3 0z" />
+            </svg>
+        </button>
+        <button class="play-btn" id="playBtn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"
+                class="icon icon-tabler icons-tabler-filled icon-tabler-player-play">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M6 4v16a1 1 0 0 0 1.524 .852l13 -8a1 1 0 0 0 0 -1.704l-13 -8a1 1 0 0 0 -1.524 .852z" />
+            </svg>
+        </button>
+        <button class="icon-btn" id="forwardBtn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="icon icon-tabler icons-tabler-outline icon-tabler-rewind-forward-10">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M17 9l3 -3l-3 -3" />
+                <path d="M8 17.918a5.997 5.997 0 0 1 -5 -5.918a6 6 0 0 1 6 -6h11" />
+                <path d="M12 14v6" />
+                <path d="M15 15.5v3a1.5 1.5 0 0 0 3 0v-3a1.5 1.5 0 0 0 -3 0z" />
+            </svg>
+        </button>
+    </div>
+
+</section>
+
+<!-- Esta seccion es de las indicaciones  -->
+<section class="indicaciones">
+    <button class="indicaciones-btn" id="indicacionesToggle">
+        Indicaciones / Instrucciones generales
+        <span class="indicaciones-flecha">▼</span>
+    </button>
+
+    <div class="indicaciones-content" id="indicacionesContent">
+        <div class="indicaciones-box">
+            <p>
+                Una vez terminado de escuchar el audiolibro, por favor responde
+                el siguiente cuestionario. Si no entiendes algunas palabras,
+                puedes revisar el glosario.
+            </p>
+        </div>
+    </div>
+</section>
+
+
+<!-- Esta seccion le pertenece al glosario o vocabulario del audiolibro -->
+<section class="vocabulario">
+    <button class="acordeon-btn" id="toggleVocabulario">
+        Vocabulario / Glosario
+        <span class="flecha">▼</span>
+    </button>
+
+    <div class="acordeon-content" id="vocabularioContent">
+        <div class="vocabulario-lista">
+
+            {% for item in libro.vocabulario.all %}
+            <div class="vocab-box">
+                <h3 class="vocab-palabra">{{ item.palabra }}:</h3>
+
+                <p class="vocab-definicion">{{ item.definicion }}</p>
+
+                {% if item.ejemplo %}
+                <p class="vocab-ejemplo"><strong>Ejemplo:</strong> {{ item.ejemplo }}</p>
+                {% endif %}
+            </div>
+            {% empty %}
+            <p class="no-vocab">No se encontraron vocabularios para este audiolibro.</p>
+            {% endfor %}
+
+        </div>
+    </div>
+</section>
+<!-- Esta seccion le pertene al cuestionario donde mostramos las preguntas
+y respuestas -->
+<section class="test">
+    <button class="acordeon-btn" id="toggleCuestionario">
+        Cuestionario
+        <span class="flecha">▼</span>
+    </button>
+
+    <div class="acordeon-content" id="cuestionarioContent">
+        <div class="detalle-pregunta">
+            <form method="POST">
+                {% csrf_token %}
+
+                {% for pregunta in preguntas %}
+                <div class="pregunta-box">
+                    <h3 class="pregunta-titulo">{{ forloop.counter }}. {{ pregunta.text }}</h3>
+
+                    <div class="opciones">
+                        {% for opcion in pregunta.options.all %}
+                        <label class="opcion">
+                            <input type="radio" name="pregunta_{{ pregunta.id }}" value="{{ opcion.id }}">
+                            <span class="texto-opcion">{{ opcion.text }}</span>
+                        </label>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
+
+                <button class="enviar-respuesta" type="button" id="btnAbrirModal">Enviar respuestas</button>
+            </form>
+        </div>
+    </div>
+    <div id="modalDatos" class="modal-overlay">
+        <div class="modal-content">
+            <h3>Ingresa tus datos</h3>
+
+            <p id="mensajeError" class="error"></p>
+
+            <label>Nombre:</label>
+            <input type="text" id="nombre">
+
+            <label>Apellido:</label>
+            <input type="text" id="apellido">
+
+            <label>Correo:</label>
+            <input type="email" id="correo">
+            <div class="boton-modal">
+                <button id="enviarModal">Enviar</button>
+                <button id="cerrarModal" class="cerrar">Cancelar</button>
+            </div>
+
+        </div>
+    </div>
+    <div id="modalError" class="modal-overlay">
+        <div class="modal-content error">
+            <h3>Faltan preguntas por responder</h3>
+            <p>Por favor responde todas las preguntas antes de continuar.</p>
+            <button id="cerrarError" class="cerrar">Entendido</button>
+        </div>
+    </div>
+</section>
+
+<!-- Esta seccion pertence a los resultados del Cuestionario -->
+{% if puntaje %}
+
+<!-- Primera seccion pertenece a mostrar la calificacion -->
+<section class="resultado-content">
+    <div>
+        <h2 class="resultado-titulo">Calificación Final</h2>
+        <p class="resultado-puntaje">{{ puntaje }} / 10</p>
+    </div>
+</section>
+
+<!-- Segunda seccion pertenece a mostrar las preguntas con las respuesta que son correctas -->
+<section class="revision-respuesta ">
+    <div class="revision-container">
+        <h2>Revisión</h2>
+
+        {% for r in detalles %}
+        <div class="pregunta-item">
+            <p class="pregunta-titulo">
+                {{ forloop.counter }}. {{ r.pregunta }}
+            </p>
+
+            {% if r.correcta %}
+            <!-- RESPUESTA CORRECTA -->
+            <div class="respuesta correcta">
+                <span class="icono">✔</span>
+                <span>{{ r.respuesta }}</span>
+            </div>
+
+            {% else %}
+            <!-- RESPUESTA INCORRECTA -->
+            <div class="respuesta incorrecta">
+                <span class="icono">✖</span>
+                <span class="tachado">{{ r.respuesta }}</span>
+            </div>
+
+            <!-- MOSTRAR RESPUESTA CORRECTA -->
+            <div class="respuesta correcta">
+                <span class="icono">✔</span>
+                <span><strong>Respuesta Correcta:</strong> {{ r.respuesta_correcto }}</span>
+            </div>
+            {% endif %}
+
+        </div>
+        {% endfor %}
+    </div>
+
+</section>
+{% endif %}
+
+{% endblock %}
+{% block scripts %}
+<script src="{% static 'js/reproductor.js' %}"></script>
+<script src="{% static 'js/acordeon.js' %}"></script>
+<script src="{% static 'js/formulario-modal.js' %}"></script>
+<script src="{% static 'js/acordeon-vocabulary.js' %}"></script>
+<script src="{% static 'js/acordeon-indicaciones.js' %}"></script>
+
+
+
+
+{% endblock %}
