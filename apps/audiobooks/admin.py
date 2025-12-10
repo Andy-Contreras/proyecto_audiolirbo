@@ -9,7 +9,7 @@ from .models import Audiobook, Questions, AnswerOption, Vocabulario
 class AnswerOptionInline(nested_admin.NestedTabularInline):
     model = AnswerOption
     extra = 3
-    fields = ("text", "is_correct", "points_if_correct", "points_if_wrong")
+    fields = ("text", "is_correct","justification", "points_if_correct", "points_if_wrong")
 
 
 # ---------------------------

@@ -37,6 +37,24 @@
 .respuesta.correcta {
   background: #0f8152;
   border: 1px solid #19c37d;
+  padding: 12px;
+  border-radius: 10px;
+
+  display: flex;
+  gap: 10px;
+  align-items: flex-start; /* CLAVE */
+}
+
+.texto-respuesta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.justificacion {
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  padding-top: 6px;
+  font-size: 0.95rem;
 }
 
 /* Incorrecta */

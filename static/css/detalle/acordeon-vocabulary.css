@@ -38,6 +38,8 @@
   border-bottom: 1px solid #ccc;
   background: #161b22;
   border-radius: 15px;
+  padding-bottom: 10px;
+  margin-bottom: 15px; 
 }
 
 .vocab-palabra {
@@ -98,4 +100,8 @@
 
 .indicaciones-flecha {
   transition: transform 0.3s ease;
+}
+
+.indicaciones-btn:hover {
+  background: #333e57;
 }

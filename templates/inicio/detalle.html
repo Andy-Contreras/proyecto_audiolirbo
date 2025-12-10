@@ -24,10 +24,19 @@
                 <path d="M5 12l6 -6" />
             </svg>
         </a>
-        <h1>Prática de Audio</h1>
+        <h1>Prática de Video/AudiLibro</h1>
     </div>
 </section>
 
+{% if libro.is_video %}
+<section class="reproductor-card">
+    <video controls width="80%" >
+        <source src="{{ libro.audio_file.url }}" type="video/mp4">
+        Tu navegador no soporta video.
+    </video>
+    
+</section>
+{% elif libro.is_audio %}
 <!-- Esta seccion le pertenece al reproductor -->
 <section class="reproductor-card">
     <div class="libro-info">
@@ -38,7 +47,7 @@
         </div>
     </div>
 
-    <audio id="player" src="{{ libro.audio_file.url }}"></audio>
+    <audio id="player" src="{{ libro.audio_file.url }}" preload="metadata"></audio>
 
     <div class="audio-progreso">
         <input id="progreso-bar" type="range" min="0" max="100" value="0">
@@ -81,6 +90,8 @@
     </div>
 
 </section>
+{% endif %}
+
 
 <!-- Esta seccion es de las indicaciones  -->
 <section class="indicaciones">
@@ -229,10 +240,18 @@ y respuestas -->
             <!-- MOSTRAR RESPUESTA CORRECTA -->
             <div class="respuesta correcta">
                 <span class="icono">✔</span>
-                <span><strong>Respuesta Correcta:</strong> {{ r.respuesta_correcto }}</span>
+
+                <div class="texto-respuesta">
+                    <span><strong>Respuesta Correcta:</strong> {{ r.respuesta_correcto }}</span>
+
+                    {% if r.justificacion %}
+                    <p class="justificacion">
+                        <strong>Justificación:</strong> {{ r.justificacion }}
+                    </p>
+                    {% endif %}
+                </div>
             </div>
             {% endif %}
-
         </div>
         {% endfor %}
     </div>

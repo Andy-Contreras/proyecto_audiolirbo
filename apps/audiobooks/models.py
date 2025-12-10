@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+import os
 # Create your models here.
 
 class Audiobook(models.Model):
@@ -36,6 +36,16 @@ class Audiobook(models.Model):
         verbose_name="Fecha de creación"
     )
 
+    def is_video(self):
+        video_extensions = ['.mp4', '.webm', '.ogg']
+        ext = os.path.splitext(self.audio_file.name)[1].lower()
+        return ext in video_extensions
+
+    def is_audio(self):
+        audio_extensions = ['.mp3', '.wav', '.ogg']
+        ext = os.path.splitext(self.audio_file.name)[1].lower()
+        return ext in audio_extensions
+
     def __str__(self):
         return f"{self.title} - {self.author_name} - {self.added_by}"
     
@@ -67,6 +77,11 @@ class AnswerOption(models.Model):
     )
     text = models.CharField(max_length=300, verbose_name="Texto de la opción")
     is_correct = models.BooleanField(default=False, verbose_name="¿Correcta?")
+    justification = models.TextField(
+        blank=True,
+        null=True,
+        verbose_name="Justificación de la respuesta"
+    )
     # Puntajes (ajusta valores por defecto si deseas penalizar respuestas erróneas)
     points_if_correct = models.IntegerField(default=1, verbose_name="Puntos si es correcta")
     points_if_wrong = models.IntegerField(default=0, verbose_name="Puntos si es incorrecta")
