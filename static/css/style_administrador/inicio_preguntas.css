@@ -1,0 +1,54 @@
+.audiobooks-wrapper {
+    padding: 20px;
+}
+
+.title {
+    color: #e5e7eb;
+    margin-bottom: 20px;
+}
+
+.audiobook-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.audiobook-card {
+    background: #0f1c2d;
+    border-radius: 14px;
+    padding: 16px;
+    color: white;
+}
+
+.audiobook-card img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.audiobook-card h3 {
+    font-size: 1rem;
+    margin-bottom: 4px;
+}
+
+.author {
+    font-size: 0.85rem;
+    color: #9ca3af;
+    margin-bottom: 12px;
+}
+
+.btn-questions {
+    display: block;
+    text-align: center;
+    padding: 10px;
+    background: #3b82f6;
+    color: white;
+    border-radius: 10px;
+    text-decoration: none;
+}
+
+.btn-questions:hover {
+    background: #2563eb;
+}

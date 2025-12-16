@@ -20,7 +20,7 @@ def login_view(request):
         user_auth = authenticate(request, username =user.username, password=password)
         if user_auth is not None:
             login(request, user_auth)
-            return redirect("dashboard")
+            return redirect("administrador")
         else:
             messages.error(request, "Email o contraseña incorrectos.")
         

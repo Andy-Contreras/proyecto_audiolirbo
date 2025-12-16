@@ -1,6 +1,6 @@
 from django.core.mail import send_mail
 from django.conf import settings
-
+from django.utils import timezone
 def evaluar_preguntas(preguntas, respuestas_post):
     puntaje_total = 0
     puntaje_maximo = 0
@@ -72,18 +72,16 @@ def evaluar_preguntas(preguntas, respuestas_post):
 
 
 def enviar_resultado_cuestionario(resultado):
-    """
-    Envía un correo al docente que subió el audiolibro
-    con el resultado del cuestionario.
-    """
-
     audiobook = resultado.audiobook
     docente = audiobook.added_by
 
     if not docente.email:
-        return  # no hay email, no enviamos nada
+        return
 
     asunto = f"Nuevo resultado - {audiobook.title}"
+
+    # Convertimos a hora local según TIME_ZONE
+    fecha_local = timezone.localtime(resultado.creado_en)
 
     mensaje = f"""
 Hola {docente.get_full_name() or docente.username},
@@ -101,7 +99,7 @@ Correo: {resultado.correo}
 Puntaje obtenido: {resultado.puntaje}/10
 
 📅 Fecha:
-{resultado.creado_en.strftime('%d/%m/%Y %H:%M')}
+{fecha_local.strftime('%d/%m/%Y %H:%M')}
 
 Saludos,
 Plataforma de Audiolibros

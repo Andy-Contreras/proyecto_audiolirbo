@@ -1,20 +1,6 @@
 /* boton del acordeon */
-.acordeon-btn {
-  width: 100%;
-  background: #111827;
-  color: white;
-  border-radius: 10px;
-  padding: 15px;
-  font-size: 1.1rem;
-  cursor: pointer;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  transition: 0.3s ease;
-  margin-bottom: 10px;
-}
 .acordeon-btn:hover {
-  background: #333e57;
+  background: #d4b881;
 }
 .acordeon-btn .flecha {
   transition: transform 0.3s ease;
@@ -42,10 +28,15 @@
   color: white;
   margin-bottom: 1rem;
 }
-.detalle-pregunta {
-  color: white;
-} /* Cada pregunta */
+
+.no-preguntas {
+  display: block;
+  color: #333;
+  background: #f7eeee;
+}
+/* Cada pregunta */
 .pregunta-box {
+  background: #f7eeee;
   margin-bottom: 2rem;
   display: flex;
   flex-direction: column;
@@ -54,7 +45,10 @@
 .pregunta-titulo {
   font-size: 1.1rem;
   margin-bottom: 1rem;
-} /* Contenedor de opciones */
+  color: #8b5f5b;
+}
+
+/* Contenedor de opciones */
 .opciones {
   display: flex;
   flex-direction: column;
@@ -65,13 +59,16 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  background: #111827;
+  /* background: #f7eeee; */
   padding: 12px 15px;
   border-radius: 10px;
-  border: 1px solid #1f2937;
+  border: 1px solid #f892a7;
   cursor: pointer;
   transition: 0.25s;
-} /* Ocultar radio real */
+  color: #333;
+}
+
+/* Ocultar radio real */
 .opcion input[type="radio"] {
   appearance: none;
   width: 18px;
@@ -84,13 +81,13 @@
 
 /* Indicador del radio cuando está seleccionado */
 .opcion input[type="radio"]:checked {
-  border-color: #3b82f6;
+  border-color: #f892a7;
 }
 .opcion input[type="radio"]:checked::before {
   content: "";
   width: 10px;
   height: 10px;
-  background: #3b82f6;
+  background: #f892a7;
   border-radius: 50%;
   position: absolute;
   top: 2px;
@@ -99,17 +96,19 @@
 
 .opcion input[type="radio"]:checked + .texto-opcion,
 .opcion:has(input[type="radio"]:checked) {
-  background-color: #1e3a8a;
-  border-color: #3b82f6;
-  color: white;
+  background-color: #f7eeee;
+  border-color: #f892a7;
+  color: #333;
 }
 /* Hover */
 .opcion:hover {
-  background: #1f2937;
-} /* Botón */
+  background: #f892a7;
+}
+
+/* Botón */
 .enviar-respuesta {
   margin-top: 15px;
-  background: #3b82f6;
+  background: #f3a392;
   color: white;
   border-radius: 8px;
   padding: 10px 10px;
@@ -118,7 +117,7 @@
   width: 100%;
 }
 .enviar-respuesta:hover {
-  background: #2563eb;
+  background: #e48a78;
 }
 
 .error {
@@ -145,20 +144,26 @@
 .modal-content {
   display: flex;
   flex-direction: column;
-  background: #111827;
+  background: linear-gradient(
+    135deg,
+    rgba(247, 238, 238, 0.9),
+    rgba(255, 255, 255, 0.78)
+  );
   padding: 20px;
   width: 400px;
   border-radius: 10px;
   gap: 7px;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.2);
 }
 
 .modal-content h3 {
-  color: white;
+  color: #8b5f5b;
   font-size: 15px;
   text-align: center;
 }
 .modal-content label {
-  color: white;
+  color: #8b5f5b;
   font-size: 15px;
 }
 
@@ -167,6 +172,10 @@
   padding: 10px;
   outline: none;
   border: none;
+  background: #f7eeee;
+  border: 1px solid rgba(139, 95, 91, 0.18);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
+  transition: border-color 0.15s, box-shadow 0.15s;
 }
 
 .boton-modal {
@@ -180,14 +189,15 @@
   color: white;
   cursor: pointer;
   width: 100%;
-  background: rgb(59, 130, 246);
+  background: #f3a392;
   border-radius: 8px;
   padding: 10px;
   border: none;
+  box-shadow: 0 8px 20px rgba(243, 163, 146, 0.25);
 }
 
 .boton-modal button:hover {
-  background: #2563eb;
+  background: #e48a78;
 }
 
 #modalError {
@@ -199,12 +209,15 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.6);
   z-index: 9999;
 }
 
 #modalError .modal-content {
-  background: rgba(0, 0, 0, 0.6);
+  background: linear-gradient(
+    135deg,
+    rgba(247, 238, 238, 0.92),
+    /* blanco rosado */ rgba(255, 255, 255, 0.75)
+  );
   padding: 25px;
   width: 90%;
   max-width: 350px;
@@ -215,7 +228,7 @@
 }
 
 #modalError .modal-content.error h3 {
-  color: #d9534f;
+  color: #8b5f5b;
   margin-bottom: 10px;
   font-size: 15px;
 }
@@ -223,12 +236,12 @@
 #modalError .modal-content p {
   margin-bottom: 20px;
   font-size: 15px;
-  color: white;
+  color: #8b5f5b;
 }
 
 #modalError .modal-content button {
   font-size: 15px;
-  background: rgb(59, 130, 246);
+  background: #f3a392;
   border-radius: 8px;
   border: none;
   color: white;
@@ -236,8 +249,9 @@
 }
 
 #modalError .modal-content button:hover {
-  background: #2563eb;
+  background: #e48a78;
 }
+
 @keyframes aparecer {
   from {
     transform: scale(0.8);
@@ -249,9 +263,54 @@
   }
 }
 
+@media (max-width: 768px) {
+  .test {
+    max-width: 95%;
+    padding: 0 12px;
+  }
+
+  .pregunta-titulo {
+    font-size: 1.05rem;
+  }
+
+  .opcion {
+    padding: 12px;
+  }
+
+  .texto-opcion {
+    font-size: 1rem;
+  }
+
+  .modal-content {
+    width: 330px;
+    padding: 18px;
+  }
+}
+
+/* ====== <= 640px ====== */
+@media (max-width: 640px) {
+  .pregunta-box {
+    margin-bottom: 1.5rem;
+  }
+
+  .acordeon-btn {
+    padding: 12px;
+    font-size: 1rem;
+  }
+
+  .flecha {
+    font-size: 1.1rem;
+  }
+
+  .modal-content {
+    width: 300px;
+  }
+}
+
+/* ====== <= 480px ====== */
 @media (max-width: 480px) {
   .test {
-    padding: 0 10px;
+    padding: 0px 10px;
   }
 
   .pregunta-titulo {
@@ -259,11 +318,16 @@
     line-height: 1.3;
   }
 
+  .opciones {
+    gap: 8px;
+  }
+
   .opcion {
     padding: 10px 12px;
     gap: 8px;
   }
 
+  /* Radio más pequeño */
   .opcion input[type="radio"] {
     width: 16px;
     height: 16px;
@@ -279,32 +343,49 @@
   .texto-opcion {
     font-size: 0.95rem;
   }
-}
 
-@media (max-width: 640px) {
-  .test {
-    padding: 0 15px;
+  /* MODAL */
+  .modal-content {
+    width: 90%;
+    padding: 15px;
   }
 
-  .pregunta-box {
-    margin-bottom: 1.5rem;
+  #modalError .modal-content {
+    width: 90%;
+    padding: 20px;
+  }
+
+  #modalError .modal-content button,
+  .boton-modal button {
+    padding: 10px;
+    font-size: 14px;
+  }
+}
+
+/* ====== <= 360px ====== */
+@media (max-width: 360px) {
+  .pregunta-titulo {
+    font-size: 0.95rem;
   }
 
   .opcion {
-    padding: 12px;
+    padding: 8px 10px;
   }
 
   .texto-opcion {
+    font-size: 0.9rem;
+  }
+
+  .modal-content {
+    padding: 12px;
+  }
+
+  .acordeon-btn {
+    padding: 10px;
+    font-size: 0.95rem;
+  }
+
+  .flecha {
     font-size: 1rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .test {
-    max-width: 95%;
-  }
-
-  .pregunta-titulo {
-    font-size: 1.05rem;
   }
 }

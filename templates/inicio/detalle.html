@@ -24,17 +24,17 @@
                 <path d="M5 12l6 -6" />
             </svg>
         </a>
-        <h1>Prática de Video/AudiLibro</h1>
+        <h1>Prática de Video/AudioLibro</h1>
     </div>
-</section>
+</section> 
 
 {% if libro.is_video %}
 <section class="reproductor-card">
-    <video controls width="80%" >
+    <video controls width="80%">
         <source src="{{ libro.audio_file.url }}" type="video/mp4">
         Tu navegador no soporta video.
     </video>
-    
+
 </section>
 {% elif libro.is_audio %}
 <!-- Esta seccion le pertenece al reproductor -->
@@ -89,7 +89,7 @@
         </button>
     </div>
 
-</section>
+</section> 
 {% endif %}
 
 
@@ -133,12 +133,15 @@
                 {% endif %}
             </div>
             {% empty %}
-            <p class="no-vocab">No se encontraron vocabularios para este audiolibro.</p>
+            <div>
+                <p class="no-vocab">No se encontraron vocabularios para este audiolibro.</p>
+
+            </div>
             {% endfor %}
 
         </div>
     </div>
-</section>
+</section> 
 <!-- Esta seccion le pertene al cuestionario donde mostramos las preguntas
 y respuestas -->
 <section class="test">
@@ -152,6 +155,7 @@ y respuestas -->
             <form method="POST">
                 {% csrf_token %}
 
+                {% if preguntas %}
                 {% for pregunta in preguntas %}
                 <div class="pregunta-box">
                     <h3 class="pregunta-titulo">{{ forloop.counter }}. {{ pregunta.text }}</h3>
@@ -168,6 +172,11 @@ y respuestas -->
                 {% endfor %}
 
                 <button class="enviar-respuesta" type="button" id="btnAbrirModal">Enviar respuestas</button>
+                {% else %}
+                <div class="no-preguntas">
+                    <p>No hay preguntas disponibles.</p>
+                </div>
+                {% endif %}
             </form>
         </div>
     </div>
@@ -178,13 +187,13 @@ y respuestas -->
             <p id="mensajeError" class="error"></p>
 
             <label>Nombre:</label>
-            <input type="text" id="nombre">
+            <input type="text" id="nombre" placeholder="Ingresar su Nombre">
 
             <label>Apellido:</label>
-            <input type="text" id="apellido">
+            <input type="text" id="apellido" placeholder="Ingresar su Apellido">
 
             <label>Correo:</label>
-            <input type="email" id="correo">
+            <input type="email" id="correo" placeholder="Ingresar su correo">
             <div class="boton-modal">
                 <button id="enviarModal">Enviar</button>
                 <button id="cerrarModal" class="cerrar">Cancelar</button>
@@ -199,7 +208,7 @@ y respuestas -->
             <button id="cerrarError" class="cerrar">Entendido</button>
         </div>
     </div>
-</section>
+</section> 
 
 <!-- Esta seccion pertence a los resultados del Cuestionario -->
 {% if puntaje %}
@@ -224,20 +233,17 @@ y respuestas -->
             </p>
 
             {% if r.correcta %}
-            <!-- RESPUESTA CORRECTA -->
             <div class="respuesta correcta">
                 <span class="icono">✔</span>
                 <span>{{ r.respuesta }}</span>
             </div>
 
             {% else %}
-            <!-- RESPUESTA INCORRECTA -->
             <div class="respuesta incorrecta">
                 <span class="icono">✖</span>
                 <span class="tachado">{{ r.respuesta }}</span>
             </div>
 
-            <!-- MOSTRAR RESPUESTA CORRECTA -->
             <div class="respuesta correcta">
                 <span class="icono">✔</span>
 

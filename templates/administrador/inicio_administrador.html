@@ -1,0 +1,34 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    {% block css %}
+    <link rel="stylesheet" href="{% static 'css/style_administrador/inicio.css'%}">
+    {% endblock %}
+</head>
+
+<body>
+
+    <!-- ===== SIDEBAR / HEADER ===== -->
+    <header class="sidebar" id="sidebar">
+        {% include 'administrador/sidebar_administrador.html' %}
+
+    </header>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="main-content">
+        {% block content %}
+
+        {% endblock %}
+    </main>
+
+    {% block scripts %}
+
+    {% endblock %}
+</body>
+
+</html>

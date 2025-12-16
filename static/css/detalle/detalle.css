@@ -3,16 +3,18 @@
   margin: 0 auto;
   width: 100%;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.35);
+  /* box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.35); */
   border-radius: 20px;
 }
 .detalle-encabezado {
+  background: #8b5f5b;
   display: flex;
   position: relative;
   width: 100%;
   align-items: center;
   justify-content: center;
   padding: 1rem 0;
+  border-radius: 10px;
 }
 
 .detalle-encabezado a {
@@ -35,9 +37,9 @@
   justify-content: center;
   max-width: 60rem;
   margin: 0 auto;
-  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.35);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.08);
   border-radius: 20px;
-  background-color: #111827;
+  background: #b8e5c4;
   padding: 25px;
   margin-bottom: 20px !important;
   gap: 20px;
@@ -54,13 +56,13 @@
     object-fit: cover;
   }
   h3 {
-    color: white;
+    color: #8b5f5b;
     font-size: 1.1rem;
     margin-bottom: 4px;
   }
   p {
     font-size: 0.9rem;
-    color: #9ca3af;
+    color: #555;
   }
 }
 
@@ -71,7 +73,7 @@
 .audio-progreso input[type="range"] {
   appearance: none;
   height: 4px;
-  background: #2563eb;
+  background: #e4ebf2;
   border-radius: 5px;
 }
 
@@ -79,7 +81,7 @@
   appearance: none;
   width: 16px;
   height: 16px;
-  background: #60a5fa;
+  background: #f892a7;
   border-radius: 50%;
   cursor: pointer;
 }
@@ -104,7 +106,7 @@
   height: 45px;
   background: transparent;
   border: none;
-  color: white;
+  color: #8b5f5b;
   font-size: 1.5rem;
   cursor: pointer;
 }
@@ -112,20 +114,24 @@
 .play-btn {
   width: 45px;
   height: 45px;
-  background: #3b82f6;
+  background: #f892a7;
   border-radius: 50%;
   color: white;
   font-size: 2rem;
   cursor: pointer;
-  box-shadow: 0px 0px 18px #1d4ed8;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
   border: none;
 }
 .play-btn:hover {
-  background: #2563eb;
+  background: #f36c8a;
 }
 
-
 @media (max-width: 768px) {
+
+  .detalle-container {
+    border-radius: 15px;
+  }
+
   .detalle-encabezado h1 {
     font-size: 1rem;
   }
@@ -140,8 +146,20 @@
     height: 120px;
   }
 
+  .libro-info h3 {
+    font-size: 1rem;
+  }
+
+  .libro-info p {
+    font-size: 0.9rem;
+  }
+
   .audio-progreso input {
     width: 100%;
+  }
+
+  .reproductor-card {
+    padding: 18px;
   }
 
   .controles {
@@ -149,8 +167,9 @@
   }
 }
 
-/* Móviles pequeños */
+/* ===== MÓVILES PEQUEÑOS (<= 480px) ===== */
 @media (max-width: 480px) {
+
   .detalle-encabezado {
     padding: 0.5rem 0;
   }
@@ -163,13 +182,18 @@
     left: 0.5rem;
   }
 
+  .reproductor-card {
+    padding: 15px;
+    gap: 15px;
+  }
+
   .libro-info img {
     width: 90px;
     height: 90px;
   }
 
   .libro-info h3 {
-    font-size: 1rem;
+    font-size: 0.95rem;
   }
 
   .libro-info p {
@@ -188,5 +212,32 @@
 
   .play-btn {
     font-size: 1.5rem;
+  }
+}
+
+/* ===== MÓVILES MUY PEQUEÑOS (<= 360px) ===== */
+@media (max-width: 360px) {
+
+  .detalle-encabezado h1 {
+    font-size: 0.8rem;
+  }
+
+  .libro-info img {
+    width: 80px;
+    height: 80px;
+  }
+
+  .reproductor-card {
+    padding: 12px;
+  }
+
+  .icon-btn,
+  .play-btn {
+    width: 32px;
+    height: 32px;
+  }
+
+  .play-btn {
+    font-size: 1.3rem;
   }
 }

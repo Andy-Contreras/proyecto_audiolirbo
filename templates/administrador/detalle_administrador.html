@@ -1,0 +1,45 @@
+{% extends 'administrador/inicio_administrador.html'%}
+{% load static %}
+
+{% block content %}
+<h1 class="title">Dashboard</h1>
+
+<section class="stats">
+    <div class="card">
+        <p>Total de audiolibros</p>
+        <h2>{{ total_audiolibros }}</h2>
+    </div>
+    <div class="card">
+        <p>Total de usuarios</p>
+        <h2>{{total_participantes}}</h2>
+    </div>
+    <div class="card">
+        <p>Prácticas completadas</p>
+        <h2>{{practicas_completadas}}</h2>
+    </div>
+    <div class="card">
+        <p>Calificación promedio</p>
+        <h2>{{calificacion_promedio}}</h2>
+    </div>
+</section>
+
+<section class="chart">
+    <p>Nuevos usuarios este mes</p>
+    <h2>{{ usuarios_mes_actual }}</h2>
+
+    <div class="bars" id="chart-bars">
+        <div class="bar"></div>
+        <div class="bar small"></div>
+        <div class="bar active"></div>
+        <div class="bar"></div>
+    </div>
+</section>
+
+<button class="btn-primary">⬆ Subir Nuevo Audiolibro</button>
+{% endblock %}
+{% block scripts %}
+<script src="{% static 'js/administrador/inicio.js' %}"></script>
+
+
+
+{% endblock %}

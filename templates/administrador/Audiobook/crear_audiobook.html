@@ -1,0 +1,39 @@
+{% extends 'administrador/inicio_administrador.html'%}
+{% load static %}
+{% block css %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'css/style_administrador/crear_audiobook.css' %}">
+
+{% endblock %}
+{% block content %}
+<!-- templates/audiobooks/nuevo.html -->
+<div class="audiobook-wrapper">
+    <h2 class="audiobook-title">Crear audiolibro</h2>
+
+    <form method="POST" enctype="multipart/form-data" class="audiobook-card">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label>Título del audiolibro</label>
+            {{ form.title }}
+        </div>
+
+        <div class="form-group">
+            <label>Autor</label>
+            {{ form.author_name }}
+        </div>
+
+        <div class="form-group">
+            <label>Subir archivo de audio/video</label>
+            {{ form.audio_file }}
+        </div>
+
+        <div class="form-group">
+            <label>Imagen de portada (opcional)</label>
+            {{ form.cover_image }}
+        </div>
+
+        <button type="submit" class="btn-guardar">Guardar</button>
+    </form>
+</div>
+{% endblock %}

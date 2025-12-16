@@ -3,7 +3,7 @@
   max-width: 60rem;
   margin: 0 auto;
   padding: 12px 12px;
-  background: #111827;
+  background: transparent;
   border-radius: 10px;
 }
 
@@ -11,6 +11,7 @@
   padding-top: 10px;
   font-size: 1.1rem;
   margin-bottom: 20px;
+  color: #8b5f5b;
 }
 
 .pregunta-item {
@@ -21,6 +22,7 @@
   margin-bottom: 10px;
   font-size: 18px;
   font-weight: 600;
+  color: #5a403e;
 }
 
 .respuesta {
@@ -35,20 +37,22 @@
 
 /* Correcta */
 .respuesta.correcta {
-  background: #0f8152;
-  border: 1px solid #19c37d;
+  background: #b5e4c8;
+  border: 1px solid transparent;
   padding: 12px;
   border-radius: 10px;
 
   display: flex;
   gap: 10px;
   align-items: flex-start; /* CLAVE */
+  color: #333;
 }
 
 .texto-respuesta {
   display: flex;
   flex-direction: column;
   gap: 6px;
+  color: #333;
 }
 
 .justificacion {
@@ -59,23 +63,95 @@
 
 /* Incorrecta */
 .respuesta.incorrecta {
-  background: #4a0e0e;
-  border: 2px solid #d93030;
+  background: #f4b4a3;
+  border: 2px solid transparent;
 }
 /* Iconos */
-.icono {
-  font-size: 15px;
+.respuesta.correcta .icono {
+  color: #19c37d; 
+}
+
+.respuesta.incorrecta .icono {
+  color: #d93030; 
 }
 
 /* Tachado para respuesta incorrecta */
 .tachado {
   text-decoration: line-through;
+  color: #333;
 }
 
 /* -------- RESPONSIVE ---------- */
 @media (max-width: 600px) {
+
+  .revision-respuesta {
+    padding: 10px;
+    border-radius: 8px;
+  }
+
+  .revision-container h2 {
+    font-size: 1rem;
+    margin-bottom: 16px;
+  }
+
+  .pregunta-titulo {
+    font-size: 1rem;
+    text-align: center;
+  }
+
   .respuesta {
     flex-direction: column;
     text-align: center;
+    font-size: 15px;
+    padding: 10px 12px;
+    gap: 8px;
+  }
+
+  .respuesta.correcta,
+  .respuesta.incorrecta {
+    align-items: center;
+    padding: 12px;
+  }
+
+  .respuesta .icono {
+    font-size: 1.3rem;
+  }
+
+  .texto-respuesta {
+    gap: 4px;
+  }
+
+  .justificacion {
+    margin-top: 5px;
+    font-size: 0.9rem;
+  }
+}
+
+/* ====== RESPONSIVE <= 360px ====== */
+@media (max-width: 360px) {
+
+  .revision-respuesta {
+    padding: 8px;
+  }
+
+  .pregunta-titulo {
+    font-size: 0.95rem;
+  }
+
+  .respuesta {
+    padding: 8px 10px;
+    font-size: 14px;
+  }
+
+  .respuesta .icono {
+    font-size: 1.2rem;
+  }
+
+  .texto-respuesta {
+    gap: 3px;
+  }
+
+  .justificacion {
+    font-size: 0.85rem;
   }
 }

@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-
   // Elementos
   const audio = document.getElementById("player");
   const playBTN = document.getElementById("playBtn");
@@ -8,6 +7,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const tiempoTotal = document.getElementById("durationTime");
   const rewind = document.getElementById("rewindBtn");
   const forward = document.getElementById("forwardBtn");
+
+  // 👉 SI NO ES AUDIO, NO HACEMOS NADA
+  if (!audio) return;
 
   // Íconos
   const iconPlay = `
@@ -34,39 +36,48 @@ document.addEventListener("DOMContentLoaded", () => {
     return `${min}:${sec < 10 ? "0" + sec : sec}`;
   }
 
-  // Estado inicial
-  playBTN.disabled = true;
-  progressBar.value = 0;
-  tiempoActual.textContent = "00:00";
-  tiempoTotal.textContent = "00:00";
+  // ===== BLOQUEAR CONTROLES AL INICIO =====
+  function bloquearControles(bloquear) {
+    playBTN.disabled = bloquear;
+    progressBar.disabled = bloquear;
+    rewind.disabled = bloquear;
+    forward.disabled = bloquear;
+    playBTN.style.opacity = bloquear ? "0.5" : "1";
+  }
 
-  // ✅ Metadata cargada
-  audio.addEventListener("loadedmetadata", () => {
-    tiempoTotal.textContent = formatTime(audio.duration);
-  });
+  bloquearControles(true);
 
-  // ✅ Audio listo para reproducir
-  audio.addEventListener("canplay", () => {
-    playBTN.disabled = false;
-  });
+  // ===== AUDIO LISTO =====
+  audio.addEventListener(
+    "canplaythrough",
+    () => {
+      tiempoTotal.textContent = formatTime(audio.duration);
+      bloquearControles(false);
+    },
+    { once: true }
+  );
 
-  // Play / Pause
+  // ===== PLAY / PAUSE =====
   playBTN.addEventListener("click", () => {
+    if (audio.readyState < 3) return;
+
     if (audio.paused) {
-      audio.play()
-        .then(() => {
-          playBTN.innerHTML = iconPause;
-        })
-        .catch(err => {
-          console.error("Error al reproducir:", err);
-        });
+      audio.play().then(() => {
+        playBTN.innerHTML = iconPause;
+      });
     } else {
       audio.pause();
       playBTN.innerHTML = iconPlay;
     }
   });
 
-  // Actualizar barra y tiempo
+  // ===== FIN DEL AUDIO =====
+  audio.addEventListener("ended", () => {
+    playBTN.innerHTML = iconPlay;
+    progressBar.value = 100;
+  });
+
+  // ===== TIEMPO Y BARRA =====
   audio.addEventListener("timeupdate", () => {
     if (!isNaN(audio.duration)) {
       progressBar.value = (audio.currentTime / audio.duration) * 100;
@@ -74,28 +85,19 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Mover audio usando la barra
   progressBar.addEventListener("input", () => {
-    if (!isNaN(audio.duration)) {
-      audio.currentTime = (progressBar.value / 100) * audio.duration;
-    }
+    if (isNaN(audio.duration) || audio.readyState < 3) return;
+    audio.currentTime = (progressBar.value / 100) * audio.duration;
   });
 
-  // Retroceder 10s
+  // ===== CONTROLES =====
   rewind.addEventListener("click", () => {
+    if (audio.readyState < 3) return;
     audio.currentTime = Math.max(0, audio.currentTime - 10);
   });
 
-  // Avanzar 10s
   forward.addEventListener("click", () => {
+    if (audio.readyState < 3) return;
     audio.currentTime = Math.min(audio.duration, audio.currentTime + 10);
   });
-
-  // Al finalizar
-  audio.addEventListener("ended", () => {
-    audio.currentTime = 0;
-    progressBar.value = 0;
-    playBTN.innerHTML = iconPlay;
-  });
-
 });

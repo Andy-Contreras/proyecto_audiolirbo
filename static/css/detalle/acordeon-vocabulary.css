@@ -8,8 +8,8 @@
 
 .acordeon-btn {
   width: 100%;
-  background: #161b22;
-  color: white;
+  background: #e2c68e;
+  color: #444;
   border-radius: 10px;
   padding: 15px;
   font-size: 1.1rem;
@@ -35,25 +35,35 @@
 
 .vocab-box {
   padding: 15px;
-  border-bottom: 1px solid #ccc;
-  background: #161b22;
+  border-bottom: 1px solid transparent;
+  background: #f7eeee;
   border-radius: 15px;
   padding-bottom: 10px;
-  margin-bottom: 15px; 
+  margin-bottom: 15px;
 }
 
 .vocab-palabra {
   font-size: 20px;
   font-weight: bold;
+  color: #8b5f5b;
 }
 
 .vocab-definicion {
   margin-top: 5px;
+  color: #222;
 }
 
 .vocab-ejemplo {
   margin-top: 5px;
   font-style: italic;
+}
+.no-vocab {
+  background: #f7eeee;
+  padding: 15px;
+  border-radius: 10px;
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 15px;
 }
 
 .indicaciones {
@@ -68,8 +78,8 @@
 
 .indicaciones-btn {
   width: 100%;
-  background: #161b22;
-  color: white;
+  background: #e2c68e;
+  color: #444;
   border-radius: 10px;
   padding: 15px;
   font-size: 1.1rem;
@@ -93,9 +103,10 @@
 
 .indicaciones-box {
   padding: 15px;
-  color: white;
-  background: #161b22;
+  color: #333;
+  background: #f7eeee;
   border-radius: 15px;
+  margin-top: 10px;
 }
 
 .indicaciones-flecha {
@@ -103,5 +114,105 @@
 }
 
 .indicaciones-btn:hover {
-  background: #333e57;
+  background: #d4b881;
+}
+
+/* ====== <= 768px ====== */
+@media (max-width: 768px) {
+  .vocabulario,
+  .indicaciones {
+    max-width: 90%;
+  }
+
+  .acordeon-btn,
+  .indicaciones-btn {
+    padding: 14px;
+    font-size: 1rem;
+  }
+
+  .vocab-box,
+  .indicaciones-box {
+    padding: 14px;
+  }
+
+  .vocab-palabra {
+    font-size: 1.15rem;
+  }
+}
+
+/* ====== <= 640px ====== */
+@media (max-width: 640px) {
+  .acordeon-btn,
+  .indicaciones-btn {
+    padding: 12px;
+    font-size: 0.95rem;
+  }
+
+  .vocab-palabra {
+    font-size: 1.05rem;
+  }
+
+  .vocab-definicion,
+  .vocab-ejemplo {
+    font-size: 0.95rem;
+  }
+
+  .vocab-box,
+  .indicaciones-box {
+    padding: 12px;
+    border-radius: 12px;
+  }
+}
+
+/* ====== <= 480px ====== */
+@media (max-width: 480px) {
+
+
+  .acordeon-btn,
+  .indicaciones-btn {
+    padding: 10px 12px;
+    font-size: 0.9rem;
+    gap: 8px;
+  }
+
+  .vocab-palabra {
+    font-size: 1rem;
+  }
+
+  .vocab-definicion,
+  .vocab-ejemplo {
+    font-size: 0.9rem;
+  }
+
+  .vocab-box,
+  .indicaciones-box {
+    padding: 10px;
+  }
+
+  .indicaciones-flecha {
+    transform: scale(0.9);
+  }
+}
+
+/* ====== <= 360px ====== */
+@media (max-width: 360px) {
+  .acordeon-btn,
+  .indicaciones-btn {
+    padding: 8px 10px;
+    font-size: 0.85rem;
+  }
+
+  .vocab-palabra {
+    font-size: 0.95rem;
+  }
+
+  .vocab-definicion,
+  .vocab-ejemplo {
+    font-size: 0.85rem;
+  }
+
+  .vocab-box,
+  .indicaciones-box {
+    padding: 8px;
+  }
 }

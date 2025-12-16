@@ -1,0 +1,43 @@
+{% extends 'administrador/inicio_administrador.html' %}
+{% load static %}
+{% block css %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'css/style_administrador/inicio_preguntas.css' %}">
+{% endblock %}
+{% block content %}
+<div class="audiobooks-wrapper">
+    <h2 class="title">Mis audiolibros</h2>
+
+    {% if audiolibros %}
+    <div class="audiobook-grid">
+        {% for audiobook in audiolibros %}
+        <div class="audiobook-card">
+
+            {% if audiobook.cover_image %}
+            <img src="{{ audiobook.cover_image.url }}" alt="{{ audiobook.title }}">
+            {% endif %}
+
+            <h3>{{ audiobook.title }}</h3>
+            <p class="author">{{ audiobook.author_name }}</p>
+
+            {% if request.user == audiobook.added_by %}
+            <a href="{% url 'crear_contenido_audiobook' audiobook.id %}" class="btn-questions">
+                Crear preguntas
+            </a>
+            {% else %}
+            <button class="btn-questions disabled" disabled>
+                Sin acceso
+            </button>
+            {% endif %}
+
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="empty">
+        Aún no has creado audiolibros.
+    </p>
+    {% endif %}
+</div>
+
+{% endblock %}

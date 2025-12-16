@@ -1,0 +1,103 @@
+{% extends 'administrador/inicio_administrador.html' %}
+{% load static %}
+{% block content %}
+<h2>Crear preguntas</h2>
+<p><strong>Audiolibro:</strong> {{ audiobook.title }}</p>
+
+<form method="POST">
+    {% csrf_token %}
+    {{ question_formset.management_form }}
+
+    <div class="questions-container">
+        {% for form in question_formset %}
+        <div class="question-card" style="border:1px solid #ccc; padding:10px; margin-bottom:20px;">
+            <div class="question-header" style="margin-bottom:10px;">
+                <strong>Pregunta #{{ forloop.counter }}</strong>
+                {{ form.text }}
+                {% if form.DELETE %}
+                {{ form.DELETE }}
+                {% endif %}
+                <button type="button" class="remove-question-btn">❌</button>
+            </div>
+
+            <div class="answers-block" style="margin-left:0;">
+                {% for question, answer_formset in answer_formsets %}
+                {% if question.pk == form.instance.pk %}
+                {{ answer_formset.management_form }}
+
+                <table class="answers-table" border="1"
+                    style="width:100%; border-collapse:collapse; margin-bottom:5px;">
+                    <thead>
+                        <tr>
+                            <th>Texto de la opción</th>
+                            <th>Correcta</th>
+                            <th>Justificación</th>
+                            <th>Puntos si es correcta</th>
+                            <th>Puntos si es incorrecta</th>
+                            <th>Eliminar</th>
+                        </tr>
+                    </thead>
+                    <tbody class="answers-container">
+                        {% for aform in answer_formset %}
+                        <tr class="answer-card">
+                            <td>{{ aform.text }}</td>
+                            <td style="text-align:center;">{{ aform.is_correct }}</td>
+                            <td>{{ aform.justification }}</td>
+                            <td style="text-align:center;">{{ aform.points_if_correct }}</td>
+                            <td style="text-align:center;">{{ aform.points_if_wrong }}</td>
+                            <td style="text-align:center;">
+                                {{ aform.DELETE }}
+                                <button type="button" class="remove-answer-btn">❌</button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <button type="button" class="add-answer-btn">➕ Agregar opción</button>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <button type="button" id="add-question-btn" style="margin-top:10px;">➕ Agregar pregunta</button>
+    <button type="submit" style="margin-top:10px;">Guardar preguntas y respuestas</button>
+</form>
+
+<!-- Template pregunta -->
+<div id="question-template" style="display:none;">
+    <div class="question-card">
+        <div class="question-header">
+            <strong>Pregunta #X</strong>
+            <input type="text" name="question-__prefix__-text" placeholder="Texto de la pregunta">
+            <input type="checkbox" name="question-__prefix__-DELETE" hidden>
+            <button type="button" class="remove-question-btn">❌</button>
+        </div>
+
+        <div class="answers-block">
+            <div class="answers-container">
+                <div class="answer-card">
+                    <input type="text" name="__prefix__-answer-0-text" placeholder="Texto de la opción">
+                    <input type="checkbox" name="__prefix__-answer-0-is_correct"> Correcta
+                    <input type="text" name="__prefix__-answer-0-justification" placeholder="Justificación">
+                    <input type="number" name="__prefix__-answer-0-points_if_correct" placeholder="Puntos si acierta">
+                    <input type="number" name="__prefix__-answer-0-points_if_wrong" placeholder="Puntos si falla">
+                    <input type="checkbox" name="__prefix__-answer-0-DELETE" hidden>
+                    <button type="button" class="remove-answer-btn">❌</button>
+                </div>
+            </div>
+            <button type="button" class="add-answer-btn">➕ Agregar opción</button>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/administrador/answer_formset.js' %}"></script>
+
+
+
+{% endblock %}

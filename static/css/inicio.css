@@ -5,10 +5,14 @@
   box-sizing: border-box;
   font-family: "Inter", sans-serif;
 }
-
 body {
-  background-color: #0d1117; /* Fondo azul oscuro */
+  background-image: url("../img/fondo.png");
+  background-size: cover; /* Cubre toda la pantalla */
+  background-position: center; /* Centra la imagen */
+  background-repeat: no-repeat; /* No se repite */
+  background-attachment: fixed;
   padding: 20px;
+  min-height: 83vh;
 }
 
 /* ====== HEADER ====== */
@@ -42,7 +46,7 @@ body {
 .header h1 {
   font-size: 1.5rem;
   font-weight: 700;
-  color: white;
+  color: #6c7161;
 }
 
 /* ====== BUSCADOR ====== */
@@ -57,7 +61,10 @@ main form {
 }
 
 main form div {
-  background-color: #161b22;
+  background-color: #f3f4f6;
+  /* CONTRASTE */
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.16);
+  border: 1px solid rgba(0, 0, 0, 0.04);
   display: flex;
   align-items: center;
   gap: 10px;
@@ -71,14 +78,14 @@ main form input {
   background: transparent;
   border: none;
   outline: none;
-  color: #ffffff;
+  color: #374151;
   font-size: 1rem;
 }
 
 main form svg {
   width: 22px;
   height: 22px;
-  stroke: #6b7280;
+  stroke: #d1d5db;
 }
 
 /* ====== TÍTULO DE SECCIÓN ====== */
@@ -86,14 +93,15 @@ main h2 {
   font-size: 1.3rem;
   margin-bottom: 15px;
   color: white;
+  text-shadow: 0px 3px 8px rgba(0, 0, 0, 0.35);
 }
 
 /* ====== CARRUSEL DE LIBROS ====== */
 .audiolibros-container {
-  display: flex;
-  gap: 15px;
-  overflow-x: auto;
-  padding-bottom: 10px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 16px;
+  padding: 10px 0;
 }
 
 /* Ocultar scroll en navegadores */
@@ -102,51 +110,58 @@ main h2 {
 }
 
 .book-card {
-  min-width: 200px;
-  background-color: #161b22;
+  background-color: #ffffff;
   padding: 10px;
   border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.18);
   display: flex;
   flex-direction: column;
   gap: 8px;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  /* 👇 ESTA LÍNEA ES IMPORTANTE */
+  height: 100%;
 }
 
 .book-card:hover {
-  transform: translateY(-5px) scale(1.03);
-  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.35);
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0px 10px 24px rgba(0, 0, 0, 0.22);
 }
 
 .book-card img {
-  width: 100%;
-  height: 230px;
+  width: 75%;
+  height: 150px;
   object-fit: cover;
   border-radius: 8px;
+  display: block;
+  margin: 0 auto;
 }
 
 .book-card h3 {
   font-size: 0.9rem;
   font-weight: 600;
-  color: #fff;
+  color: #1f2933;
 }
 
 .book-card p {
   font-size: 0.8rem;
-  color: #9ca3af;
+  color: #6b7280;
 }
 
 /* botone detalle */
 .book-card .detalle {
   text-decoration: none;
   border-radius: 5px;
-  background: #3b82f6;
-  color: white;
+  background: #f6a192;
+  color: #ffffff;
   text-align: center;
   padding: 4px 0;
+  /* 👇 ESTO EMPUJA EL BOTÓN HACIA ABAJO */
+  margin-top: auto;
 }
 
 .book-card .detalle:hover {
-  background: #2563eb;
+  background: #f28b7a;
 }
 
 /* seccion del audiolibro */
@@ -157,18 +172,57 @@ main .seccion-audiolibro {
 }
 
 /* Móviles */
-@media (max-width: 600px) {
+@media (max-width: 400px) {
+  body {
+    padding: 10px;
+  }
+
   .header > div {
-    flex-direction: row;
+    padding: 0 10px;
     justify-content: center;
   }
 
   .header h1 {
+    font-size: 1rem;
+  }
+
+  .audiolibros-container {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 12px;
+  }
+
+  .book-card {
+    padding: 8px;
+  }
+
+  .book-card img {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    height: auto;
+  }
+
+  .book-card h3 {
+    font-size: 0.8rem;
+  }
+}
+@media (max-width: 600px) {
+  .header > div {
+    flex-direction: row;
+    justify-content: center;
+    padding: 0 10px;
+  }
+
+  .header h1 {
     font-size: 1.2rem;
+    color: black;
   }
 
   main form div {
     padding: 10px;
+  }
+
+  body {
+    padding: 12px;
   }
 
   .book-card {
@@ -176,7 +230,9 @@ main .seccion-audiolibro {
   }
 
   .book-card img {
-    height: 180px;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    height: auto;
   }
 }
 
@@ -184,9 +240,16 @@ main .seccion-audiolibro {
 @media (max-width: 900px) {
   .header h1 {
     font-size: 1.3rem;
+    color: black;
   }
 
   .book-card {
     min-width: 170px;
+  }
+
+  .book-card img {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    height: auto;
   }
 }
