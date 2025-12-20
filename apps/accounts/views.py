@@ -14,7 +14,7 @@ def login_view(request):
             #Buscar al usuario por email
             user = User.objects.get(email=email)
         except User.DoesNotExist:
-            messages.error(request, "Email o contraseña incorrectos.")
+            messages.error(request, "Correo o contraseña incorrectos.")
             return render(request, "accounts/login.html")
         
         user_auth = authenticate(request, username =user.username, password=password)
@@ -22,7 +22,7 @@ def login_view(request):
             login(request, user_auth)
             return redirect("administrador")
         else:
-            messages.error(request, "Email o contraseña incorrectos.")
+            messages.error(request, "Correo o contraseña incorrectos")
         
     return render(request, "accounts/login.html")
     # return render(request, "accounts/login.html")
@@ -86,4 +86,6 @@ def register_view(request):
 def logout_view(request):
     logout(request)
     return redirect("login")
+
+
 

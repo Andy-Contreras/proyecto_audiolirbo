@@ -26,7 +26,7 @@
         </a>
         <h1>Prática de Video/AudioLibro</h1>
     </div>
-</section> 
+</section>
 
 {% if libro.is_video %}
 <section class="reproductor-card">
@@ -47,8 +47,8 @@
         </div>
     </div>
 
-    <audio id="player" src="{{ libro.audio_file.url }}" preload="metadata"></audio>
-
+    <audio id="player" src="{{ libro.audio_file.url }}"></audio>
+    
     <div class="audio-progreso">
         <input id="progreso-bar" type="range" min="0" max="100" value="0">
         <div class="tiempo">
@@ -89,7 +89,7 @@
         </button>
     </div>
 
-</section> 
+</section>
 {% endif %}
 
 
@@ -141,7 +141,7 @@
 
         </div>
     </div>
-</section> 
+</section>
 <!-- Esta seccion le pertene al cuestionario donde mostramos las preguntas
 y respuestas -->
 <section class="test">
@@ -208,7 +208,7 @@ y respuestas -->
             <button id="cerrarError" class="cerrar">Entendido</button>
         </div>
     </div>
-</section> 
+</section>
 
 <!-- Esta seccion pertence a los resultados del Cuestionario -->
 {% if puntaje %}

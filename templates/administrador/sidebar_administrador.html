@@ -53,7 +53,7 @@
         </svg>
         Questions
     </a>
-    <a href="#">
+    <a href="{% url 'usuarios' %}">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#44b0d5"
             stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
             class="icon icon-tabler icons-tabler-outline icon-tabler-users">
@@ -64,11 +64,27 @@
             <path d="M21 21v-2a4 4 0 0 0 -3 -3.85" />
         </svg>Users
     </a>
+    <a href="{% url 'lista_vocabulario' %}">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#44b0d5"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="icon icon-tabler icons-tabler-outline icon-tabler-vocabulary">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path
+                d="M10 19h-6a1 1 0 0 1 -1 -1v-14a1 1 0 0 1 1 -1h6a2 2 0 0 1 2 2a2 2 0 0 1 2 -2h6a1 1 0 0 1 1 1v14a1 1 0 0 1 -1 1h-6a2 2 0 0 0 -2 2a2 2 0 0 0 -2 -2z" />
+            <path d="M12 5v16" />
+            <path d="M7 7h1" />
+            <path d="M7 11h1" />
+            <path d="M16 7h1" />
+            <path d="M16 11h1" />
+            <path d="M16 15h1" />
+        </svg>
+        Vocabulario
+    </a>
 </nav>
 
 <!-- Bottom -->
 <div class="sidebar-bottom">
-    <a href="#">
+    <a href="{% url 'settings' %}">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#44b0d5"
             stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
             class="icon icon-tabler icons-tabler-outline icon-tabler-settings">
@@ -81,6 +97,16 @@
     </a>
     <a href="#">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#44b0d5"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="icon icon-tabler icons-tabler-outline icon-tabler-user">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+            <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+        </svg>
+        {{ request.user.get_full_name|default:request.user.username }}
+    </a>
+    <a href="{% url 'logout' %}">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#44b0d5"
             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M10 12h10" />
             <path d="M17 8l4 4l-4 4" />
@@ -90,5 +116,4 @@
         Cerrar sesión
     </a>
 
-    <p class="user">Andy Contreras</p>
 </div>

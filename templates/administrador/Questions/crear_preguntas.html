@@ -1,103 +1,146 @@
 {% extends 'administrador/inicio_administrador.html' %}
 {% load static %}
+{% block css %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'css/style_administrador/crear_preguntas.css'%}">
+{% endblock %}
 {% block content %}
-<h2>Crear preguntas</h2>
-<p><strong>Audiolibro:</strong> {{ audiobook.title }}</p>
-
-<form method="POST">
-    {% csrf_token %}
-    {{ question_formset.management_form }}
-
-    <div class="questions-container">
-        {% for form in question_formset %}
-        <div class="question-card" style="border:1px solid #ccc; padding:10px; margin-bottom:20px;">
-            <div class="question-header" style="margin-bottom:10px;">
-                <strong>Pregunta #{{ forloop.counter }}</strong>
-                {{ form.text }}
-                {% if form.DELETE %}
-                {{ form.DELETE }}
-                {% endif %}
-                <button type="button" class="remove-question-btn">❌</button>
-            </div>
-
-            <div class="answers-block" style="margin-left:0;">
-                {% for question, answer_formset in answer_formsets %}
-                {% if question.pk == form.instance.pk %}
-                {{ answer_formset.management_form }}
-
-                <table class="answers-table" border="1"
-                    style="width:100%; border-collapse:collapse; margin-bottom:5px;">
-                    <thead>
-                        <tr>
-                            <th>Texto de la opción</th>
-                            <th>Correcta</th>
-                            <th>Justificación</th>
-                            <th>Puntos si es correcta</th>
-                            <th>Puntos si es incorrecta</th>
-                            <th>Eliminar</th>
-                        </tr>
-                    </thead>
-                    <tbody class="answers-container">
-                        {% for aform in answer_formset %}
-                        <tr class="answer-card">
-                            <td>{{ aform.text }}</td>
-                            <td style="text-align:center;">{{ aform.is_correct }}</td>
-                            <td>{{ aform.justification }}</td>
-                            <td style="text-align:center;">{{ aform.points_if_correct }}</td>
-                            <td style="text-align:center;">{{ aform.points_if_wrong }}</td>
-                            <td style="text-align:center;">
-                                {{ aform.DELETE }}
-                                <button type="button" class="remove-answer-btn">❌</button>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-
-                <button type="button" class="add-answer-btn">➕ Agregar opción</button>
-                {% endif %}
-                {% endfor %}
-            </div>
-        </div>
-        {% endfor %}
+<div class="container">
+    <div class="header">
+        <h1>Preguntas - {{ audiobook.title }}</h1>
     </div>
 
-    <button type="button" id="add-question-btn" style="margin-top:10px;">➕ Agregar pregunta</button>
-    <button type="submit" style="margin-top:10px;">Guardar preguntas y respuestas</button>
-</form>
+    <div id="alert-container"></div>
 
-<!-- Template pregunta -->
-<div id="question-template" style="display:none;">
-    <div class="question-card">
-        <div class="question-header">
-            <strong>Pregunta #X</strong>
-            <input type="text" name="question-__prefix__-text" placeholder="Texto de la pregunta">
-            <input type="checkbox" name="question-__prefix__-DELETE" hidden>
-            <button type="button" class="remove-question-btn">❌</button>
-        </div>
+    <div class="question-form">
+        <form id="questionForm">
+            {% csrf_token %}
+            <input type="hidden" id="question_id" name="question_id" value="">
 
-        <div class="answers-block">
-            <div class="answers-container">
-                <div class="answer-card">
-                    <input type="text" name="__prefix__-answer-0-text" placeholder="Texto de la opción">
-                    <input type="checkbox" name="__prefix__-answer-0-is_correct"> Correcta
-                    <input type="text" name="__prefix__-answer-0-justification" placeholder="Justificación">
-                    <input type="number" name="__prefix__-answer-0-points_if_correct" placeholder="Puntos si acierta">
-                    <input type="number" name="__prefix__-answer-0-points_if_wrong" placeholder="Puntos si falla">
-                    <input type="checkbox" name="__prefix__-answer-0-DELETE" hidden>
-                    <button type="button" class="remove-answer-btn">❌</button>
+            <div class="form-group">
+                <label for="question_text">
+                    Pregunta:
+                    <span class="label-info">(Escribe la pregunta que deseas hacer)</span>
+                </label>
+                <input type="text" id="question_text" name="question_text"
+                    placeholder="¿De qué materiales construyeron sus casas los tres cerditos, y en qué orden lo hicieron?"
+                    required>
+            </div>
+
+            <div class="options-section">
+                <h3 class="options-section-title">Opciones de Respuesta</h3>
+
+                <div class="options-header">
+                    <div>Texto de la Opción</div>
+                    <div style="text-align: center;">¿Correcta?</div>
+                    <div>Justificación de la Respuesta</div>
+                    <div style="text-align: center;">Puntos si es Correcta</div>
+                    <div style="text-align: center;">Puntos si es Incorrecta</div>
+                    <div style="text-align: center;">Eliminar</div>
+                </div>
+
+                <div class="options-container">
+                    <div id="options-container">
+                        <!-- Las opciones se agregarán aquí dinámicamente -->
+                    </div>
+                </div>
+
+                <button type="button" class="btn-add-option" onclick="addOption()">
+                    + Agregar Opción
+                </button>
+            </div>
+
+            <div class="actions">
+                <button type="button" class="btn btn-secondary" onclick="resetForm()">
+                    Cancelar
+                </button>
+                <button type="submit" class="btn btn-primary">
+                    Guardar Pregunta
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div class="questions-list">
+        <h2 class="questions-list-title">Preguntas Guardadas ({{ questions.count }})</h2>
+        <div id="questions-list-container">
+            {% if questions %}
+            {% for question in questions %}
+            <div class="question-item" data-question-id="{{ question.id }}">
+                <h3>{{ question.text }}</h3>
+                <div class="options">
+                    {% for option in question.options.all %}
+                    <div class="option {% if option.is_correct %}correct{% else %}incorrect{% endif %}">
+                        <span class="icon">{% if option.is_correct %}✓{% else %}✗{% endif %}</span>
+                        <div>
+                            <div>{{ option.text }}</div>
+                            {% if option.justification %}
+                            <div class="option-justification">{{ option.justification }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="actions">
+                    <button class="btn btn-primary" data-question-id="{{ question.id }}" onclick="editQuestion(this)">
+                        Editar
+                    </button>
+                    <button class="btn btn-remove" data-question-id="{{ question.id }}" onclick="deleteQuestion(this)">
+                        Eliminar
+                    </button>
                 </div>
             </div>
-            <button type="button" class="add-answer-btn">➕ Agregar opción</button>
+            {% endfor %}
+            {% else %}
+            <div class="empty-state">
+                <div class="empty-state-icon">📝</div>
+                <p>No hay preguntas guardadas aún.</p>
+                <p style="font-size: 12px; margin-top: 5px;">Crea tu primera pregunta usando el formulario de arriba.
+                </p>
+            </div>
+            {% endif %}
         </div>
     </div>
 </div>
-
+<!-- Modal de Confirmación de Eliminación -->
+<div id="deleteQuestionModal" class="modal">
+    <div class="modal-content modal-small">
+        <div class="modal-header modal-header-danger">
+            <h2>🗑️ Eliminar Pregunta</h2>
+            <button class="modal-close" onclick="closeDeleteQuestionModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="delete-warning">
+                <div class="warning-icon">⚠️</div>
+                <p class="warning-text">
+                    ¿Estás seguro de que deseas eliminar esta pregunta?
+                </p>
+                <p class="question-preview" id="delete_question_preview"></p>
+                <p class="warning-subtext">
+                    Esta acción eliminará la pregunta y todas sus opciones de respuesta.
+                    <strong>No se puede deshacer.</strong>
+                </p>
+            </div>
+            <input type="hidden" id="delete_question_id">
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" onclick="closeDeleteQuestionModal()">
+                Cancelar
+            </button>
+            <button type="button" class="btn btn-danger-full" onclick="confirmDeleteQuestion()">
+                Sí, Eliminar Pregunta
+            </button>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block scripts %}
 <script src="{% static 'js/administrador/answer_formset.js' %}"></script>
-
-
+<script>
+    // Configuración global
+    const AUDIOBOOK_ID = {{ audiobook.id }};
+    const CSRF_TOKEN = '{{ csrf_token }}';
+</script>
 
 {% endblock %}

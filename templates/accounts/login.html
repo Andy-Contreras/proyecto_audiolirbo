@@ -14,6 +14,13 @@
     </div>
     <div class="login-container">
         <h2>Bienvenido de nuevo</h2>
+        {% if messages %}
+        <div class="alert">
+            {% for message in messages %}
+            {{ message }}
+            {% endfor %}
+        </div>
+        {% endif %}
         <form method="POST">
             {% csrf_token %}
             <label>Usuario</label>
@@ -25,4 +32,13 @@
         <p>¿No tienes cuenta? <a href="{% url 'register' %}">Crear cuenta</a> </p>
     </div>
 </div>
+
+<script>
+    setTimeout(() => {
+        const alert = document.querySelector('.alert');
+        if (alert) {
+            alert.style.display = 'none';
+        }
+    }, 5000); // desaparece después de 5 segundos
+</script>
 {% endblock %}

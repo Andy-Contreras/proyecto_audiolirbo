@@ -1,111 +1,128 @@
 body {
-    margin: 0;
-    padding: 0;
-    background: #0f172a; /* azul oscuro */
-    font-family: 'Inter', sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    color: #ffffff;
+  margin: 0;
+  padding: 0;
+  background: #f8fafc; /* fondo claro */
+  font-family: "Inter", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: #0f172a;
 }
-.main{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* cabecera login */
-.login-cabecera{
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 10px;
+.login-cabecera {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
 }
 
-.login-cabecera h1{
-    font-size: 26px;
-    font-weight: 600;
-    color: #ffffff;
+.login-cabecera h1 {
+  font-size: 26px;
+  font-weight: 600;
+  color: #0f172a;
 }
 
 /* formulario */
-.login-container{
-    background: #111827;
-    padding: 40px 45px;
-    border-radius: 14px;
-    width: 380px;
-    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.35);
-    text-align: left;
+.login-container {
+  background: #ffffff;
+  padding: 40px 45px;
+  border-radius: 14px;
+  width: 380px;
+  box-shadow: 0px 12px 30px rgba(15, 23, 42, 0.08);
+  text-align: left;
+  border: 1px solid #e2e8f0;
 }
 
-.login-container h2{
-    text-align: center;
-    font-size: 22px;
-    margin-bottom: 30px;
-    font-weight: 700;
-    color: white;
+.login-container h2 {
+  text-align: center;
+  font-size: 22px;
+  margin-bottom: 30px;
+  font-weight: 700;
+  color: #0f172a;
 }
 
-/* input */
-
-.login-container label{
-    display: block;
-    color: #cbd5e1;
-    margin-bottom: 8px;
-    font-size: 14px;
+/* labels */
+.login-container label {
+  display: block;
+  color: #475569;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 500;
 }
 
-.login-container input{
-    width: 100%;
-    padding: 12px 14px;
-    border-radius: 8px;
-    border: 1px solid #334155;
-    background: transparent;
-    color: #e2e8f0;
-    font-size: 15px;
-    outline: none;
-    margin-bottom: 18px;
+/* inputs */
+.login-container input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: #0f172a;
+  font-size: 15px;
+  outline: none;
+  margin-bottom: 18px;
+  transition: border 0.2s, box-shadow 0.2s;
 }
 
-.login-container input::placeholder{
-    color: #64748b;
+.login-container input::placeholder {
+  color: #94a3b8;
 }
 
-input:focus {
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25);
+.login-container input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
 }
 
-/* boton */
-.login-container button{
-    background: #3b82f6;
-    width: 100%;
-    padding: 12px 0;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 16px;
-    cursor: pointer;
+/* botón */
+.login-container button {
+  background: #3b82f6;
+  width: 100%;
+  padding: 12px 0;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
 }
 
-.login-cabecera button:hover{
-    background: #2563eb;
+.login-container button:hover {
+  background: #2563eb;
+  transform: translateY(-1px);
 }
 
-/* parrafo final */
-.login-container p{
-    text-align: center;
-    margin-top: 15px;
-    color: #cbd5e1;
+/* texto inferior */
+.login-container p {
+  text-align: center;
+  margin-top: 15px;
+  color: #475569;
+  font-size: 14px;
 }
 
 .login-container a {
-    color: #3b82f6;
-    text-decoration: none;
-    &:hover{
-        text-decoration: underline;
-    }
+  color: #3b82f6;
+  text-decoration: none;
+  font-weight: 500;
 }
 
+.login-container a:hover {
+  text-decoration: underline;
+}
+.alert {
+  background-color: #f44336; /* rojo de fondo */
+  color: white; /* texto en blanco */
+  padding: 10px 15px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  font-weight: bold;
+  text-align: center;
+}

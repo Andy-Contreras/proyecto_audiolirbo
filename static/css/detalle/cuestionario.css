@@ -7,6 +7,7 @@
 } /* Contenido del acordeon */
 .acordeon-content {
   max-height: 0;
+  max-width: 60rem;
   overflow: hidden;
   opacity: 0;
   transition: max-height 0.4s ease, opacity 0.3s ease;
@@ -18,12 +19,17 @@
 .acordeon-btn.activo .flecha {
   transform: rotate(180deg);
 } /* .acordeon-btn { border: 1px solid #374151; } /* Estilos para el cuestionario */
+
+
 .test {
   max-width: 60rem;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
 }
+
+
+
 .encabezado-test h2 {
   color: white;
   margin-bottom: 1rem;
@@ -266,7 +272,7 @@
 @media (max-width: 768px) {
   .test {
     max-width: 95%;
-    padding: 0 12px;
+    padding: 0 14px;
   }
 
   .pregunta-titulo {

@@ -1,0 +1,59 @@
+.password-container {
+  max-width: 420px;
+  margin: 40px auto;
+  background: #ffffff;
+  padding: 24px;
+  border-radius: 16px;
+  border: 1px solid #e5e7eb;
+}
+
+.password-title {
+  margin-bottom: 18px;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.password-form .form-group {
+  margin-bottom: 14px;
+}
+
+.password-form label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+.password-form input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #cbd5f5;
+}
+
+.error-text {
+  color: #dc2626;
+  font-size: 13px;
+  margin-top: 4px;
+  display: block;
+}
+
+.form-error {
+  background: #fee2e2;
+  color: #991b1b;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 16px;
+}
+
+.password-rules {
+  margin: 16px 0;
+  font-size: 14px;
+}
+
+.password-rules ul {
+  padding-left: 18px;
+}
+
+.password-rules li {
+  margin-bottom: 6px;
+}

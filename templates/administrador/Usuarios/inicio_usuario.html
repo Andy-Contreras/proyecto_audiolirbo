@@ -1,0 +1,54 @@
+{% extends "administrador/inicio_administrador.html" %}
+{% load static %}
+
+{% block css %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'css/style_administrador/usuarios.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="results-container">
+
+    <div class="results-header">
+        <h1>Resultados del Cuestionario</h1>
+    </div>
+    <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Buscar por nombre, apellido o correo...">
+    </div>
+
+    {% if resultados %}
+    <div class="table-wrapper">
+        <table class="results-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Correo</th>
+                    <th>Mejor Puntaje</th>
+                    <th>Intentos</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for r in resultados %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ r.nombre }}</td>
+                    <td>{{ r.apellido }}</td>
+                    <td>{{ r.correo }}</td>
+                    <td>{{ r.mejor_puntaje }}</td>
+                    <td>{{ r.intentos }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <div class="empty-icon">📊</div>
+        <p>No hay resultados aún para este audiolibro.</p>
+    </div>
+    {% endif %}
+
+</div>
+{% endblock %}

@@ -7,11 +7,9 @@
 {% block content %}
 <div class="audiobooks-wrapper">
     <h2 class="title">Mis audiolibros</h2>
-
     <div class="search-box">
         <input type="text" id="searchInput" placeholder="Buscar por titulo del libro">
     </div>
-
     {% if audiolibros %}
     <div class="audiobook-grid">
         {% for audiobook in audiolibros %}
@@ -25,8 +23,8 @@
             <p class="author">{{ audiobook.author_name }}</p>
 
             {% if request.user == audiobook.added_by %}
-            <a href="{% url 'manage_questions' audiobook.id %}" class="btn-questions">
-                Crear preguntas
+            <a href="{% url 'manage_vocabulary' audiobook.id %}" class="btn-questions">
+                Crear glosario
             </a>
             {% else %}
             <button class="btn-questions disabled" disabled>
@@ -43,6 +41,7 @@
     </p>
     {% endif %}
 </div>
+
 
 <script>
     document.addEventListener("DOMContentLoaded", () => {

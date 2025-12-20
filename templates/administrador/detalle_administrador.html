@@ -23,23 +23,32 @@
     </div>
 </section>
 
-<section class="chart">
-    <p>Nuevos usuarios este mes</p>
-    <h2>{{ usuarios_mes_actual }}</h2>
+<!-- Gráfico de usuarios por mes -->
+<section class="chart-section">
+    <div class="chart-header">
+        <div>
+            <h2>Nuevos usuarios por mes</h2>
+            <p class="chart-subtitle">Últimos 6 meses</p>
+        </div>
+        <div class="chart-stats">
+            <span class="highlight-number">{{ usuarios_mes_actual }}</span>
+            <span class="highlight-text">Este mes</span>
+        </div>
+    </div>
 
-    <div class="bars" id="chart-bars">
-        <div class="bar"></div>
-        <div class="bar small"></div>
-        <div class="bar active"></div>
-        <div class="bar"></div>
+    <div class="chart-container">
+        <canvas id="usuariosChart"></canvas>
     </div>
 </section>
 
-<button class="btn-primary">⬆ Subir Nuevo Audiolibro</button>
+
+<script>
+    const mesesLabels = {{ meses_labels| safe }};
+    const mesesData = {{ meses_data| safe }};
+</script>
 {% endblock %}
+
 {% block scripts %}
-<script src="{% static 'js/administrador/inicio.js' %}"></script>
-
-
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="{% static 'js/administrador/dashboard.js' %}"></script>
 {% endblock %}

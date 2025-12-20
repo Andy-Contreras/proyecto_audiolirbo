@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ===== PLAY / PAUSE =====
   playBTN.addEventListener("click", () => {
-    if (audio.readyState < 3) return;
+    if (audio.readyState < 2) return;
 
     if (audio.paused) {
       audio.play().then(() => {

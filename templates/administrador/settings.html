@@ -1,0 +1,41 @@
+{% extends "administrador/inicio_administrador.html" %}
+{% load static %}
+{% block css %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'css/style_administrador/settings.css' %}">
+{% endblock %}
+{% block content %}
+<div class="settings-container">
+    <h1>⚙️ Configuración</h1>
+
+    <form method="POST" class="settings-card">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label>Nombre</label>
+            <input type="text" name="first_name" value="{{ request.user.first_name }}">
+        </div>
+
+        <div class="form-group">
+            <label>Apellido</label>
+            <input type="text" name="last_name" value="{{ request.user.last_name }}">
+        </div>
+
+        <div class="form-group">
+            <label>Correo electrónico</label>
+            <input type="email" name="email" value="{{ request.user.email }}">
+        </div>
+
+        <button type="submit" class="btn-primary">
+            Guardar cambios
+        </button>
+    </form>
+
+    <div class="settings-card">
+        <h3>Seguridad</h3>
+        <a href="{% url 'password_change' %}" class="btn-secondary">
+            Cambiar contraseña
+        </a>
+    </div>
+</div>
+{% endblock %}

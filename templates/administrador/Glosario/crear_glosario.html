@@ -1,0 +1,165 @@
+{% extends 'administrador/inicio_administrador.html' %}
+{% load static %}
+{% block css %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'css/style_administrador/vocabulario.css' %}">
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="header">
+        <h1>📚 Gestión de Vocabulario</h1>
+        <p>{{ audiobook.title }}</p>
+    </div>
+
+    <div class="content-wrapper">
+        <div id="alert-container"></div>
+
+        <div class="vocabulary-form">
+            <h2 class="form-title">Agregar Palabras al Vocabulario</h2>
+            <p class="form-subtitle">Puedes agregar múltiples palabras a la vez antes de guardar</p>
+
+            <form id="vocabularyForm">
+                {% csrf_token %}
+
+                <div class="form-actions-top">
+                    <button type="button" class="btn btn-add" onclick="addVocabItem()">
+                        + Agregar Palabra
+                    </button>
+                </div>
+
+                <div id="vocabulary-items" class="vocabulary-items">
+                    <!-- Las palabras se agregarán aquí dinámicamente -->
+                </div>
+
+                <div class="form-actions-bottom">
+                    <button type="button" class="btn btn-secondary" onclick="clearForm()">
+                        ✗ Limpiar Todo
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        ✓ Guardar Todas las Palabras
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div class="vocabulary-list">
+            <div class="list-header">
+                <h2 class="list-title">
+                    Vocabulario Guardado
+                    <span class="list-count">{{ vocabulario.count }}</span>
+                </h2>
+            </div>
+
+            <div id="vocabulary-list-container">
+                {% if vocabulario %}
+                <div class="vocabulary-grid">
+                    {% for vocab in vocabulario %}
+                    <div class="vocabulary-card" data-vocab-id="{{ vocab.id }}">
+                        <div class="vocab-word">{{ vocab.palabra }}</div>
+                        <div class="vocab-definition">{{ vocab.definicion }}</div>
+                        {% if vocab.ejemplo %}
+                        <div class="vocab-example">💬 {{ vocab.ejemplo }}</div>
+                        {% endif %}
+                        <div class="card-actions">
+                            <button class="btn btn-edit" data-vocab-id="{{ vocab.id }}"
+                                onclick="editVocabulary(this)">
+                                ✏️ Editar
+                            </button>
+                            <button class="btn btn-danger" data-vocab-id="{{ vocab.id }}"
+                                onclick="deleteVocabulary(this)">
+                                🗑️ Eliminar
+                            </button>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="empty-state">
+                    <div class="empty-state-icon">📚</div>
+                    <h3>No hay palabras guardadas aún</h3>
+                    <p>Comienza agregando vocabulario relevante para este audiolibro.</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Edición -->
+<div id="editModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>✏️ Editar Palabra</h2>
+            <button class="modal-close" onclick="closeEditModal()">&times;</button>
+        </div>
+        <form id="editForm">
+            <input type="hidden" id="edit_vocab_id">
+
+            <div class="modal-body">
+                <div class="field-group">
+                    <label class="label-required">Palabra</label>
+                    <input type="text" id="edit_palabra" required>
+                </div>
+
+                <div class="field-group">
+                    <label class="label-required">Definición</label>
+                    <textarea id="edit_definicion" required></textarea>
+                </div>
+
+                <div class="field-group">
+                    <label>Ejemplo de uso <span class="label-optional">(opcional)</span></label>
+                    <textarea id="edit_ejemplo" class="textarea-small"></textarea>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closeEditModal()">
+                    Cancelar
+                </button>
+                <button type="submit" class="btn btn-primary">
+                    Guardar Cambios
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- Modal de Confirmación de Eliminación -->
+<div id="deleteModal" class="modal">
+    <div class="modal-content modal-small">
+        <div class="modal-header modal-header-danger">
+            <h2>🗑️ Eliminar Palabra</h2>
+            <button class="modal-close" onclick="closeDeleteModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="delete-warning">
+                <div class="warning-icon">⚠️</div>
+                <p class="warning-text">
+                    ¿Estás seguro de que deseas eliminar la palabra
+                    <strong id="delete_palabra_name"></strong>?
+                </p>
+                <p class="warning-subtext">
+                    Esta acción no se puede deshacer.
+                </p>
+            </div>
+            <input type="hidden" id="delete_vocab_id">
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" onclick="closeDeleteModal()">
+                Cancelar
+            </button>
+            <button type="button" class="btn btn-danger-full" onclick="confirmDelete()">
+                Sí, Eliminar
+            </button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+    // Configuración global
+    const AUDIOBOOK_ID = {{ audiobook.id }};
+    const CSRF_TOKEN = '{{ csrf_token }}';
+</script>
+<script src="{% static 'js/administrador/vocabulario.js' %}"></script>
+
+{% endblock %}
