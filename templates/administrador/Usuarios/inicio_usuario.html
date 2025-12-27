@@ -12,43 +12,87 @@
     <div class="results-header">
         <h1>Resultados del Cuestionario</h1>
     </div>
-    <div class="search-box">
-        <input type="text" id="searchInput" placeholder="Buscar por nombre, apellido o correo...">
-    </div>
+    <div class="usuario-wrapers">
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Buscar por nombre, apellido o correo...">
+        </div>
 
-    {% if resultados %}
-    <div class="table-wrapper">
-        <table class="results-table">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Correo</th>
-                    <th>Mejor Puntaje</th>
-                    <th>Intentos</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for r in resultados %}
-                <tr>
-                    <td>{{ forloop.counter }}</td>
-                    <td>{{ r.nombre }}</td>
-                    <td>{{ r.apellido }}</td>
-                    <td>{{ r.correo }}</td>
-                    <td>{{ r.mejor_puntaje }}</td>
-                    <td>{{ r.intentos }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        {% if resultados %}
+        <div class="table-wrapper">
+            <table class="results-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Correo</th>
+                        <th>Mejor Puntaje</th>
+                        <th>Intentos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for r in resultados %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ r.nombre }}</td>
+                        <td>{{ r.apellido }}</td>
+                        <td>{{ r.correo }}</td>
+                        <td>{{ r.mejor_puntaje }}</td>
+                        <td>{{ r.intentos }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div id="noResultsMessage"
+            style="display: none; text-align: center; padding: 20px; background: #f8f9fa; border-radius: 8px; margin-top: 10px;">
+            <p>🔍 No se encontraron usuarios con ese criterio.</p>
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <div class="empty-icon">📊</div>
+            <p>No hay resultados aún.</p>
+        </div>
+        {% endif %}
     </div>
-    {% else %}
-    <div class="empty-state">
-        <div class="empty-icon">📊</div>
-        <p>No hay resultados aún para este audiolibro.</p>
-    </div>
-    {% endif %}
-
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const input = document.getElementById("searchInput");
+        // Seleccionamos TODAS las filas del cuerpo de la tabla
+        const rows = document.querySelectorAll(".results-table tbody tr");
+        const noResults = document.getElementById("noResultsMessage");
+
+        // Función para quitar acentos (normalizar)
+        const normalize = text =>
+            text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
+        input.addEventListener("keyup", () => {
+            const searchTerm = normalize(input.value);
+            let hasResults = false;
+
+            rows.forEach(row => {
+                // Obtenemos el texto de toda la fila (nombre, apellido y correo)
+                const cells = Array.from(row.querySelectorAll("td"));
+                const rowText = normalize(cells.map(c => c.textContent).join(" "));
+
+                // Si el término de búsqueda está en el texto de la fila...
+                if (rowText.includes(searchTerm)) {
+                    row.style.display = "";
+                    hasResults = true;
+                } else {
+                    row.style.display = "none";
+                }
+            });
+
+            // Si después de revisar todas las filas, ninguna coincidió:
+            if (hasResults) {
+                noResults.style.display = "none";
+            } else {
+                noResults.style.display = "block";
+            }
+        });
+    });
+</script>
 {% endblock %}

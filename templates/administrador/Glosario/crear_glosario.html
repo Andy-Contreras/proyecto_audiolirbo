@@ -41,46 +41,44 @@
                 </div>
             </form>
         </div>
+    </div>
 
-        <div class="vocabulary-list">
-            <div class="list-header">
-                <h2 class="list-title">
-                    Vocabulario Guardado
-                    <span class="list-count">{{ vocabulario.count }}</span>
-                </h2>
-            </div>
 
-            <div id="vocabulary-list-container">
-                {% if vocabulario %}
-                <div class="vocabulary-grid">
-                    {% for vocab in vocabulario %}
-                    <div class="vocabulary-card" data-vocab-id="{{ vocab.id }}">
-                        <div class="vocab-word">{{ vocab.palabra }}</div>
-                        <div class="vocab-definition">{{ vocab.definicion }}</div>
-                        {% if vocab.ejemplo %}
-                        <div class="vocab-example">💬 {{ vocab.ejemplo }}</div>
-                        {% endif %}
-                        <div class="card-actions">
-                            <button class="btn btn-edit" data-vocab-id="{{ vocab.id }}"
-                                onclick="editVocabulary(this)">
-                                ✏️ Editar
-                            </button>
-                            <button class="btn btn-danger" data-vocab-id="{{ vocab.id }}"
-                                onclick="deleteVocabulary(this)">
-                                🗑️ Eliminar
-                            </button>
-                        </div>
+    <div class="vocabulary-list">
+        <div>
+            <h2 class="list-title">
+                Vocabulario Guardado ({{ vocabulario.count }})
+            </h2>
+        </div>
+
+        <div id="vocabulary-list-container">
+            {% if vocabulario %}
+            <div class="vocabulary-grid">
+                {% for vocab in vocabulario %}
+                <div class="vocabulary-card" data-vocab-id="{{ vocab.id }}">
+                    <div class="vocab-word">{{ vocab.palabra }}</div>
+                    <div class="vocab-definition">{{ vocab.definicion }}</div>
+                    {% if vocab.ejemplo %}
+                    <div class="vocab-example">💬 {{ vocab.ejemplo }}</div>
+                    {% endif %}
+                    <div class="card-actions">
+                        <button class="btn btn-edit" data-vocab-id="{{ vocab.id }}" onclick="editVocabulary(this)">
+                            ✏️ Editar
+                        </button>
+                        <button class="btn btn-danger" data-vocab-id="{{ vocab.id }}" onclick="deleteVocabulary(this)">
+                            🗑️ Eliminar
+                        </button>
                     </div>
-                    {% endfor %}
                 </div>
-                {% else %}
-                <div class="empty-state">
-                    <div class="empty-state-icon">📚</div>
-                    <h3>No hay palabras guardadas aún</h3>
-                    <p>Comienza agregando vocabulario relevante para este audiolibro.</p>
-                </div>
-                {% endif %}
+                {% endfor %}
             </div>
+            {% else %}
+            <div class="empty-state">
+                <div class="empty-state-icon">📚</div>
+                <h3>No hay palabras guardadas aún</h3>
+                <p>Comienza agregando vocabulario relevante para este audiolibro.</p>
+            </div>
+            {% endif %}
         </div>
     </div>
 </div>

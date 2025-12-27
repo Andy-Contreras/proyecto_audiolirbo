@@ -6,7 +6,7 @@ urlpatterns = [
     path('administrador/',views.dashboard_privado_view, name="administrador" ),
     path('audiolibros/nuevo/', views.nuevo_audiolibro_view, name='nuevo_audiolibro'),
     path('audiobooks/mis-audiolibros/',views.mis_audiolibros_view,name='mis_audiolibros'),
-    path("audiobook/",views.usuarios_audiobook,name="usuarios"),
+    path("usuarios/",views.usuarios_audiobook,name="usuarios"),
     
     # Gestionar preguntas de un audiolibro
     path('audiobook/<int:audiobook_id>/questions/', views.manage_questions, name='manage_questions'),
@@ -17,7 +17,7 @@ urlpatterns = [
     path('question/<int:question_id>/details/', views.question_details, name='question_details'),
     
     # Glosarios 
-    path("vocabulario/", views.lista_vocabulario, name="lista_vocabulario"),
+    path("glosario/", views.lista_vocabulario, name="lista_vocabulario"),
     path('audiobook/<int:audiobook_id>/vocabulario/', views.manage_vocabulary, name='manage_vocabulary'),
     
     # AJAX - Operaciones CRUD

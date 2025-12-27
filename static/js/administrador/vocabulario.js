@@ -182,7 +182,7 @@ function closeEditModal() {
 }
 
 function editVocabulary(button) {
-  const vocabId = button.dataset.vocabId
+  const vocabId = button.dataset.vocabId;
   openEditModal(vocabId);
 }
 
@@ -201,9 +201,7 @@ document.getElementById("editForm").addEventListener("submit", function (e) {
   }
 
   const submitBtn = this.querySelector('button[type="submit"]');
-  const originalText = submitBtn.innerHTML;
   submitBtn.disabled = true;
-  submitBtn.innerHTML = "⏳ Guardando...";
 
   fetch(`/vocabulario/${vocabId}/update/`, {
     method: "POST",
@@ -220,7 +218,6 @@ document.getElementById("editForm").addEventListener("submit", function (e) {
     .then((response) => response.json())
     .then((data) => {
       submitBtn.disabled = false;
-      submitBtn.innerHTML = originalText;
 
       if (data.success) {
         showAlert("Palabra actualizada exitosamente", "success");
@@ -250,7 +247,6 @@ document.getElementById("editForm").addEventListener("submit", function (e) {
     })
     .catch((error) => {
       submitBtn.disabled = false;
-      submitBtn.innerHTML = originalText;
       console.error("Error:", error);
       showAlert("Error al actualizar la palabra", "error");
     });
@@ -295,9 +291,7 @@ function confirmDelete() {
   }
 
   const deleteBtn = document.querySelector(".btn-danger-full");
-  const originalText = deleteBtn.innerHTML;
   deleteBtn.disabled = true;
-  deleteBtn.innerHTML = "⏳ Eliminando...";
 
   fetch(`/vocabulario/${vocabId}/delete/`, {
     method: "POST",
@@ -309,7 +303,6 @@ function confirmDelete() {
     .then((response) => response.json())
     .then((data) => {
       deleteBtn.disabled = false;
-      deleteBtn.innerHTML = originalText;
 
       if (data.success) {
         closeDeleteModal();
@@ -332,7 +325,6 @@ function confirmDelete() {
     })
     .catch((error) => {
       deleteBtn.disabled = false;
-      deleteBtn.innerHTML = originalText;
       console.error("Error:", error);
       showAlert("Error al eliminar la palabra", "error");
       closeDeleteModal();
@@ -340,7 +332,7 @@ function confirmDelete() {
 }
 
 function deleteVocabulary(button) {
-  const vocabId = button.dataset.vocabId
+  const vocabId = button.dataset.vocabId;
   openDeleteModal(vocabId);
 }
 
@@ -386,9 +378,7 @@ document
     }
 
     const submitBtn = this.querySelector('button[type="submit"]');
-    const originalText = submitBtn.innerHTML;
     submitBtn.disabled = true;
-    submitBtn.innerHTML = "⏳ Guardando...";
 
     fetch(`/audiobook/${AUDIOBOOK_ID}/vocabulario/save/`, {
       method: "POST",
@@ -401,7 +391,6 @@ document
       .then((response) => response.json())
       .then((data) => {
         submitBtn.disabled = false;
-        submitBtn.innerHTML = originalText;
 
         if (data.success) {
           let message = data.message;
@@ -424,7 +413,6 @@ document
       })
       .catch((error) => {
         submitBtn.disabled = false;
-        submitBtn.innerHTML = originalText;
         console.error("Error:", error);
         showAlert("Error al guardar las palabras", "error");
       });

@@ -1,0 +1,172 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    /* Cambiado a un verde más claro y amigable (Menta) */
+    background-color: #83c5be; 
+}
+
+.hero-section {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    color: #004d40; /* Texto en verde muy oscuro para mejor lectura sobre menta */
+    padding: 60px 5%;
+    overflow: hidden;
+}
+
+.container {
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 100px;
+}
+
+.content {
+    flex: 1;
+    z-index: 10;
+}
+
+.title {
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    line-height: 1.1;
+    margin-bottom: 20px;
+    color: #ffffff; /* El título resalta en blanco */
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+.slogan {
+    font-size: 1.8rem;
+    margin-bottom: 40px;
+    font-weight: 400;
+    color: #004d40;
+}
+
+.features-list {
+    list-style: none;
+    margin-bottom: 50px;
+}
+
+.features-list li {
+    margin-bottom: 20px;
+    padding-left: 40px;
+    position: relative;
+    font-size: 1.2rem;
+    color: #004d40;
+}
+
+.features-list li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: #ffffff; /* Checkmark blanco para resaltar */
+    font-weight: bold;
+    font-size: 1.4rem;
+}
+
+.btn-primary {
+    display: inline-block;
+    /* Cambiado a Coral/Salmón para combinar con los botones de la biblioteca */
+    background-color: #ff9e80; 
+    color: #ffffff;
+    padding: 20px 60px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.2rem;
+    box-shadow: 0 4px 15px rgba(255, 158, 128, 0.4);
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #ff8a65; /* Un tono más intenso al pasar el mouse */
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(255, 158, 128, 0.6);
+}
+
+/* --- ESTILOS DE LOS LIBROS --- */
+
+.book-display {
+    flex: 1;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 500px;
+    margin-left: 50px; 
+}
+
+.book-card {
+    position: absolute;
+    border-radius: 12px;
+    overflow: hidden;
+    /* Sombras más suaves para el fondo claro */
+    box-shadow: 10px 10px 30px rgba(0,0,0,0.2);
+    transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.book-card img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    background-color: #ffffff; 
+}
+
+.book-main {
+    z-index: 3;
+    width: 240px;
+    height: 340px;
+    transform: scale(1.1);
+}
+
+.book-back-left {
+    z-index: 2;
+    width: 200px;
+    height: 300px;
+    transform: translateX(-110px) rotate(-15deg);
+    opacity: 0.95;
+}
+
+.book-back-right {
+    z-index: 2;
+    width: 200px;
+    height: 300px;
+    transform: translateX(110px) rotate(15deg);
+    opacity: 0.95;
+}
+
+.book-display:hover .book-back-left {
+    transform: translateX(-180px) rotate(-25deg) scale(1.05);
+}
+
+.book-display:hover .book-back-right {
+    transform: translateX(180px) rotate(25deg) scale(1.05);
+}
+
+/* Ajustes para móviles */
+@media (max-width: 1024px) {
+    .container {
+        flex-direction: column;
+        text-align: center;
+        gap: 60px;
+    }
+    
+    .book-display {
+        margin-left: 0;
+        transform: scale(0.85);
+    }
+
+    .features-list li {
+        text-align: left;
+        max-width: 500px;
+        margin: 0 auto 20px auto;
+    }
+}

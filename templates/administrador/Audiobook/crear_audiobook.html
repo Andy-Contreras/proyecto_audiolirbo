@@ -7,33 +7,109 @@
 {% endblock %}
 {% block content %}
 <!-- templates/audiobooks/nuevo.html -->
-<div class="audiobook-wrapper">
-    <h2 class="audiobook-title">Crear audiolibro</h2>
+<div class="container-books">
+    <div class="header">
+        <h2>Crear audiolibro</h2>
+    </div>
 
-    <form method="POST" enctype="multipart/form-data" class="audiobook-card">
-        {% csrf_token %}
+    <div class="audiobook-wrapper">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
 
-        <div class="form-group">
-            <label>Título del audiolibro</label>
-            {{ form.title }}
-        </div>
+            <div class="form-group">
+                <label>Título del audiolibro</label>
+                {{ form.title }}
+            </div>
 
-        <div class="form-group">
-            <label>Autor</label>
-            {{ form.author_name }}
-        </div>
+            <div class="form-group">
+                <label>Autor</label>
+                {{ form.author_name }}
+            </div>
 
-        <div class="form-group">
-            <label>Subir archivo de audio/video</label>
-            {{ form.audio_file }}
-        </div>
+            <div class="form-group">
+                <label>Subir archivo de audio/video</label>
+                {{ form.audio_file }}
+                <div id="audio-preview-container" style="margin-top: 15px; display: none;">
+                    <p><small>Vista previa de audio:</small></p>
+                    <audio id="audio-preview" controls style="width: 100%;">
+                        Tu navegador no soporta la reproducción de audio.
+                    </audio>
+                </div>
 
-        <div class="form-group">
-            <label>Imagen de portada (opcional)</label>
-            {{ form.cover_image }}
-        </div>
+                <div id="video-preview-container" style="margin-top: 15px; display: none;">
+                    <p><small>Vista previa de video:</small></p>
+                    <video id="video-preview" controls style="width: 100%; max-height: 250px; border-radius: 8px;">
+                        Tu navegador no soporta la reproducción de video.
+                    </video>
+                </div>
+            </div>
 
-        <button type="submit" class="btn-guardar">Guardar</button>
-    </form>
+            <div class="form-group">
+                <label>Imagen de portada (opcional)</label>
+                {{ form.cover_image }}
+                <div id="preview-container" style="margin-top: 15px; display: none;">
+                    <img id="image-preview" src="#" alt="Vista previa"
+                        style="max-width: 200px; border-radius: 8px; border: 2px solid #ddd;">
+                </div>
+            </div>
+
+            <button type="submit" class="btn-guardar">Guardar</button>
+        </form>
+    </div>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // 1. Función genérica para manejar las vistas previas
+        const handlePreview = (inputName, callback) => {
+            const input = document.querySelector(`input[type="file"][name="${inputName}"]`);
+            if (input) {
+                input.addEventListener('change', function () {
+                    const file = this.files[0];
+                    callback(file);
+                });
+            }
+        };
+
+        // 2. Lógica para la Imagen de Portada
+        handlePreview('cover_image', (file) => {
+            const previewContainer = document.getElementById('preview-container');
+            const previewImage = document.getElementById('image-preview');
+
+            if (file && file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    previewImage.src = e.target.result;
+                    previewContainer.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                previewContainer.style.display = 'none';
+            }
+        });
+
+        // 3. Lógica para Audio o Video
+        handlePreview('audio_file', (file) => {
+            const audioContainer = document.getElementById('audio-preview-container');
+            const audioPlayer = document.getElementById('audio-preview');
+            const videoContainer = document.getElementById('video-preview-container');
+            const videoPlayer = document.getElementById('video-preview');
+
+            // Limpiar estados previos
+            [audioContainer, videoContainer].forEach(c => c.style.display = 'none');
+            audioPlayer.src = '';
+            videoPlayer.src = '';
+
+            if (file) {
+                const fileURL = URL.createObjectURL(file);
+                if (file.type.includes('audio')) {
+                    audioPlayer.src = fileURL;
+                    audioContainer.style.display = 'block';
+                } else if (file.type.includes('video')) {
+                    videoPlayer.src = fileURL;
+                    videoContainer.style.display = 'block';
+                }
+            }
+        });
+    });
+</script>
 {% endblock %}

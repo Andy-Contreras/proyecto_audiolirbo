@@ -48,7 +48,7 @@
     </div>
 
     <audio id="player" src="{{ libro.audio_file.url }}"></audio>
-    
+
     <div class="audio-progreso">
         <input id="progreso-bar" type="range" min="0" max="100" value="0">
         <div class="tiempo">
@@ -88,7 +88,6 @@
             </svg>
         </button>
     </div>
-
 </section>
 {% endif %}
 
@@ -159,15 +158,16 @@ y respuestas -->
                 {% for pregunta in preguntas %}
                 <div class="pregunta-box">
                     <h3 class="pregunta-titulo">{{ forloop.counter }}. {{ pregunta.text }}</h3>
+                    {% for opcion in pregunta.options.all %}
+                    <section class="opciones">
 
-                    <div class="opciones">
-                        {% for opcion in pregunta.options.all %}
                         <label class="opcion">
                             <input type="radio" name="pregunta_{{ pregunta.id }}" value="{{ opcion.id }}">
                             <span class="texto-opcion">{{ opcion.text }}</span>
                         </label>
-                        {% endfor %}
-                    </div>
+
+                    </section>
+                    {% endfor %}
                 </div>
                 {% endfor %}
 
@@ -187,10 +187,10 @@ y respuestas -->
             <p id="mensajeError" class="error"></p>
 
             <label>Nombre:</label>
-            <input type="text" id="nombre" placeholder="Ingresar su Nombre">
+            <input type="text" id="nombre" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+" placeholder="Ingresar su Nombre">
 
             <label>Apellido:</label>
-            <input type="text" id="apellido" placeholder="Ingresar su Apellido">
+            <input type="text" id="apellido" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+" placeholder="Ingresar su Apellido">
 
             <label>Correo:</label>
             <input type="email" id="correo" placeholder="Ingresar su correo">

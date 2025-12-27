@@ -73,7 +73,21 @@ document.addEventListener("DOMContentLoaded", () => {
           : "Faltan todos los campos.";
       return;
     }
+    // 2. NUEVA VALIDACIÓN: Solo letras y espacios
+    // Esta regex permite letras (a-z), mayúsculas, tildes y la letra ñ
+    const regexSoloLetras = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/;
 
+    if (!regexSoloLetras.test(nombre.value.trim())) {
+      error.textContent = "El nombre no debe contener números ni símbolos.";
+      nombre.style.border = "1px solid red";
+      return;
+    }
+
+    if (!regexSoloLetras.test(apellido.value.trim())) {
+      error.textContent = "El apellido no debe contener números ni símbolos.";
+      apellido.style.border = "1px solid red";
+      return;
+    }
     formCuestionario.insertAdjacentHTML(
       "beforeend",
       `<input type="hidden" name="nombre" value="${nombre.value}">

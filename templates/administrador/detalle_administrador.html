@@ -2,44 +2,50 @@
 {% load static %}
 
 {% block content %}
-<h1 class="title">Dashboard</h1>
-
-<section class="stats">
-    <div class="card">
-        <p>Total de audiolibros</p>
-        <h2>{{ total_audiolibros }}</h2>
-    </div>
-    <div class="card">
-        <p>Total de usuarios</p>
-        <h2>{{total_participantes}}</h2>
-    </div>
-    <div class="card">
-        <p>Prácticas completadas</p>
-        <h2>{{practicas_completadas}}</h2>
-    </div>
-    <div class="card">
-        <p>Calificación promedio</p>
-        <h2>{{calificacion_promedio}}</h2>
-    </div>
-</section>
-
-<!-- Gráfico de usuarios por mes -->
-<section class="chart-section">
-    <div class="chart-header">
-        <div>
-            <h2>Nuevos usuarios por mes</h2>
-            <p class="chart-subtitle">Últimos 6 meses</p>
-        </div>
-        <div class="chart-stats">
-            <span class="highlight-number">{{ usuarios_mes_actual }}</span>
-            <span class="highlight-text">Este mes</span>
-        </div>
+<div class="container-dashboard">
+    <div class="title">
+        <h1>Dashboard</h1>
     </div>
 
-    <div class="chart-container">
-        <canvas id="usuariosChart"></canvas>
+    <div class="dashboard-wrapper">
+        <section class="stats">
+            <div class="card">
+                <p>Total de audiolibros</p>
+                <h2>{{ total_audiolibros }}</h2>
+            </div>
+            <div class="card">
+                <p>Total de usuarios</p>
+                <h2>{{total_participantes}}</h2>
+            </div>
+            <div class="card">
+                <p>Prácticas completadas</p>
+                <h2>{{practicas_completadas}}</h2>
+            </div>
+            <div class="card">
+                <p>Calificación promedio</p>
+                <h2>{{calificacion_promedio}}</h2>
+            </div>
+        </section>
+
+        <!-- Gráfico de usuarios por mes -->
+        <section class="chart-section">
+            <div class="chart-header">
+                <div>
+                    <h2>Nuevos usuarios por mes</h2>
+                    <p class="chart-subtitle">Últimos 6 meses</p>
+                </div>
+                <div class="chart-stats">
+                    <span class="highlight-number">{{ usuarios_mes_actual }} </span>
+                    <span class="highlight-text">Este mes</span>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <canvas id="usuariosChart"></canvas>
+            </div>
+        </section>
     </div>
-</section>
+</div>
 
 
 <script>

@@ -18,26 +18,39 @@ from django.db.models.functions import TruncMonth
 
 @login_required
 def dashboard_privado_view(request):
-    total_audiolibros = Audiobook.objects.count()
+
+    # 🔒 FILTRO BASE (CLAVE)
+    resultados = ResultadoCuestionario.objects.filter(
+        audiobook__added_by=request.user
+    )
+
+    # Audiolibros del usuario
+    total_audiolibros = Audiobook.objects.filter(
+        added_by=request.user
+    ).count()
+
+    # Participantes únicos
     total_participantes = (
-        ResultadoCuestionario.objects
+        resultados
         .values("correo")
         .distinct()
         .count()
     )
-    practicas_completadas = ResultadoCuestionario.objects.count()
-    calificacion_promedio = ResultadoCuestionario.objects.aggregate(
+
+    # Prácticas completadas
+    practicas_completadas = resultados.count()
+
+    # Calificación promedio
+    calificacion_promedio = resultados.aggregate(
         promedio=Avg("puntaje")
-    )["promedio"]
-    
-    if calificacion_promedio is None:
-        calificacion_promedio = 0
+    )["promedio"] or 0
 
     now = timezone.now()
     inicio_mes = now.replace(day=1, hour=0, minute=0, second=0)
 
+    # Usuarios del mes actual
     usuarios_mes_actual = (
-        ResultadoCuestionario.objects
+        resultados
         .filter(creado_en__gte=inicio_mes)
         .values("correo")
         .distinct()
@@ -46,14 +59,14 @@ def dashboard_privado_view(request):
 
     # --- DATOS PARA EL GRÁFICO ---
     seis_meses_atras = now - timedelta(days=180)
-    
+
     usuarios_por_mes = (
-        ResultadoCuestionario.objects
+        resultados
         .filter(creado_en__gte=seis_meses_atras)
-        .annotate(mes=TruncMonth('creado_en'))
-        .values('mes')
-        .annotate(total=Count('correo', distinct=True))
-        .order_by('mes')
+        .annotate(mes=TruncMonth("creado_en"))
+        .values("mes")
+        .annotate(total=Count("correo", distinct=True))
+        .order_by("mes")
     )
 
     # Meses en español
@@ -65,29 +78,21 @@ def dashboard_privado_view(request):
 
     meses_labels = []
     meses_data = []
-    
-    # Crear diccionario con todos los meses
+
     meses_dict = {}
     for i in range(5, -1, -1):
-        mes = now - timedelta(days=30*i)
+        mes = now - timedelta(days=30 * i)
         mes_key = mes.strftime('%Y-%m-01')
         meses_dict[mes_key] = 0
-    
-    # Llenar con datos reales
+
     for item in usuarios_por_mes:
         mes_key = item['mes'].strftime('%Y-%m-01')
         if mes_key in meses_dict:
             meses_dict[mes_key] = item['total']
-    
-    # Formatear para el gráfico
+
     for mes_str, total in sorted(meses_dict.items()):
         mes_obj = datetime.strptime(mes_str, '%Y-%m-%d')
-        mes_numero = mes_obj.month
-        anio = mes_obj.year
-        
-        # Formato: "Ene 2024"
-        label = f"{MESES[mes_numero]} {anio}"
-        
+        label = f"{MESES[mes_obj.month]} {mes_obj.year}"
         meses_labels.append(label)
         meses_data.append(total)
 
@@ -99,7 +104,9 @@ def dashboard_privado_view(request):
         "usuarios_mes_actual": usuarios_mes_actual,
         "meses_labels": json.dumps(meses_labels),
         "meses_data": json.dumps(meses_data),
+        "titulo_libro": "Let´s Read Together"
     }
+
     return render(request, "administrador/detalle_administrador.html", context)
 
 
@@ -111,12 +118,13 @@ def nuevo_audiolibro_view(request):
             audiobook = form.save(commit=False)
             audiobook.added_by = request.user
             audiobook.save()
-            return redirect("administrador")
+            return redirect("mis_audiolibros")
     else:
         form = AudiobookForm()
 
     return render(request, 'administrador/Audiobook/crear_audiobook.html', {
-        'form': form
+        'form': form,
+        "titulo_libro": "Let´s Read Together"
     })
 
 
@@ -129,11 +137,12 @@ def mis_audiolibros_view(request):
         request,
         'administrador/Questions/inicio_preguntas.html',
         {
-            'audiolibros': audiolibros
+            'audiolibros': audiolibros,
+            "titulo_libro": "Let´s Read Together"
         }
     )
 
-# Vista 2: Gestionar preguntas de un audiolibro (reemplaza tu crear_contenido_audiobook)
+# Vista 2: Gestionar preguntas de un audiolibro 
 @login_required
 def manage_questions(request, audiobook_id):
     audiobook = get_object_or_404(Audiobook, id=audiobook_id, added_by=request.user)
@@ -142,6 +151,7 @@ def manage_questions(request, audiobook_id):
     context = {
         'audiobook': audiobook,
         'questions': questions,
+        "titulo_libro": "Let´s Read Together"
     }
     return render(request, 'administrador/Questions/crear_preguntas.html', context)
 
@@ -253,6 +263,9 @@ def question_details(request, question_id):
 def usuarios_audiobook(request):
     resultados = (
         ResultadoCuestionario.objects
+        .filter(
+            audiobook__added_by=request.user   # 🔥 CLAVE AQUÍ
+        )
         .values("nombre", "apellido", "correo")
         .annotate(
             mejor_puntaje=Max("puntaje"),
@@ -266,6 +279,7 @@ def usuarios_audiobook(request):
         "administrador/Usuarios/inicio_usuario.html",
         {
             "resultados": resultados,
+            "titulo_libro": "Let´s Read Together"
         }
     )
 
@@ -277,7 +291,8 @@ def lista_vocabulario(request):
     """Vista para listar todos los audiolibros del usuario"""
     audiolibros = Audiobook.objects.filter(added_by=request.user)
     return render(request, "administrador/Glosario/inicio_glosario.html", {
-        "audiolibros": audiolibros
+        "audiolibros": audiolibros,
+        "titulo_libro": "Let´s Read Together"
     })
 
 @login_required
@@ -289,6 +304,7 @@ def manage_vocabulary(request, audiobook_id):
     context = {
         'audiobook': audiobook,
         'vocabulario': vocabulario,
+        "titulo_libro": "Let´s Read Together"
     }
     return render(request, 'administrador/Glosario/crear_glosario.html', context)
 
@@ -450,39 +466,6 @@ def vocabulary_details(request, vocab_id):
             'success': False,
             'message': f'Error: {str(e)}'
         }, status=500)
-    """Obtener detalles de una palabra para edición (AJAX)"""
-    try:
-        vocabulario = get_object_or_404(Vocabulario, id=vocab_id)
-        
-        # Verificar que el vocabulario pertenece a un audiobook del usuario
-        if vocabulario.audiobook.added_by != request.user:
-            return JsonResponse({
-                'success': False,
-                'message': 'No tienes permiso para acceder a esta palabra'
-            }, status=403)
-        
-        data = {
-            'success': True,
-            'id': vocabulario.id,
-            'palabra': vocabulario.palabra,
-            'definicion': vocabulario.definicion,
-            'ejemplo': vocabulario.ejemplo or ''
-        }
-        
-        return JsonResponse(data)
-    
-    except Vocabulario.DoesNotExist:
-        return JsonResponse({
-            'success': False,
-            'message': 'La palabra no existe'
-        }, status=404)
-    
-    except Exception as e:
-        return JsonResponse({
-            'success': False,
-            'message': f'Error al obtener detalles: {str(e)}'
-        }, status=500)
-
 
 
 
@@ -490,7 +473,7 @@ def vocabulary_details(request, vocab_id):
 def dashboard_view(request):
     audiobook = Audiobook.objects.all()[:10]
     context = {
-        'titulo_pagina': 'Audio Practice',
+        'titulo_pagina': 'Let´s Read Together',
         'audiolibro': audiobook,
     }
     return render(request, "inicio/inicio.html", context)
@@ -545,7 +528,7 @@ def detalle_view(request, id):
     contexto = {
         "libro": audiobook,
         "preguntas": preguntas,
-        "titulo_pagina": "Audio Practice",
+        "titulo_pagina": "Let´s Read Together",
     }
 
     # Si existen datos guardados, agregarlos al contexto
@@ -570,7 +553,9 @@ def settings_view(request):
         messages.success(request, "Datos actualizados correctamente")
         return redirect("settings")
 
-    return render(request, "administrador/settings.html")
+    return render(request, "administrador/settings.html",{
+        "titulo_libro": "Let´s Read Together"
+    })
 # Contraseña nueva
 @login_required
 def change_password(request):
@@ -591,5 +576,6 @@ def change_password(request):
         form = CustomPasswordChangeForm(request.user)
 
     return render(request, "administrador/password_change.html", {
-        "form": form
+        "form": form,
+        "titulo_libro": "Let´s Read Together"
     })

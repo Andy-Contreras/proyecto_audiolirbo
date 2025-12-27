@@ -101,7 +101,7 @@ textarea {
   padding: 12px 15px;
   border-radius: 4px 4px 0 0;
   display: grid;
-  grid-template-columns: 250px 100px 1fr 130px 130px 80px;
+  grid-template-columns: 250px 100px 1fr 80px;;
   gap: 15px;
   font-size: 12px;
   font-weight: 600;
@@ -117,13 +117,16 @@ textarea {
 
 .option-row {
   display: grid;
-  grid-template-columns: 250px 100px 1fr 130px 130px 80px;
+  grid-template-columns: 250px 100px 1fr 80px;
   gap: 15px;
   padding: 15px;
   align-items: start;
   border-bottom: 1px solid #e0e0e0;
   transition: background-color 0.2s;
+  
+  align-items: center;
 }
+
 
 .option-row:last-child {
   border-bottom: none;
@@ -217,10 +220,12 @@ textarea {
   font-size: 14px;
   font-weight: 600;
   transition: all 0.3s;
+  text-align: center; 
+  display: inline-block;
 }
 
 .btn-primary {
-  background: #007bff;
+  background: #3d7a99;
   color: white;
 }
 
@@ -444,7 +449,7 @@ textarea {
     width: 90%;
     max-width: 600px;
     max-height: 90vh;
-    overflow-y: auto;
+    overflow-y: visible;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
     animation: slideUp 0.3s ease;
 }

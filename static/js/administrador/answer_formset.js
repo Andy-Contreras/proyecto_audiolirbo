@@ -23,19 +23,9 @@ function addOption(data = null) {
         </div>
         
         <textarea name="option_justification_${optionId}" 
-                  placeholder="La primera casa que construyó uno de los cerditos fue de paja...">${
+                  placeholder="La primera casa que construyó...">${
                     data ? data.justification || "" : ""
                   }</textarea>
-        
-        <input type="number" 
-               name="option_points_correct_${optionId}" 
-               value="${data ? data.points_if_correct : 1}" 
-               min="0">
-        
-        <input type="number" 
-               name="option_points_wrong_${optionId}" 
-               value="${data ? data.points_if_wrong : 0}" 
-               min="0">
         
         <button type="button" class="btn-remove" onclick="removeOption(${optionId})">
             ✗
@@ -106,19 +96,13 @@ function getFormData() {
     const justification = row.querySelector(
       `[name="option_justification_${optionId}"]`
     ).value;
-    const pointsCorrect = parseInt(
-      row.querySelector(`[name="option_points_correct_${optionId}"]`).value
-    );
-    const pointsWrong = parseInt(
-      row.querySelector(`[name="option_points_wrong_${optionId}"]`).value
-    );
 
     options.push({
       text: text,
       is_correct: isCorrect,
       justification: justification,
-      points_if_correct: pointsCorrect,
-      points_if_wrong: pointsWrong,
+      points_if_correct: 1,  // Valor por defecto
+      points_if_wrong: 0,
     });
   });
 

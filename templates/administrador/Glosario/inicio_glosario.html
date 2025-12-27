@@ -5,51 +5,59 @@
 <link rel="stylesheet" href="{% static 'css/style_administrador/inicio_preguntas.css' %}">
 {% endblock %}
 {% block content %}
-<div class="audiobooks-wrapper">
-    <h2 class="title">Mis audiolibros</h2>
-    <div class="search-box">
-        <input type="text" id="searchInput" placeholder="Buscar por titulo del libro">
+<div class="audiobooks-questions">
+    <div class="title">
+        <h2>Mis audiolibros - Glosario</h2>
     </div>
-    {% if audiolibros %}
-    <div class="audiobook-grid">
-        {% for audiobook in audiolibros %}
-        <div class="audiobook-card">
 
-            {% if audiobook.cover_image %}
-            <img src="{{ audiobook.cover_image.url }}" alt="{{ audiobook.title }}">
-            {% endif %}
-
-            <h3>{{ audiobook.title }}</h3>
-            <p class="author">{{ audiobook.author_name }}</p>
-
-            {% if request.user == audiobook.added_by %}
-            <a href="{% url 'manage_vocabulary' audiobook.id %}" class="btn-questions">
-                Crear glosario
-            </a>
-            {% else %}
-            <button class="btn-questions disabled" disabled>
-                Sin acceso
-            </button>
-            {% endif %}
-
+    <div class="detalle-questions">
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Buscar por titulo del libro">
         </div>
-        {% endfor %}
+
+        {% if audiolibros %}
+        <div class="audiobook-grid">
+            {% for audiobook in audiolibros %}
+            <div class="audiobook-card">
+
+                {% if audiobook.cover_image %}
+                <img src="{{ audiobook.cover_image.url }}" alt="{{ audiobook.title }}">
+                {% endif %}
+
+                <h3>{{ audiobook.title }}</h3>
+                <p class="author">{{ audiobook.author_name }}</p>
+
+                {% if request.user == audiobook.added_by %}
+                <a href="{% url 'manage_vocabulary' audiobook.id %}" class="btn-questions">
+                    Crear Glosario
+                </a>
+                {% else %}
+                <button class="btn-questions disabled" disabled>
+                    Sin acceso
+                </button>
+                {% endif %}
+
+            </div>
+            {% endfor %}
+        </div>
+        <div id="noResultsMessage" style="display: none; text-align: center; padding: 40px; color: #666;">
+            <p style="font-size: 1.2rem;">🔍 No se encontraron resultados para tu búsqueda.</p>
+        </div>
+        {% else %}
+        <p class="empty">
+            Aún no has creado audiolibros.
+        </p>
+        {% endif %}
     </div>
-    {% else %}
-    <p class="empty">
-        Aún no has creado audiolibros.
-    </p>
-    {% endif %}
 </div>
 
 
 <script>
     document.addEventListener("DOMContentLoaded", () => {
-
         const input = document.getElementById("searchInput");
         const cards = document.querySelectorAll(".audiobook-card");
+        const noResults = document.getElementById("noResultsMessage");
 
-        // Si no estamos en esta página, no hace nada
         if (!input || cards.length === 0) return;
 
         const normalize = text =>
@@ -57,15 +65,27 @@
 
         input.addEventListener("keyup", () => {
             const value = normalize(input.value.trim());
+            let visibleCards = 0; // Contador de tarjetas visibles
 
             cards.forEach(card => {
                 const titleEl = card.querySelector("h3");
                 const title = titleEl ? normalize(titleEl.textContent) : "";
 
-                card.style.display = title.includes(value) ? "" : "none";
+                if (title.includes(value)) {
+                    card.style.display = "";
+                    visibleCards++; // Sumamos si hay coincidencia
+                } else {
+                    card.style.display = "none";
+                }
             });
-        });
 
+            // Si el contador es 0, mostramos el mensaje, si no, lo ocultamos
+            if (visibleCards === 0) {
+                noResults.style.display = "block";
+            } else {
+                noResults.style.display = "none";
+            }
+        });
     });
 </script>
 {% endblock %}

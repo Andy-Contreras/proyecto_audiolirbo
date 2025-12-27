@@ -1,23 +1,46 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f5f5f5;
+  padding: 20px;
+}
+
 .container {
-  max-width: 1400px;
+  /* max-width: 1400px;
   margin: 0 auto;
   background: #ffffff;
   border-radius: 12px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
+  overflow: hidden; */
+  max-width: 1400px;
+  margin: 0 auto;
+  background: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 /* ================= HEADER ================= */
 .header {
-  background: #2563eb;
+  background: #2c5f7f;
   color: white;
-  padding: 30px;
+  padding: 15px 20px;
+  border-radius: 4px;
+  margin-bottom: 30px;
 }
 
 .header h1 {
-  font-size: 28px;
+  font-size: 18px;
   font-weight: 600;
-  margin-bottom: 5px;
+  text-transform: uppercase;
+  /* font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 5px; */
 }
 
 .header p {
@@ -27,7 +50,11 @@
 
 /* ================= CONTENT ================= */
 .content-wrapper {
-  padding: 30px;
+  margin-bottom: 40px;
+  border: 1px solid #e0e0e0;
+  padding: 25px;
+  border-radius: 6px;
+  background: #fafafa;
 }
 
 /* ================= ALERTS ================= */
@@ -54,21 +81,17 @@
 }
 
 /* ================= FORM ================= */
-.vocabulary-form {
-  background: #f9fafb;
-  padding: 30px;
-  border-radius: 10px;
-  margin-bottom: 40px;
-  border: 1px solid #e5e7eb;
-}
 
 .form-title {
-  color: #2563eb;
+  color: #333;
   font-size: 22px;
   font-weight: 600;
   margin-bottom: 10px;
 }
-
+.btn-secondary{
+  color: white;
+  background: #6c757d;
+}
 .form-subtitle {
   color: #64748b;
   font-size: 14px;
@@ -113,7 +136,7 @@
 }
 
 .btn-remove-item {
-  background: #ef4444;
+  background: #dc3545;
   color: white;
   border: none;
   padding: 6px 12px;
@@ -208,20 +231,26 @@ textarea {
 }
 
 /* 🟢 */
-.btn-add,
-.btn-edit {
+.btn-add {
   background: #22c55e;
   color: white;
 }
+.btn-edit {
+  background: #3d7a99;
+  color: white;
+}
 
-.btn-add:hover,
-.btn-edit:hover {
+.btn-add:hover{
   background: #16a34a;
+}
+
+.btn-edit:hover {
+  background: #1d4ed8;
 }
 
 /* 🔵 */
 .btn-primary {
-  background: #2563eb;
+  background: #3d7a99;
   color: white;
 }
 
@@ -231,7 +260,7 @@ textarea {
 
 /* 🔴 */
 .btn-danger {
-  background: #ef4444;
+  background: #dc3545;
   color: white;
 }
 
@@ -241,30 +270,31 @@ textarea {
 
 /* ================= LIST ================= */
 .vocabulary-list {
-  margin-top: 40px;
+  margin-top: 50px;
+  padding-top: 30px;
+  border-top: 3px solid #2c5f7f;
 }
 
-.list-header {
+/* .list-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
   padding-bottom: 15px;
-  border-bottom: 2px solid #e5e7eb;
-}
+} */
 
 .list-title {
-  color: #2563eb;
-  font-size: 22px;
+  color: #2c5f7f;
+  font-size: 20px;
   font-weight: 600;
+  margin-bottom: 25px;
 }
 
-.list-count {
+/* .list-count {
   background: #2563eb;
   color: white;
   padding: 4px 12px;
   border-radius: 20px;
-}
+} */
 
 .vocabulary-grid {
   display: grid;
@@ -279,6 +309,7 @@ textarea {
   border-radius: 10px;
   padding: 20px;
   transition: 0.2s;
+  border-left: 5px solid #2c5f7f;
 }
 
 .vocabulary-card:hover {
@@ -289,8 +320,9 @@ textarea {
 .vocab-word {
   font-size: 20px;
   font-weight: 700;
-  color: #2563eb;
+  color: #333;
   margin-bottom: 12px;
+  line-height: 1.5;
 }
 
 .vocab-definition {
@@ -334,7 +366,7 @@ textarea {
   }
 
   .form-actions-bottom {
-    flex-direction: column-reverse;
+    flex-direction: row;
   }
 
   .btn {
@@ -342,7 +374,12 @@ textarea {
     justify-content: center;
   }
 }
-
+@media (max-width: 576px){
+  .form-actions-bottom {
+    flex-direction: column-reverse;
+  }
+  
+}
 /* ================= MODAL ================= */
 .modal {
   display: none;
@@ -372,7 +409,7 @@ textarea {
 
 /* HEADER */
 .modal-header {
-  background: #2563eb;
+  background: #2c5f7f;
   color: white;
   padding: 20px 24px;
   border-radius: 14px 14px 0 0;

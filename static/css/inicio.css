@@ -38,9 +38,10 @@ body {
   gap: 10px;
   text-decoration: none;
 }
-.header svg {
-  width: 32px;
-  height: 32px;
+#logoCanvas {
+  display: block;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .header h1 {

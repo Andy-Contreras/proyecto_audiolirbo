@@ -5,14 +5,30 @@
   font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
+.container-dashboard {
+  max-width: 1400px;
+  margin: 0 auto;
+  background: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-wrapper {
+  margin-bottom: 40px;
+  border: 1px solid #e0e0e0;
+  padding: 25px;
+  border-radius: 6px;
+  background: #fafafa;
+}
 /* =========================================================
    BODY
 ========================================================= */
 body {
   background: #f8fafc; /* fondo claro */
-  color: #0f172a; /* texto principal */
   display: flex;
   min-height: 100vh;
+  padding: 20px;
 }
 
 /* =========================================================
@@ -68,7 +84,6 @@ body {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  margin-top: 30px;
 }
 
 .menu a {
@@ -138,10 +153,17 @@ body {
 /* =========================================================
    TITLES
 ========================================================= */
-.title {
-  margin-bottom: 24px;
-  font-size: 24px;
-  font-weight: 700;
+.container-dashboard .title {
+  background: #2c5f7f;
+  color: white;
+  padding: 15px 20px;
+  border-radius: 4px;
+  margin-bottom: 30px;
+  h1 {
+    font-size: 18px;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
 }
 
 /* =========================================================
@@ -380,13 +402,13 @@ body {
   display: flex;
   align-items: baseline;
   gap: 10px;
-  padding: 10px 20px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 0 10px;
+  background: linear-gradient(135deg, #667eea 0%, #2c5f7f);
   border-radius: 8px;
 }
 
 .highlight-number {
-  font-size: 32px;
+  font-size: 30px;
   font-weight: 700;
   color: white;
 }
@@ -394,6 +416,7 @@ body {
 .highlight-text {
   font-size: 14px;
   color: rgba(255, 255, 255, 0.9);
+  align-self: center;
 }
 
 .chart-container {
@@ -414,7 +437,7 @@ body {
   align-items: center;
   gap: 10px;
   padding: 15px 30px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #2c5f7f;
   color: white;
   border: none;
   border-radius: 8px;
