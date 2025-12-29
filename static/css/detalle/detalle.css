@@ -131,7 +131,9 @@
   .detalle-container {
     border-radius: 15px;
   }
-
+  .detalle-encabezado{
+    max-width: 90%;
+  }
   .detalle-encabezado h1 {
     font-size: 1rem;
   }
@@ -159,7 +161,7 @@
   }
 
   .reproductor-card {
-    padding: 18px;
+    max-width: 90%;
   }
 
   .controles {

@@ -85,7 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  progressBar.addEventListener("input", () => {
+  progressBar.addEventListener("change", () => {
     if (isNaN(audio.duration) || audio.readyState < 3) return;
     audio.currentTime = (progressBar.value / 100) * audio.duration;
   });

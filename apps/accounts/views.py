@@ -24,7 +24,9 @@ def login_view(request):
         else:
             messages.error(request, "Correo o contraseña incorrectos")
         
-    return render(request, "accounts/login.html")
+    return render(request, "accounts/login.html", {
+        "titulo_libro": "Let´s Read Together"
+    })
     # return render(request, "accounts/login.html")
 
 

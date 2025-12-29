@@ -30,11 +30,10 @@
 
 {% if libro.is_video %}
 <section class="reproductor-card">
-    <video controls width="80%">
+    <video controls width="80%" preload="metadata">
         <source src="{{ libro.audio_file.url }}" type="video/mp4">
         Tu navegador no soporta video.
     </video>
-
 </section>
 {% elif libro.is_audio %}
 <!-- Esta seccion le pertenece al reproductor -->
@@ -47,7 +46,7 @@
         </div>
     </div>
 
-    <audio id="player" src="{{ libro.audio_file.url }}"></audio>
+    <audio id="player" src="{{ libro.audio_file.url }}" preload="metadata"></audio>
 
     <div class="audio-progreso">
         <input id="progreso-bar" type="range" min="0" max="100" value="0">
@@ -263,6 +262,8 @@ y respuestas -->
     </div>
 
 </section>
+
+
 {% endif %}
 
 {% endblock %}

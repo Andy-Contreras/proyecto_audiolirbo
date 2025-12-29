@@ -126,3 +126,33 @@ body {
   font-weight: bold;
   text-align: center;
 }
+
+@media (max-width: 768px) {
+  /* Ajustamos el cuerpo para que no esté tan pegado a los bordes */
+  body {
+    padding: 20px;
+    align-items: center; /* Mantenemos el centrado vertical si cabe */
+  }
+
+  /* El contenedor ahora ocupa un poco más de porcentaje */
+  .login-container {
+    width: 80%;
+    max-width: 450px; /* Le damos un poco más de aire en tablets */
+    padding: 35px 40px;
+  }
+
+  /* Mejoramos el tamaño de fuente para lectura cómoda en tablets */
+  .login-container h2 {
+    font-size: 24px;
+  }
+
+  .login-container input {
+    font-size: 16px; /* Evita el zoom automático en dispositivos móviles */
+    padding: 14px;
+  }
+
+  .login-container button {
+    font-size: 18px;
+    padding: 15px 0;
+  }
+}

@@ -579,3 +579,8 @@ def change_password(request):
         "form": form,
         "titulo_libro": "Let´s Read Together"
     })
+
+
+# Vista para la principal de cuando ingresa al sitio web
+def principal_view(request):
+    return render(request, "base_prin.html")
