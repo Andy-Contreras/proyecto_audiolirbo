@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.validators import FileExtensionValidator
 import os
 # Create your models here.
 
@@ -35,7 +36,14 @@ class Audiobook(models.Model):
         auto_now_add=True,
         verbose_name="Fecha de creación"
     )
-
+    
+    pdf_file = models.FileField(
+        upload_to="audiobooks/pdfs/",
+        verbose_name="Archivo PDF (Libro)",
+        validators=[FileExtensionValidator(allowed_extensions=['pdf'])],
+        null=True,  # Permite que registros antiguos no tengan PDF
+        blank=True  # Permite que el formulario se envíe sin PDF si no es obligatorio
+    )
     def is_video(self):
         video_extensions = ['.mp4', '.webm', '.ogg']
         ext = os.path.splitext(self.audio_file.name)[1].lower()

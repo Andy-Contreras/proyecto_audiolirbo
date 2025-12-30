@@ -5,7 +5,7 @@ from django.contrib.auth.forms import PasswordChangeForm
 class AudiobookForm(forms.ModelForm):
     class Meta:
         model = Audiobook
-        fields = ['title', 'author_name', 'audio_file', 'cover_image']
+        fields = ['title', 'author_name', 'audio_file', 'cover_image','pdf_file']
         widgets = {
         'title': forms.TextInput(attrs={'placeholder': 'Ej: El Principito'}),
         'author_name': forms.TextInput(attrs={'placeholder': 'Autor'}),
