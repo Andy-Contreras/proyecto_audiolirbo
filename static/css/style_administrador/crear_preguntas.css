@@ -101,7 +101,7 @@ textarea {
   padding: 12px 15px;
   border-radius: 4px 4px 0 0;
   display: grid;
-  grid-template-columns: 250px 100px 1fr 80px;;
+  grid-template-columns: 250px 100px 1fr 80px;
   gap: 15px;
   font-size: 12px;
   font-weight: 600;
@@ -123,10 +123,9 @@ textarea {
   align-items: start;
   border-bottom: 1px solid #e0e0e0;
   transition: background-color 0.2s;
-  
+
   align-items: center;
 }
-
 
 .option-row:last-child {
   border-bottom: none;
@@ -220,7 +219,7 @@ textarea {
   font-size: 14px;
   font-weight: 600;
   transition: all 0.3s;
-  text-align: center; 
+  text-align: center;
   display: inline-block;
 }
 
@@ -376,267 +375,369 @@ textarea {
   margin-bottom: 15px;
 }
 
-@media (max-width: 1200px) {
-  .options-header,
-  .option-row {
-    grid-template-columns: 200px 80px 1fr 100px 100px 70px;
-    gap: 10px;
-  }
+.mobile-label {
+  display: none;
 }
 
-@media (max-width: 992px) {
-  .options-header,
-  .option-row {
-    grid-template-columns: 1fr;
+/* Aseguramos que los contenedores no rompan el grid en escritorio */
+.field-group {
+  display: contents;
+}
+
+@media (max-width: 768px) {
+  /* 1. Reset de márgenes externos */
+  body {
+    padding: 0;
+    margin: 0;
+    background-color: #f5f5f5;
   }
 
+  /* 2. Contenedor a pantalla completa */
+  .container {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 15px 10px;
+    border-radius: 5px;
+    box-shadow: none;
+  }
+
+  /* 3. Header pegado a los bordes */
+  .header {
+    border-radius: 5px;
+    padding: 20px 15px;
+  }
+
+  /* 4. Formulario y listas de preguntas */
+  .question-form,
+  .question-item {
+    padding: 15px;
+    margin-left: 0;
+    margin-right: 0;
+    border-radius: 5px;
+  }
+
+  /* 5. Reestructuración de la tabla de opciones (Grid a Columna) */
   .options-header {
-    display: none;
+    display: none; /* Oculta cabecera de tabla */
   }
 
   .option-row {
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    margin-bottom: 10px;
+    grid-template-columns: 1fr; /* Todo en una sola fila vertical */
+    gap: 12px;
+    padding: 15px;
+    border: 1px solid #e0e0e0;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
   }
 
+  /* Forzamos que cada elemento de la fila ocupe todo el ancho */
   .option-row > * {
     width: 100%;
   }
-}
 
-@media (max-width: 576px) {
-  .container {
-    padding: 15px;
+  /* Estilo especial para el checkbox 'Correcta' en móvil */
+  .checkbox-container {
+    justify-content: flex-start;
+    padding: 8px 0;
+    border-top: 1px dashed #ddd;
   }
 
-  .header h1 {
-    font-size: 16px;
+  .checkbox-container::before {
+    content: "Respuesta Correcta: ";
+    font-size: 13px;
+    margin-right: 10px;
+    color: #333;
+  }
+
+  /* 6. Botones grandes y apilados */
+  .actions {
+    flex-direction: column-reverse;
+    gap: 12px;
+    width: 100%;
   }
 
   .btn {
     width: 100%;
+    padding: 14px;
+    font-size: 16px; /* Evita zoom automático en iPhone */
+    display: block;
   }
 
-  .actions {
-    flex-direction: column-reverse;
+  /* 7. Ajuste de textos e inputs */
+  .header h1 {
+    font-size: 16px;
+  }
+
+  input[type="text"],
+  textarea,
+  input[type="number"] {
+    font-size: 16px; /* Vital para usabilidad móvil */
+  }
+  .field-group {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  .mobile-label {
+    display: block; /* Aparece solo en móvil */
+    font-size: 13px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 5px;
   }
 }
 
 /* ==================== MODAL STYLES ==================== */
 
 .modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
-    animation: fadeIn 0.3s ease;
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  animation: fadeIn 0.3s ease;
 }
 
 .modal.active {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .modal-content {
-    background: white;
-    border-radius: 12px;
-    width: 90%;
-    max-width: 600px;
-    max-height: 90vh;
-    overflow-y: visible;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-    animation: slideUp 0.3s ease;
+  background: white;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: visible;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease;
 }
 
 .modal-small {
-    max-width: 500px;
+  max-width: 500px;
 }
 
 .modal-header {
-    background: linear-gradient(135deg, #2c5f7f 0%, #1a3a4d 100%);
-    color: white;
-    padding: 20px 30px;
-    border-radius: 12px 12px 0 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  background: linear-gradient(135deg, #2c5f7f 0%, #1a3a4d 100%);
+  color: white;
+  padding: 20px 30px;
+  border-radius: 12px 12px 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .modal-header-danger {
-    background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+  background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
 }
 
 .modal-header h2 {
-    font-size: 22px;
-    font-weight: 600;
-    margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+  margin: 0;
 }
 
 .modal-close {
-    background: transparent;
-    border: none;
-    color: white;
-    font-size: 32px;
-    cursor: pointer;
-    padding: 0;
-    width: 32px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    transition: background 0.3s;
-    line-height: 1;
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 32px;
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.3s;
+  line-height: 1;
 }
 
 .modal-close:hover {
-    background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.2);
 }
 
 .modal-body {
-    padding: 30px;
+  padding: 30px;
 }
 
 .modal-footer {
-    padding: 20px 30px;
-    border-top: 2px solid #e9ecef;
-    display: flex;
-    gap: 12px;
-    justify-content: flex-end;
+  padding: 20px 30px;
+  border-top: 2px solid #e9ecef;
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
 }
 
 /* Delete Modal Specific */
 .delete-warning {
-    text-align: center;
-    padding: 20px;
+  text-align: center;
+  padding: 20px;
 }
 
 .warning-icon {
-    font-size: 64px;
-    margin-bottom: 20px;
-    animation: pulse 2s infinite;
+  font-size: 64px;
+  margin-bottom: 20px;
+  animation: pulse 2s infinite;
 }
 
 @keyframes pulse {
-    0%, 100% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.1);
-    }
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
 }
 
 .warning-text {
-    font-size: 18px;
-    color: #495057;
-    margin-bottom: 15px;
-    line-height: 1.6;
-    font-weight: 600;
+  font-size: 18px;
+  color: #495057;
+  margin-bottom: 15px;
+  line-height: 1.6;
+  font-weight: 600;
 }
 
 .question-preview {
-    background: #f8f9fa;
-    padding: 15px;
-    border-radius: 6px;
-    border-left: 4px solid #dc3545;
-    margin: 20px 0;
-    font-size: 14px;
-    color: #495057;
-    text-align: left;
-    font-style: italic;
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 6px;
+  border-left: 4px solid #dc3545;
+  margin: 20px 0;
+  font-size: 14px;
+  color: #495057;
+  text-align: left;
+  font-style: italic;
 }
 
 .warning-subtext {
-    font-size: 14px;
-    color: #6c757d;
-    margin-top: 15px;
+  font-size: 14px;
+  color: #6c757d;
+  margin-top: 15px;
 }
 
 .warning-subtext strong {
-    color: #dc3545;
+  color: #dc3545;
 }
 
 .btn-danger-full {
-    background: #dc3545;
-    color: white;
-    padding: 12px 28px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 600;
-    transition: all 0.3s;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
+  background: #dc3545;
+  color: white;
+  padding: 12px 28px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .btn-danger-full:hover {
-    background: #c82333;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(220, 53, 69, 0.4);
+  background: #c82333;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(220, 53, 69, 0.4);
 }
 
 .btn-danger-full:disabled {
-    background: #6c757d;
-    cursor: not-allowed;
-    transform: none;
-    opacity: 0.6;
+  background: #6c757d;
+  cursor: not-allowed;
+  transform: none;
+  opacity: 0.6;
 }
 
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes slideUp {
-    from {
-        opacity: 0;
-        transform: translateY(50px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Responsive Modal */
 @media (max-width: 768px) {
-    .modal-content {
-        width: 95%;
-        max-height: 95vh;
-    }
+  /* Aseguramos que el fondo oscuro cubra todo sin dejar bordes */
+  .modal {
+    padding: 10px;
+  }
 
-    .modal-body {
-        padding: 20px;
-    }
+  .modal-content {
+    width: 100%; /* Aprovecha todo el ancho del celular */
+    max-width: 100%;
+    max-height: 98vh; /* Casi toda la altura para evitar scrolls dobles */
+    border-radius: 8px;
+    margin: 0 auto;
+  }
 
-    .modal-footer {
-        flex-direction: column-reverse;
-        padding: 15px 20px;
-    }
+  .modal-header {
+    padding: 15px 20px;
+    border-radius: 8px 8px 0 0;
+  }
 
-    .modal-footer .btn,
-    .modal-footer .btn-danger-full {
-        width: 100%;
-        justify-content: center;
-    }
+  .modal-header h2 {
+    font-size: 18px; /* Título más acorde a pantalla pequeña */
+  }
 
-    .warning-icon {
-        font-size: 48px;
-    }
+  .modal-body {
+    padding: 20px 15px;
+    overflow-y: auto; /* Si el contenido es largo, permite scroll interno */
+  }
 
-    .warning-text {
-        font-size: 16px;
-    }
+  /* REGLA DE ORO PARA BOTONES EN MÓVIL */
+  .modal-footer {
+    flex-direction: column-reverse; /* Botón de acción arriba, cancelar abajo */
+    padding: 15px;
+    gap: 10px;
+  }
+
+  .modal-footer .btn,
+  .modal-footer .btn-danger-full {
+    width: 100%; /* Botones grandes y fáciles de tocar */
+    margin: 0;
+    padding: 14px;
+    justify-content: center;
+    font-size: 16px;
+  }
+
+  /* Ajustes de la advertencia de borrado */
+  .warning-icon {
+    font-size: 48px;
+    margin-bottom: 10px;
+  }
+
+  .warning-text {
+    font-size: 16px;
+    line-height: 1.4;
+  }
+
+  .question-preview {
+    padding: 12px;
+    font-size: 13px;
+    margin: 15px 0;
+  }
 }

@@ -83,3 +83,43 @@ body {
 .password-rules li {
   margin-bottom: 6px;
 }
+
+@media (max-width: 768px) {
+  body {
+    padding: 0; /* Elimina el espacio exterior que causa la asimetría */
+  }
+
+  .password-container {
+    width: 100%;
+    max-width: 100%;
+    padding: 15px 10px; /* Reducción de espacio interno para maximizar el área de trabajo */
+    border-radius: 5px; /* El contenedor blanco ocupa toda la pantalla */
+    box-shadow: none;
+    margin: 0;
+  }
+
+  .password-title {
+    border-radius: 5px; /* El encabezado azul llega de lado a lado */
+    margin-bottom: 20px;
+    padding: 15px;
+  }
+
+  .password-wrapper {
+    padding: 15px;
+    margin-bottom: 20px;
+    width: 100%;
+    border-radius: 5px; /* Mantiene la consistencia visual */
+  }
+
+  .password-form input {
+    font-size: 16px; /* Previene el zoom automático en móviles */
+    padding: 12px; /* Aumentamos ligeramente para mayor comodidad táctil */
+  }
+
+  .password-rules {
+    font-size: 13px; /* Ajustamos un poco el texto de las reglas para pantallas pequeñas */
+    background: #fdfdfd;
+    padding: 10px;
+    border-radius: 8px;
+  }
+}

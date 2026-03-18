@@ -1,3 +1,9 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -6,8 +12,9 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100dvh;
   color: #0f172a;
+  overflow: hidden;
 }
 
 .main {
@@ -128,31 +135,29 @@ body {
 }
 
 @media (max-width: 768px) {
-  /* Ajustamos el cuerpo para que no esté tan pegado a los bordes */
   body {
     padding: 20px;
-    align-items: center; /* Mantenemos el centrado vertical si cabe */
+    /* Quitamos el overflow: hidden para que en celulares pequeños se pueda bajar */
+    overflow-y: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  /* El contenedor ahora ocupa un poco más de porcentaje */
+  .main {
+    width: 100%;
+    max-width: 400px; /* Evita que el logo y el form se estiren demasiado */
+  }
+
   .login-container {
-    width: 80%;
-    max-width: 450px; /* Le damos un poco más de aire en tablets */
-    padding: 35px 40px;
+    width: 100%; /* Ahora sí ocupará el ancho real gracias al box-sizing */
+    padding: 30px 20px; /* Un poco menos de espacio interno para ganar espacio */
+    margin: 0 auto; /* Lo centra perfectamente */
   }
 
-  /* Mejoramos el tamaño de fuente para lectura cómoda en tablets */
-  .login-container h2 {
-    font-size: 24px;
-  }
-
+  /* Ajuste para los inputs en móvil */
   .login-container input {
-    font-size: 16px; /* Evita el zoom automático en dispositivos móviles */
-    padding: 14px;
-  }
-
-  .login-container button {
-    font-size: 18px;
-    padding: 15px 0;
+    width: 100%; /* Se mantendrá dentro de los límites del contenedor */
+    font-size: 16px;
   }
 }

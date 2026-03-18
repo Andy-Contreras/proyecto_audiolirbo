@@ -15,16 +15,29 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from django.views.generic import RedirectView
 from django.conf.urls.static import static
 from django.conf import settings
+from apps.audiobooks.views import pagina_no_encontrada
+from django.views.static import serve
+import re
+handler404 = "apps.audiobooks.views.pagina_no_encontrada"
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include("apps.accounts.urls")),
     path('dashboard', RedirectView.as_view(url='/dashboard/', permanent=False)),
-    path('', include("apps.audiobooks.urls"))
+    path('', include("apps.audiobooks.urls")),
+
+    # path("<path:path>/", views.pagina_no_encontrada),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# if not settings.DEBUG:
+#     urlpatterns += [
+#         re_path(r'^media/(?P<path>.*)$', serve, {
+#             'document_root': settings.MEDIA_ROOT,
+#         }),
+#     ]

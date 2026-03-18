@@ -109,3 +109,33 @@ body {
 .btn-guardar:hover {
   background: #1d4ed8;
 }
+@media (max-width: 768px) {
+  body {
+    padding: 0; /* Elimina el espacio gris de los lados */
+  }
+
+  .container-books {
+    width: 100%;
+    max-width: 100%;
+    padding: 15px 10px; /* Espacio mínimo interno */
+    border-radius: 5px; /* Para que el diseño se vea de borde a borde */
+    box-shadow: none;
+    margin: 0;
+  }
+
+  .header {
+    border-radius: 5px; /* El encabezado azul toca los bordes laterales */
+    margin-bottom: 20px;
+    padding: 15px;
+  }
+
+  .audiobook-wrapper {
+    padding: 15px;
+    margin-bottom: 20px;
+    width: 100%;
+  }
+
+  .form-group input {
+    font-size: 16px; /* Evita zoom automático en móviles */
+  }
+}

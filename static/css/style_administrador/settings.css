@@ -61,8 +61,6 @@ body {
   font-weight: 600;
 }
 
-
-
 .btn-secondary {
   display: inline-block;
   text-decoration: none;
@@ -105,4 +103,50 @@ body {
   outline: none;
   border-color: #2563eb;
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+}
+
+@media (max-width: 768px) {
+  body {
+    padding: 0; /* Elimina el espacio exterior que causa la asimetría */
+  }
+
+  .settings-container {
+    width: 100%;
+    max-width: 100%;
+    padding: 15px 10px; /* Reducción de espacio interno para maximizar el área de trabajo */
+    border-radius: 5px; /* El contenedor blanco ocupa toda la pantalla */
+    box-shadow: none;
+    margin: 0;
+  }
+
+  .settings-title {
+    border-radius: 5px; /* El encabezado azul llega de lado a lado */
+    margin-bottom: 20px;
+    padding: 15px;
+  }
+
+  .settings-detalle {
+    padding: 15px;
+    margin-bottom: 20px;
+    width: 100%;
+    border-radius: 5px; /* Consistencia visual con el contenedor principal */
+  }
+
+  .settings-card {
+    padding: 16px; /* Cards un poco más compactas para móviles */
+    margin-bottom: 15px;
+    border-radius: 12px;
+  }
+
+  .form-group input {
+    font-size: 16px; /* Tamaño estándar para evitar zoom automático en smartphones */
+    padding: 14px; /* Área de toque más amplia para los dedos */
+  }
+
+  .btn-secondary {
+    display: block; /* El botón ocupa todo el ancho disponible para facilitar el clic */
+    width: 100%;
+    padding: 14px;
+    font-size: 16px;
+  }
 }

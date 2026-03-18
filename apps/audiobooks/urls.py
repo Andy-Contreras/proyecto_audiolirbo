@@ -32,6 +32,7 @@ urlpatterns = [
     # url para las personas que no necesitan iniciar sesion 
     path('let´s-read-Together/', views.dashboard_view, name="dashboard"),
     path('detalle/<int:id>/', views.detalle_view, name="detalle"),
+    path('buscar/', views.buscar_audiobooks, name='buscar_audiobooks'),
 
     #url 
     path('', views.principal_view, name="home"),

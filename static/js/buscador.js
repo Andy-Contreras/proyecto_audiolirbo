@@ -1,25 +1,54 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const buscador = document.getElementById("buscador");
-    const libros = document.querySelectorAll(".libro-item");
-    const sinResultados = document.getElementById("sinResultados");
+  const buscador = document.getElementById("buscador");
+  const container = document.querySelector(".audiolibros-container");
+  const sinResultados = document.getElementById("sinResultados");
+  let timeoutId;
 
-    buscador.addEventListener("input", () => {
-        const texto = buscador.value.toLowerCase();
-        let coincidencias = 0;
+  buscador.addEventListener("input", () => {
+    // Debounce: esperar 300ms después de que el usuario deje de escribir
+    clearTimeout(timeoutId);
 
-        libros.forEach(libro => {
-            const titulo = libro.querySelector("h3").textContent.toLowerCase();
-            const autor = libro.querySelector("p").textContent.toLowerCase();
+    timeoutId = setTimeout(() => {
+      const texto = buscador.value.trim();
+      buscarAudiobooks(texto);
+    }, 300);
+  });
 
-            if (titulo.includes(texto) || autor.includes(texto)) {
-                libro.style.display = "";
-                coincidencias++;
-            } else {
-                libro.style.display = "none";
-            }
-        });
+  function buscarAudiobooks(query) {
+    const url = `/buscar/?q=${encodeURIComponent(query)}`;
 
-        // Mostrar mensaje si no hay resultados
-        sinResultados.style.display = coincidencias === 0 ? "block" : "none";
+    fetch(url)
+      .then((response) => response.json())
+      .then((data) => {
+        mostrarResultados(data.audiobooks);
+      })
+      .catch((error) => {
+        console.error("Error en la búsqueda:", error);
+      });
+  }
+
+  function mostrarResultados(audiobooks) {
+    container.innerHTML = "";
+
+    if (audiobooks.length === 0) {
+      sinResultados.style.display = "block";
+      return;
+    }
+
+    sinResultados.style.display = "none";
+
+    audiobooks.forEach((libro) => {
+      const bookCard = document.createElement("div");
+      bookCard.className = "book-card libro-item";
+      bookCard.innerHTML = `
+                <img src="${libro.cover_image}" alt="${libro.title}">
+                <h3>${libro.title}</h3>
+                <p>Autor: ${libro.author_name}</p>
+                <a href="/detalle/${libro.id}/" class="detalle">
+                    Detalle
+                </a>
+            `;
+      container.appendChild(bookCard);
     });
+  }
 });

@@ -11,12 +11,6 @@ body {
 }
 
 .container {
-  /* max-width: 1400px;
-  margin: 0 auto;
-  background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-  overflow: hidden; */
   max-width: 1400px;
   margin: 0 auto;
   background: white;
@@ -88,7 +82,7 @@ body {
   font-weight: 600;
   margin-bottom: 10px;
 }
-.btn-secondary{
+.btn-secondary {
   color: white;
   background: #6c757d;
 }
@@ -240,7 +234,7 @@ textarea {
   color: white;
 }
 
-.btn-add:hover{
+.btn-add:hover {
   background: #16a34a;
 }
 
@@ -357,28 +351,82 @@ textarea {
 
 /* ================= RESPONSIVE ================= */
 @media (max-width: 768px) {
+  /* 1. Eliminamos el padding del body que causa los bordes laterales */
+  body {
+    padding: 0 ;
+    margin: 0 ;
+  }
+
+  /* 2. Contenedor a pantalla completa */
+  .container {
+    width: 100% ;
+    max-width: 100% ;
+    margin: 0 ;
+    padding: 15px 10px ;
+    border-radius: 5px ;
+  }
+
+  /* 3. Header: Lo expandimos para eliminar los huecos de los lados */
+  .header {
+    border-radius: 5px ;
+    padding: 20px 15px ;
+  }
+
+  /* 4. Campos del formulario: Todo en una columna */
   .vocab-fields {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr ;
+    gap: 15px ;
   }
 
+  .content-wrapper {
+    padding: 15px ;
+    margin-bottom: 20px ;
+    border-left: none ;
+    border-right: none ;
+    border-radius: 5px ;
+  }
+
+  /* 5. Tarjetas de Vocabulario (Grid) */
   .vocabulary-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr ; /* Una tarjeta por fila */
+    gap: 15px ;
   }
 
-  .form-actions-bottom {
-    flex-direction: row;
+  .vocabulary-card {
+    margin: 0 ;
+    border-radius: 8px ;
+  }
+
+  /* 6. Botones: Apilados y fáciles de tocar */
+  .form-actions-top,
+  .form-actions-bottom,
+  .card-actions {
+    flex-direction: column-reverse ;
+    gap: 10px ;
   }
 
   .btn {
-    width: 100%;
-    justify-content: center;
+    width: 100% ;
+    padding: 14px ;
+    justify-content: center ;
+    font-size: 16px ; /* Evita zoom en iPhone */
   }
-}
-@media (max-width: 576px){
-  .form-actions-bottom {
-    flex-direction: column-reverse;
+
+  /* 7. Ajuste de items individuales */
+  .vocab-item {
+    padding: 15px ;
   }
-  
+
+  .vocab-item-header {
+    flex-wrap: wrap ;
+    gap: 10px ;
+  }
+
+  /* Estilizamos las alertas para que no se corten */
+  .alert {
+    margin: 10px 0 ;
+    font-size: 14px ;
+  }
 }
 /* ================= MODAL ================= */
 .modal {
@@ -463,22 +511,6 @@ textarea {
   gap: 12px;
   justify-content: flex-end;
   background: #f9fafb;
-}
-
-/* RESPONSIVE */
-@media (max-width: 768px) {
-  .modal-content {
-    width: 95%;
-    max-height: 95vh;
-  }
-
-  .modal-footer {
-    flex-direction: column-reverse;
-  }
-
-  .modal-footer .btn {
-    width: 100%;
-  }
 }
 
 /* Modal de Eliminación */

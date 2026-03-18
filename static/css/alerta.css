@@ -1,3 +1,7 @@
+.oculto-inicial {
+    display: none;
+}
+
 .no-resultados {
   display: none;
   width: 100%;

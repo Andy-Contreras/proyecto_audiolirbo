@@ -6,6 +6,7 @@
 }
 
 .container-dashboard {
+  width: 100%;
   max-width: 1400px;
   margin: 0 auto;
   background: white;
@@ -460,24 +461,32 @@ body {
 
 /* Responsive */
 @media (max-width: 768px) {
+  body {
+    display: block;
+    padding: 0; /* Eliminamos el padding del body para que el contenido toque los bordes */
+  }
+
+  .main-content {
+    margin-left: 0;
+    padding: 10px; /* Reducimos el padding lateral al mínimo */
+    padding-top: 76px; /* Mantenemos el espacio para la barra superior */
+  }
+
+  .container-dashboard {
+    padding: 15px 10px; /* Reducimos el padding interno del contenedor blanco */
+    border-radius: 0; /* Opcional: quita el redondeado para que se vea más integrado */
+    box-shadow: none; /* Opcional: quita la sombra para un look más limpio en móvil */
+    width: 100%; /* Aseguramos que use el 100% */
+  }
+
+  .dashboard-wrapper {
+    padding: 15px; /* Reducimos el padding de la caja gris interna */
+    margin-bottom: 20px;
+    width: 100%;
+  }
+
   .stats {
-    grid-template-columns: 1fr;
-  }
-
-  .card {
-    padding: 20px;
-  }
-
-  .chart-header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .chart-container {
-    height: 300px;
-  }
-
-  .title {
-    font-size: 24px;
+    grid-template-columns: 1fr; /* Una sola columna para que las cards sean anchas */
+    gap: 10px;
   }
 }

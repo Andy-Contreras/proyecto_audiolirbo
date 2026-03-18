@@ -178,9 +178,13 @@ main .seccion-audiolibro {
     padding: 10px;
   }
 
-  .header > div {
-    padding: 0 10px;
-    justify-content: center;
+  /* Aseguramos que el título y el buscador se alineen al mismo margen */
+  .header > div,
+  main form,
+  main h2,
+  .seccion-audiolibro {
+    width: 100%;
+    padding: 0 5px; /* Pequeño respiro interno igualado */
   }
 
   .header h1 {
@@ -188,12 +192,16 @@ main .seccion-audiolibro {
   }
 
   .audiolibros-container {
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    gap: 12px;
+    /* Cambiamos auto-fill por auto-fit para que se distribuyan mejor */
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 10px;
+    padding: 10px 0;
+    justify-items: center; /* Centra las tarjetas dentro del grid */
   }
 
   .book-card {
-    padding: 8px;
+    width: 100%; /* Que la tarjeta ocupe el espacio asignado por el grid */
+    margin: 0;
   }
 
   .book-card img {
@@ -207,12 +215,21 @@ main .seccion-audiolibro {
   }
 }
 @media (max-width: 600px) {
-  .header > div {
-    flex-direction: row;
-    justify-content: center;
-    padding: 0 10px;
+  body {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra todo el contenido en el eje horizontal */
   }
-
+  .header > div {
+    width: 100%;
+    justify-content: center;
+    padding: 0;
+  }
+  /* El buscador debe ocupar el ancho disponible para no dejar huecos */
+  main form {
+    width: 100%;
+  }
   .header h1 {
     font-size: 1.2rem;
     color: black;
@@ -222,18 +239,23 @@ main .seccion-audiolibro {
     padding: 10px;
   }
 
-  body {
-    padding: 12px;
-  }
-
   .book-card {
-    min-width: 150px;
+    min-width: 0; /* Quitamos el min-width que puede estar empujando hacia un lado */
+    width: 100%;
   }
 
   .book-card img {
     width: 100%;
     aspect-ratio: 3 / 4;
     height: auto;
+  }
+  .audiolibros-container {
+    width: 100%;
+    grid-template-columns: repeat(
+      2,
+      1fr
+    ); /* Fuerza 2 columnas iguales en móvil */
+    gap: 12px;
   }
 }
 

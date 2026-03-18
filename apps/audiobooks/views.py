@@ -14,6 +14,7 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib import messages
 from datetime import datetime, timedelta
 from django.db.models.functions import TruncMonth
+from django.db.models import Q
 # Create your views here.
 
 @login_required
@@ -478,6 +479,27 @@ def dashboard_view(request):
     }
     return render(request, "inicio/inicio.html", context)
 
+def buscar_audiobooks(request):
+    query = request.GET.get('q', '')
+    
+    if query:
+        audiobooks = Audiobook.objects.filter(
+            Q(title__icontains=query) | Q(author_name__icontains=query)
+        )[:20]  # Limitar a 20 resultados
+    else:
+        audiobooks = Audiobook.objects.all()[:10]
+    
+    results = []
+    for libro in audiobooks:
+        results.append({
+            'id': libro.id,
+            'title': libro.title,
+            'author_name': libro.author_name,
+            'cover_image': libro.cover_image.url if libro.cover_image else '',
+        })
+    
+    return JsonResponse({'audiobooks': results})
+
 # detalle de la pagina de usuario
 def detalle_view(request, id):
     audiobook = get_object_or_404(Audiobook, id=id)
@@ -584,3 +606,10 @@ def change_password(request):
 # Vista para la principal de cuando ingresa al sitio web
 def principal_view(request):
     return render(request, "base_prin.html")
+
+
+# vista
+# def pagina_no_encontrada(request, path=None):
+#     return render(request, "errors/404.html")
+def pagina_no_encontrada(request, exception):
+    return render(request, "404.html", status=404)

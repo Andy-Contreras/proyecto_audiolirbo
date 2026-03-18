@@ -209,3 +209,48 @@ body {
   outline: none;
   border-color: #2563eb;
 }
+
+@media (max-width: 768px) {
+  body {
+    padding: 0; /* Elimina el espacio exterior que causa la asimetría */
+  }
+
+  .results-container {
+    width: 100%;
+    max-width: 100%;
+    padding: 15px 10px; /* Espacio mínimo interno */
+    border-radius: 5px; /* El contenedor blanco ocupa toda la pantalla */
+    box-shadow: none;
+    margin: 0;
+  }
+
+  .results-header {
+    border-radius: 5px; /* El encabezado azul llega hasta los bordes */
+    margin-bottom: 20px;
+    padding: 15px;
+  }
+
+  .usuario-wrapers {
+    padding: 15px;
+    margin-bottom: 20px;
+    width: 100%;
+    border-radius: 5px; /* Opcional, para mantener consistencia */
+  }
+
+  /* Ajuste de la tabla para que sea deslizable si es muy ancha */
+  .table-wrapper {
+    border-radius: 8px; /* Un poco de redondeado interno se ve mejor */
+    margin: 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+
+  .results-table th,
+  .results-table td {
+    padding: 12px 8px; /* Celdas más compactas para que quepa más texto */
+    font-size: 12px; /* Texto ligeramente más pequeño */
+  }
+
+  .results-header h1 {
+    font-size: 16px; /* Ajustamos el tamaño para que no se rompa en una línea */
+  }
+}

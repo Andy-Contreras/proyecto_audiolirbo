@@ -10,11 +10,14 @@ function addOption(data = null) {
   optionDiv.dataset.optionId = optionId;
 
   optionDiv.innerHTML = `
+        <div class="field-group">
+        <label class="mobile-label">Texto de la opcion:</label>
         <input type="text" 
                name="option_text_${optionId}" 
                placeholder="Paja" 
                value="${data ? data.text : ""}"
                required>
+    </div>
         
         <div class="checkbox-container">
             <input type="checkbox" 
@@ -22,10 +25,13 @@ function addOption(data = null) {
                    ${data && data.is_correct ? "checked" : ""}>
         </div>
         
-        <textarea name="option_justification_${optionId}" 
-                  placeholder="La primera casa que construyó...">${
-                    data ? data.justification || "" : ""
-                  }</textarea>
+        <div class="field-group">
+          <label class="mobile-label">Justificación de la respuesta:</label>
+          <textarea name="option_justification_${optionId}" 
+                    placeholder="La primera casa que construyó...">${
+                      data ? data.justification || "" : ""
+                    }</textarea>
+        </div>
         
         <button type="button" class="btn-remove" onclick="removeOption(${optionId})">
             ✗
@@ -101,7 +107,7 @@ function getFormData() {
       text: text,
       is_correct: isCorrect,
       justification: justification,
-      points_if_correct: 1,  // Valor por defecto
+      points_if_correct: 1, // Valor por defecto
       points_if_wrong: 0,
     });
   });

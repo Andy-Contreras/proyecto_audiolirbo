@@ -135,3 +135,43 @@ body {
   outline: none;
   border-color: #2563eb;
 }
+@media (max-width: 768px) {
+  body {
+    padding: 0; /* Elimina el espacio exterior para que el contenido toque los bordes */
+  }
+
+  .audiobooks-questions {
+    width: 100%;
+    max-width: 100%;
+    padding: 15px 10px; /* Reducimos padding para ganar espacio para las tarjetas */
+    border-radius: 5px;
+    box-shadow: none;
+    margin: 0;
+  }
+
+  .title {
+    border-radius: 5px; /* El título azul se expande de lado a lado */
+    margin-bottom: 20px;
+    padding: 15px;
+  }
+
+  .detalle-questions {
+    padding: 15px;
+    margin-bottom: 25px;
+    border: none; /* Opcional: quita el borde para un look más limpio en móvil */
+  }
+
+  .audiobook-grid {
+    /* Forzamos 2 columnas exactas para que no queden huecos a la derecha */
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px; /* Espacio más pequeño entre tarjetas */
+  }
+
+  .audiobook-card {
+    padding: 10px; /* Compactamos la tarjeta */
+  }
+
+  .audiobook-card img {
+    height: 120px; /* Reducimos un poco la imagen para ahorrar espacio vertical */
+  }
+}
