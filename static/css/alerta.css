@@ -1,11 +1,11 @@
 .oculto-inicial {
-    display: none;
+  display: none;
 }
 
 .no-resultados {
   display: none;
   width: 100%;
-  max-width: 60rem; 
+  max-width: 60rem;
   margin: 20px auto;
   margin-top: 20px;
   padding: 25px;
@@ -40,4 +40,4 @@
     opacity: 1;
     transform: translateY(0) scale(1);
   }
-} 
+}

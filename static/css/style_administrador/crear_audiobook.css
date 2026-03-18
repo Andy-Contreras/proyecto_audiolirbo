@@ -139,3 +139,14 @@ body {
     font-size: 16px; /* Evita zoom automático en móviles */
   }
 }
+
+
+.file-link {
+  color: black; /* Color negro */
+  text-decoration: none; /* Quitar subrayado */
+}
+
+.file-link:hover {
+  color: #333; /* Opcional: un gris oscuro al pasar el mouse */
+  text-decoration: underline; /* Opcional: subrayado al hover si quieres feedback */
+}

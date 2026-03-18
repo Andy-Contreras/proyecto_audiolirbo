@@ -119,7 +119,9 @@ main h2 {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
   /* 👇 ESTA LÍNEA ES IMPORTANTE */
   height: 100%;
 }

@@ -76,7 +76,9 @@ body {
   font-size: 15px;
   outline: none;
   margin-bottom: 18px;
-  transition: border 0.2s, box-shadow 0.2s;
+  transition:
+    border 0.2s,
+    box-shadow 0.2s;
 }
 
 .login-container input::placeholder {
@@ -99,7 +101,9 @@ body {
   font-weight: 600;
   font-size: 16px;
   cursor: pointer;
-  transition: background 0.2s, transform 0.1s;
+  transition:
+    background 0.2s,
+    transform 0.1s;
 }
 
 .login-container button:hover {
@@ -125,13 +129,23 @@ body {
   text-decoration: underline;
 }
 .alert {
-  background-color: #f44336; /* rojo de fondo */
   color: white; /* texto en blanco */
   padding: 10px 15px;
   margin-bottom: 20px;
   border-radius: 5px;
   font-weight: bold;
   text-align: center;
+}
+.alert-success {
+  background-color: #31d61b;
+}
+
+/* Cuando el mensaje sea de ERROR (Rojo) */
+/* Nota: Django usa la etiqueta 'error', pero si configuraste MESSAGE_TAGS 
+   como 'danger', usa .alert-danger */
+.alert-error,
+.alert-danger {
+  background-color: #d61b1b; /* Rojo fuerte */
 }
 
 @media (max-width: 768px) {

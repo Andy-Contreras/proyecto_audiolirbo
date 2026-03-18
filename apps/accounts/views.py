@@ -14,7 +14,7 @@ def login_view(request):
             #Buscar al usuario por email
             user = User.objects.get(email=email)
         except User.DoesNotExist:
-            messages.error(request, "Correo o contraseña incorrectos.")
+            messages.error(request, "Correo o contraseña incorrectos.",extra_tags='login')
             return render(request, "accounts/login.html")
         
         user_auth = authenticate(request, username =user.username, password=password)
@@ -22,7 +22,7 @@ def login_view(request):
             login(request, user_auth)
             return redirect("administrador")
         else:
-            messages.error(request, "Correo o contraseña incorrectos")
+            messages.error(request, "Correo o contraseña incorrectos",extra_tags='login')
         
     return render(request, "accounts/login.html", {
         "titulo_libro": "Let´s Read Together"
@@ -31,6 +31,10 @@ def login_view(request):
 
 
 def register_view(request):
+    storage = messages.get_messages(request)
+    for _ in storage:
+        pass # Al iterar sobre ellos, Django los marca como leídos y los elimina
+    # ------------------------------------------------------
     if request.method == "POST":
         full_name = request.POST.get("full_name")
         email = request.POST.get("email")
@@ -38,16 +42,16 @@ def register_view(request):
         confirm = request.POST.get("confirm")
 
         if not full_name or not email or not password or not confirm:
-            messages.error(request, "Todos los campos son obligatorios.")
-            return redirect("register")
+            messages.error(request, "Todos los campos son obligatorios.",extra_tags='register')
+            return render(request, "accounts/register.html")
         
         if password != confirm:
-            messages.error(request, "Las contraseñas no coinciden")
-            return redirect("register")
+            messages.error(request, "Las contraseñas no coinciden",extra_tags='register')
+            return render(request, "accounts/register.html")
         
         if User.objects.filter(email=email).exists():
-            messages.error(request, "Este email ya esta registrado")
-            return redirect("register")
+            messages.error(request, "Este email ya esta registrado",extra_tags='register')
+            return render(request, "accounts/register.html")
         
         # Generemos el username automatico
         username = email.split("@")[0]
@@ -80,7 +84,7 @@ def register_view(request):
             first_name = first_name,
             last_name = last_name,
         )
-        messages.success(request, "Cuenta creada con éxito, ahora inicia sesión")
+        messages.success(request, "Cuenta creada con éxito, ahora inicia sesión",extra_tags='register')
         return redirect("login")
     
     return render(request, "accounts/register.html")

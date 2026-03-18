@@ -21,7 +21,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // match
     const matchOk = val && val === pass2.value;
-    ruleMatch.textContent = (matchOk ? "✅" : "❌") + " Las contraseñas coinciden";
+    ruleMatch.textContent =
+      (matchOk ? "✅" : "❌") + " Las contraseñas coinciden";
     ruleMatch.style.color = matchOk ? "#16a34a" : "#dc2626";
   }
 

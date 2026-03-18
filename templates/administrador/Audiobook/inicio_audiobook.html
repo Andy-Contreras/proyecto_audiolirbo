@@ -1,0 +1,126 @@
+{% extends 'administrador/inicio_administrador.html' %}
+{% load static %}
+{% block css %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'css/style_administrador/inicio_preguntas.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="audiobooks-questions">
+    <div class="title">
+        <h2>My Audiobooks</h2>
+    </div>
+
+    <div class="detalle-questions">
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search by book title">
+            <a href="{% url 'nuevo_audiolibro' %}" class="btn-crear"> + Create Audiobook</a>
+        </div>
+
+        {% if audiolibros %}
+        <div class="audiobook-grid">
+            {% for audiobook in audiolibros %}
+            <div class="audiobook-card">
+
+                {% if audiobook.cover_image %}
+                <img src="{{ audiobook.cover_image.url }}" alt="{{ audiobook.title }}"
+                    style="max-width:100%; border-radius:5px;">
+                {% endif %}
+
+                <h3>{{ audiobook.title }}</h3>
+                <p class="author">{{ audiobook.author_name }}</p>
+
+                {% if request.user == audiobook.added_by %}
+                <div class="action-buttons">
+                    {% if audiobook.is_active %}
+                    <!-- Activo: mostrar Editar e Inactivar -->
+                    <a href="{% url 'edit_audiobook' audiobook.id %}" class="btn-questions">Edit</a>
+                    <button class="btn-questions btn-open-modal"
+                        data-audiobook-id="{{ audiobook.id }}">Deactivate</button>
+                    {% else %}
+                    <!-- Inactivo: mostrar solo Reactivar -->
+                    <form action="{% url 'reactivate_audiobook' audiobook.id %}" method="POST" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-questions btn-reactivate">Reactivate</button>
+                    </form>
+                    {% endif %}
+                </div>
+                {% else %}
+                <button class="btn-questions disabled" disabled>No access</button>
+                {% endif %}
+            </div>
+
+            <!-- Modal fuera del card -->
+            {% if request.user == audiobook.added_by %}
+            <div class="modal" id="modal-{{ audiobook.id }}">
+                <div class="modal-content">
+                    <h3>Confirm Deactivation</h3>
+                    <p> Are you sure you want to deactivate the audiobook<strong>{{ audiobook.title }}</strong>?</p>
+                    <div class="modal-buttons">
+                        <button class="btn-cancel">Cancel</button>
+                        <form action="{% url 'inactivate_audiobook' audiobook.id %}" method="POST"
+                            style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn-inactivate">Deactivate</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            {% endfor %}
+        </div>
+
+        <div id="noResultsMessage" style="display: none; text-align: center; padding: 40px; color: #666;">
+            <p style="font-size: 1.2rem;">🔍 No results found for your search.</p>
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <div class="empty-icon">📊</div>
+            <p>No results yet.</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+
+        // === Buscador ===
+        const input = document.getElementById("searchInput");
+        const cards = document.querySelectorAll(".audiobook-card");
+        const noResults = document.getElementById("noResultsMessage");
+        if (input && cards.length > 0) {
+            const normalize = text => text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+            input.addEventListener("keyup", () => {
+                const value = normalize(input.value.trim());
+                let visibleCards = 0;
+                cards.forEach(card => {
+                    const titleEl = card.querySelector("h3");
+                    const title = titleEl ? normalize(titleEl.textContent) : "";
+                    if (title.includes(value)) {
+                        card.style.display = "";
+                        visibleCards++;
+                    } else {
+                        card.style.display = "none";
+                    }
+                });
+                noResults.style.display = visibleCards === 0 ? "block" : "none";
+            });
+        }
+
+        // === Modal ===
+        const openButtons = document.querySelectorAll(".btn-open-modal");
+        openButtons.forEach(button => {
+            const id = button.dataset.audiobookId;
+            const modal = document.getElementById(`modal-${id}`);
+            const cancel = modal.querySelector(".btn-cancel");
+
+            button.addEventListener("click", () => modal.style.display = "block");
+            cancel.addEventListener("click", () => modal.style.display = "none");
+            window.addEventListener("click", e => { if (e.target == modal) modal.style.display = "none"; });
+        });
+
+    });
+</script>
+{% endblock %}

@@ -17,27 +17,55 @@
                 <path d="M5 12l6 -6" />
             </svg>
         </a>
-        <h1> Crear cuenta</h1>
-        <p>Únete a AudioPractice para empezar a aprender</p>
+        <h1>Create Account</h1>
+        <p>Join AudioPractice to start learning</p>
     </div>
     <div class="registro-container">
+        {% if messages %}
+        {% for message in messages %}
+        {% if "register" in message.tags %}
+        <div class="alert alert-{{ message.level_tag }}">
+            {{ message }}
+        </div>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
         <form method="POST" action="{% url 'register' %}">
             {% csrf_token %}
-            <label>Nombre Completo</label>
-            <input type="text" name="full_name" placeholder="Ingrese tu nombre completo ">
-            <label>Correo Electrónico</label>
-            <input type="email" name="email" placeholder="tu@correo.com">
-            <label>Contraseña</label>
-            <input type="password" name="password" placeholder="Ingrese su contraseña">
-            <label for="">Confirmar Contraseña</label>
-            <input type="password" name="confirm" placeholder="Vuelve a escribir la contraseña">
-            <p>Al crear una cuenta, aceptas nuestro
-                <small>Términos de Servicio</small> y
-                <small>Política de Privcaidad</small>.
+            <label>Full Name</label>
+            <input type="text" name="full_name" placeholder="Enter your full name ">
+            <label>Email Address</label>
+            <input type="email" name="email" placeholder="you@email.com">
+            <label>Password</label>
+            <input type="password" name="password" placeholder="Enter your password">
+            <label for="">Confirm Password</label>
+            <input type="password" name="confirm" placeholder="Re-enter your password">
+            <p>By creating an account, you agree to our
+                <small>Terms of Service</small> and
+                <small>Privacy Policy</small>.
             </p>
-            <button type="submit">Crear Cuenta</button>
+            <button type="submit">Create Account</button>
         </form>
     </div>
-    <p>¿Ya tienes una cuenta <a href="{% url 'login' %}">Inicio sesión</a></p>
+    <p>Already have an account ?<a href="{% url 'login' %}">Sign in</a></p>
 </div>
+{% endblock %}
+{% block scripts %}
+<script>
+    const inputNombre = document.querySelector('input[name="full_name"]');
+
+    inputNombre.addEventListener('input', function () {
+        // Reemplaza cualquier cosa que NO sea letra o espacio con un vacío
+        this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '');
+    });
+    setTimeout(() => {
+        const alerts = document.querySelectorAll('.alert');
+        alerts.forEach(alert => {
+            alert.style.transition = 'opacity 0.5s ease';
+            alert.style.opacity = '0';
+            setTimeout(() => alert.remove(), 500); // elimina del DOM después de la transición
+        });
+    }, 5000);
+</script>
+
 {% endblock %}

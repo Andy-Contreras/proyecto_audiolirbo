@@ -45,9 +45,9 @@ function addVocabItem(data = null) {
 
   itemDiv.innerHTML = `
         <div class="vocab-item-header">
-            <span class="vocab-number">Palabra #${itemCounter}</span>
+            <span class="vocab-number">Word #${itemCounter}</span>
             <button type="button" class="btn-remove-item" onclick="removeVocabItem(${itemId})">
-                ✗ Eliminar
+                ✗ Delete
             </button>
         </div>
         <div class="vocab-fields">
@@ -55,20 +55,20 @@ function addVocabItem(data = null) {
                 <label class="label-required">Palabra</label>
                 <input type="text" 
                        name="palabra_${itemId}" 
-                       placeholder="Ej: Resiliencia"
+                       placeholder="Ej: Resilience"
                        value="${data ? data.palabra : ""}"
                        required>
             </div>
             <div class="field-group">
                 <label class="label-required">Definición</label>
                 <textarea name="definicion_${itemId}" 
-                          placeholder="Escribe la definición..."
+                          placeholder="Write the definition..."
                           required>${data ? data.definicion : ""}</textarea>
             </div>
             <div class="field-group full-width">
                 <label>Ejemplo de uso <span class="label-optional">(opcional)</span></label>
                 <textarea name="ejemplo_${itemId}" 
-                          placeholder="Escribe un ejemplo...">${
+                          placeholder="Write an example...">${
                             data ? data.ejemplo || "" : ""
                           }</textarea>
             </div>
@@ -96,7 +96,7 @@ function updateItemNumbers() {
   items.forEach((item, index) => {
     const number = item.querySelector(".vocab-number");
     if (number) {
-      number.textContent = `Palabra #${index + 1}`;
+      number.textContent = `Word #${index + 1}`;
     }
   });
 }

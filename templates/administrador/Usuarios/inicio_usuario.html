@@ -10,11 +10,11 @@
 <div class="results-container">
 
     <div class="results-header">
-        <h1>Resultados del Cuestionario</h1>
+        <h1>Quiz Results</h1>
     </div>
     <div class="usuario-wrapers">
         <div class="search-box">
-            <input type="text" id="searchInput" placeholder="Buscar por nombre, apellido o correo...">
+            <input type="text" id="searchInput" placeholder="Search by first name, last name, or email...">
         </div>
 
         {% if resultados %}
@@ -23,11 +23,13 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Nombre</th>
-                        <th>Apellido</th>
-                        <th>Correo</th>
-                        <th>Mejor Puntaje</th>
-                        <th>Intentos</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Audiobook</th>
+                        <th>Course</th>
+                        <th>Email</th>
+                        <th>Best Score</th>
+                        <th>Attempts</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -36,6 +38,8 @@
                         <td>{{ forloop.counter }}</td>
                         <td>{{ r.nombre }}</td>
                         <td>{{ r.apellido }}</td>
+                        <td>{{ r.audiobook__title }}</td>
+                        <td>{{ r.curso }}</td>
                         <td>{{ r.correo }}</td>
                         <td>{{ r.mejor_puntaje }}</td>
                         <td>{{ r.intentos }}</td>
@@ -46,12 +50,12 @@
         </div>
         <div id="noResultsMessage"
             style="display: none; text-align: center; padding: 20px; background: #f8f9fa; border-radius: 8px; margin-top: 10px;">
-            <p>🔍 No se encontraron usuarios con ese criterio.</p>
+            <p>🔍 No users found matching your search.</p>
         </div>
         {% else %}
         <div class="empty-state">
             <div class="empty-icon">📊</div>
-            <p>No hay resultados aún.</p>
+            <p>No results available yet.</p>
         </div>
         {% endif %}
     </div>

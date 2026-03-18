@@ -7,7 +7,7 @@
 {% block content %}
 <div class="container">
     <div class="header">
-        <h1>📚 Gestión de Vocabulario</h1>
+        <h1>📚 Vocabulary Management</h1>
         <p>{{ audiobook.title }}</p>
     </div>
 
@@ -15,15 +15,15 @@
         <div id="alert-container"></div>
 
         <div class="vocabulary-form">
-            <h2 class="form-title">Agregar Palabras al Vocabulario</h2>
-            <p class="form-subtitle">Puedes agregar múltiples palabras a la vez antes de guardar</p>
+            <h2 class="form-title">Add Words to Vocabulary</h2>
+            <p class="form-subtitle">You can add multiple words at once before saving</p>
 
             <form id="vocabularyForm">
                 {% csrf_token %}
 
                 <div class="form-actions-top">
                     <button type="button" class="btn btn-add" onclick="addVocabItem()">
-                        + Agregar Palabra
+                        + Add Word
                     </button>
                 </div>
 
@@ -33,10 +33,10 @@
 
                 <div class="form-actions-bottom">
                     <button type="button" class="btn btn-secondary" onclick="clearForm()">
-                        ✗ Limpiar Todo
+                        ✗ Clear All
                     </button>
                     <button type="submit" class="btn btn-primary">
-                        ✓ Guardar Todas las Palabras
+                        ✓ Save All Words
                     </button>
                 </div>
             </form>
@@ -47,7 +47,7 @@
     <div class="vocabulary-list">
         <div>
             <h2 class="list-title">
-                Vocabulario Guardado ({{ vocabulario.count }})
+                Saved Vocabulary ({{ vocabulario.count }})
             </h2>
         </div>
 
@@ -63,10 +63,10 @@
                     {% endif %}
                     <div class="card-actions">
                         <button class="btn btn-edit" data-vocab-id="{{ vocab.id }}" onclick="editVocabulary(this)">
-                            ✏️ Editar
+                            ✏️ Edit
                         </button>
                         <button class="btn btn-danger" data-vocab-id="{{ vocab.id }}" onclick="deleteVocabulary(this)">
-                            🗑️ Eliminar
+                            🗑️ Delete
                         </button>
                     </div>
                 </div>
@@ -75,8 +75,8 @@
             {% else %}
             <div class="empty-state">
                 <div class="empty-state-icon">📚</div>
-                <h3>No hay palabras guardadas aún</h3>
-                <p>Comienza agregando vocabulario relevante para este audiolibro.</p>
+                <h3>No words saved yet</h3>
+                <p>Start by adding relevant vocabulary for this audiobook.</p>
             </div>
             {% endif %}
         </div>
@@ -87,7 +87,7 @@
 <div id="editModal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
-            <h2>✏️ Editar Palabra</h2>
+            <h2>✏️ Edit Word</h2>
             <button class="modal-close" onclick="closeEditModal()">&times;</button>
         </div>
         <form id="editForm">
@@ -95,27 +95,27 @@
 
             <div class="modal-body">
                 <div class="field-group">
-                    <label class="label-required">Palabra</label>
+                    <label class="label-required">Word</label>
                     <input type="text" id="edit_palabra" required>
                 </div>
 
                 <div class="field-group">
-                    <label class="label-required">Definición</label>
+                    <label class="label-required">Definition</label>
                     <textarea id="edit_definicion" required></textarea>
                 </div>
 
                 <div class="field-group">
-                    <label>Ejemplo de uso <span class="label-optional">(opcional)</span></label>
+                    <label>Usage example <span class="label-optional">(opcional)</span></label>
                     <textarea id="edit_ejemplo" class="textarea-small"></textarea>
                 </div>
             </div>
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" onclick="closeEditModal()">
-                    Cancelar
+                    Cancel
                 </button>
                 <button type="submit" class="btn btn-primary">
-                    Guardar Cambios
+                    Save Changes
                 </button>
             </div>
         </form>
@@ -125,28 +125,28 @@
 <div id="deleteModal" class="modal">
     <div class="modal-content modal-small">
         <div class="modal-header modal-header-danger">
-            <h2>🗑️ Eliminar Palabra</h2>
+            <h2>🗑️ Delete Word</h2>
             <button class="modal-close" onclick="closeDeleteModal()">&times;</button>
         </div>
         <div class="modal-body">
             <div class="delete-warning">
                 <div class="warning-icon">⚠️</div>
                 <p class="warning-text">
-                    ¿Estás seguro de que deseas eliminar la palabra
+                    Are you sure you want to delete the word
                     <strong id="delete_palabra_name"></strong>?
                 </p>
                 <p class="warning-subtext">
-                    Esta acción no se puede deshacer.
+                    This action cannot be undone.
                 </p>
             </div>
             <input type="hidden" id="delete_vocab_id">
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" onclick="closeDeleteModal()">
-                Cancelar
+                Cancel
             </button>
             <button type="button" class="btn btn-danger-full" onclick="confirmDelete()">
-                Sí, Eliminar
+                Yes, Delete
             </button>
         </div>
     </div>

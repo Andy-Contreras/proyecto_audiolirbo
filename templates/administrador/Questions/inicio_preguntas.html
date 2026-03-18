@@ -7,12 +7,12 @@
 {% block content %}
 <div class="audiobooks-questions">
     <div class="title">
-        <h2>Mis audiolibros - Preguntas</h2>
+        <h2>My Audiobooks - Questions</h2>
     </div>
 
     <div class="detalle-questions">
         <div class="search-box">
-            <input type="text" id="searchInput" placeholder="Buscar por titulo del libro">
+            <input type="text" id="searchInput" placeholder="Search by book title">
         </div>
 
         {% if audiolibros %}
@@ -27,26 +27,27 @@
                 <h3>{{ audiobook.title }}</h3>
                 <p class="author">{{ audiobook.author_name }}</p>
 
-                {% if request.user == audiobook.added_by %}
+                {% if request.user == audiobook.added_by and audiobook.is_active %}
                 <a href="{% url 'manage_questions' audiobook.id %}" class="btn-questions">
-                    Crear preguntas
+                    Create Questions
                 </a>
                 {% else %}
                 <button class="btn-questions disabled" disabled>
-                    Sin acceso
+                    No Access
                 </button>
                 {% endif %}
             </div>
             {% endfor %}
         </div>
         <div id="noResultsMessage" style="display: none; text-align: center; padding: 40px; color: #666;">
-            <p style="font-size: 1.2rem;">🔍 No se encontraron resultados para tu búsqueda.</p>
+            <p style="font-size: 1.2rem;">🔍 No results found for your search.</p>
         </div>
     </div>
     {% else %}
-    <p class="empty">
-        Aún no has creado audiolibros.
-    </p>
+    <div class="empty-state">
+        <div class="empty-icon">📊</div>
+        <p>No results yet.</p>
+    </div>
     {% endif %}
 </div>
 </div>
@@ -55,7 +56,7 @@
     document.addEventListener("DOMContentLoaded", () => {
         const input = document.getElementById("searchInput");
         const cards = document.querySelectorAll(".audiobook-card");
-        const noResults = document.getElementById("noResultsMessage"); 
+        const noResults = document.getElementById("noResultsMessage");
 
         if (!input || cards.length === 0) return;
 

@@ -14,7 +14,7 @@ function addOption(data = null) {
         <label class="mobile-label">Texto de la opcion:</label>
         <input type="text" 
                name="option_text_${optionId}" 
-               placeholder="Paja" 
+               placeholder="Straw" 
                value="${data ? data.text : ""}"
                required>
     </div>
@@ -28,7 +28,7 @@ function addOption(data = null) {
         <div class="field-group">
           <label class="mobile-label">Justificación de la respuesta:</label>
           <textarea name="option_justification_${optionId}" 
-                    placeholder="La primera casa que construyó...">${
+                    placeholder="The first house he built...">${
                       data ? data.justification || "" : ""
                     }</textarea>
         </div>
@@ -97,10 +97,10 @@ function getFormData() {
 
     const text = row.querySelector(`[name="option_text_${optionId}"]`).value;
     const isCorrect = row.querySelector(
-      `[name="option_correct_${optionId}"]`
+      `[name="option_correct_${optionId}"]`,
     ).checked;
     const justification = row.querySelector(
-      `[name="option_justification_${optionId}"]`
+      `[name="option_justification_${optionId}"]`,
     ).value;
 
     options.push({
@@ -133,7 +133,7 @@ function resetForm() {
 function editQuestion(button) {
   const questionId = button.dataset.questionId; // Obtener del data attribute
   const questionItem = document.querySelector(
-    `[data-question-id="${questionId}"]`
+    `[data-question-id="${questionId}"]`,
   );
 
   if (!questionItem) {
@@ -164,7 +164,7 @@ function editQuestion(button) {
       window.scrollTo({ top: 0, behavior: "smooth" });
       showAlert(
         "Pregunta cargada para edición. Modifica y guarda los cambios.",
-        "success"
+        "success",
       );
     })
     .catch((error) => {
@@ -178,7 +178,7 @@ function editQuestion(button) {
 function openDeleteQuestionModal(questionId) {
   const modal = document.getElementById("deleteQuestionModal");
   const questionItem = document.querySelector(
-    `[data-question-id="${questionId}"]`
+    `[data-question-id="${questionId}"]`,
   );
 
   if (!questionItem) {
@@ -234,7 +234,7 @@ function confirmDeleteQuestion() {
         closeDeleteQuestionModal();
 
         const questionItem = document.querySelector(
-          `[data-question-id="${questionId}"]`
+          `[data-question-id="${questionId}"]`,
         );
 
         if (questionItem) {

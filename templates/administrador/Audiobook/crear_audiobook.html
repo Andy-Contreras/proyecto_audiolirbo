@@ -9,7 +9,7 @@
 <!-- templates/audiobooks/nuevo.html -->
 <div class="container-books">
     <div class="header">
-        <h2>Crear audiolibro</h2>
+        <h2>Create Audiobook</h2>
     </div>
 
     <div class="audiobook-wrapper">
@@ -18,7 +18,7 @@
             {% if form.errors %}
             <div
                 style="background-color: #f8d7da; color: #721c24; padding: 15px; border: 1px solid #f5c6cb; border-radius: 5px; margin-bottom: 20px;">
-                <strong>Error al guardar:</strong>
+                <strong>Error while saving:</strong>
                 <ul style="margin-bottom: 0;">
                     {% for field in form %}
                     {% for error in field.errors %}
@@ -32,35 +32,52 @@
             </div>
             {% endif %}
             <div class="form-group">
-                <label>Título del audiolibro</label>
+                <label>Audiobook Title</label>
                 {{ form.title }}
             </div>
 
             <div class="form-group">
-                <label>Autor</label>
+                <label>Author</label>
                 {{ form.author_name }}
             </div>
-
             <div class="form-group">
-                <label>Subir archivo de audio/video</label>
+                <label>Audiobook Instructions</label>
+                {{ form.instruction }}
+            </div>
+            <div class="form-group">
+                <label>Upload audio/video file</label>
+                {% if audiobook and audiobook.audio_file %}
+                <p>Current file:
+                    <a href="{{ audiobook.audio_file.url }}" target="_blank" class="file-link">
+                        {{ audiobook.audio_file.name|slice:"13:" }}
+                    </a>
+                </p>
+                {% endif %}
                 {{ form.audio_file }}
                 <div id="audio-preview-container" style="margin-top: 15px; display: none;">
-                    <p><small>Vista previa de audio:</small></p>
+                    <p><small>Audio preview:</small></p>
                     <audio id="audio-preview" controls style="width: 100%;">
-                        Tu navegador no soporta la reproducción de audio.
+                        Your browser does not support audio playback.
                     </audio>
                 </div>
 
                 <div id="video-preview-container" style="margin-top: 15px; display: none;">
-                    <p><small>Vista previa de video:</small></p>
+                    <p><small>Video preview:</small></p>
                     <video id="video-preview" controls style="width: 100%; max-height: 250px; border-radius: 8px;">
-                        Tu navegador no soporta la reproducción de video.
+                        Your browser does not support video playback.
                     </video>
                 </div>
             </div>
 
             <div class="form-group">
-                <label>Imagen de portada (opcional)</label>
+                <label>Cover image (optional)</label>
+                {% if audiobook and audiobook.cover_image %}
+                <p>Archivo actual:
+                    <a href="{{ audiobook.cover_image.url }}" target="_blank" class="file-link">
+                        {{ audiobook.cover_image.url|slice:"12:" }}
+                    </a>
+                </p>
+                {% endif %}
                 {{ form.cover_image }}
                 <div id="preview-container" style="margin-top: 15px; display: none;">
                     <img id="image-preview" src="#" alt="Vista previa"
@@ -69,11 +86,18 @@
             </div>
 
             <div class="form-group">
-                <label>LESSON PLAN</label>
+                <label>Lesson Plan</label>
+                {% if audiobook and audiobook.pdf_file %}
+                <p>Current file:
+                    <a href="{{ audiobook.pdf_file.url }}" target="_blank" class="file-link">
+                        {{ audiobook.pdf_file.name|slice:"9:" }}
+                    </a>
+                </p>
+                {% endif %}
                 {{ form.pdf_file }}
             </div>
 
-            <button type="submit" class="btn-guardar">Guardar</button>
+            <button type="submit" class="btn-guardar">Save</button>
         </form>
     </div>
 </div>

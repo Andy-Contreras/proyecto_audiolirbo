@@ -143,6 +143,11 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
+from django.contrib.messages import constants as messages
+MESSAGE_TAGS = {
+    messages.SUCCESS: 'success',
+    messages.ERROR: 'danger',  # Ahora Django escribirá "alert-danger" en el HTML
+}
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -156,3 +161,4 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'andycontreras123456@gmail.com'
 EMAIL_HOST_PASSWORD = 'ylel hrzg mylx hpgn'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

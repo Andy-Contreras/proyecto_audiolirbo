@@ -15,6 +15,7 @@ from django.contrib import messages
 from datetime import datetime, timedelta
 from django.db.models.functions import TruncMonth
 from django.db.models import Q
+from django.views.decorators.cache import never_cache
 # Create your views here.
 
 @login_required
@@ -112,6 +113,16 @@ def dashboard_privado_view(request):
 
 
 @login_required
+@never_cache  # ← Agregar esto
+def lista_audiolibro_view(request):
+    audiolibros = Audiobook.objects.filter(added_by=request.user)
+    return render(request, "administrador/Audiobook/inicio_audiobook.html", {
+        "audiolibros": audiolibros,
+        "titulo_libro": "Let´s Read Together"
+    })
+
+
+@login_required
 def nuevo_audiolibro_view(request):
     if request.method == "POST":
         form = AudiobookForm(request.POST, request.FILES)
@@ -119,7 +130,7 @@ def nuevo_audiolibro_view(request):
             audiobook = form.save(commit=False)
             audiobook.added_by = request.user
             audiobook.save()
-            return redirect("mis_audiolibros")
+            return redirect("lista_libro")
     else:
         form = AudiobookForm()
 
@@ -128,12 +139,51 @@ def nuevo_audiolibro_view(request):
         "titulo_libro": "Let´s Read Together"
     })
 
+@login_required
+def edit_audiobook(request, id):
+    audiobook = get_object_or_404(Audiobook, id=id, added_by=request.user)  # Solo puede editar quien lo creó
+
+    if request.method == 'POST':
+        form = AudiobookForm(request.POST, request.FILES, instance=audiobook)
+        if form.is_valid():
+            form.save()
+            return redirect('lista_libro')  # O a la página que quieras
+    else:
+        form = AudiobookForm(instance=audiobook)
+
+    return render(request, 'administrador/Audiobook/crear_audiobook.html', {'form': form, 'audiobook': audiobook,"titulo_libro": "Let´s Read Together"})
+
+
+@login_required
+def inactivate_audiobook(request, id):  # Cambiar id por pk
+    audiobook = get_object_or_404(Audiobook, id=id, added_by=request.user)
+    
+    if request.method == "POST":
+        audiobook.is_active = False
+        audiobook.save()
+    else:
+        messages.error(request, "Acción no permitida.")
+    
+    return redirect("lista_libro")
+    
+
+@login_required
+def reactivate_audiobook_view(request, id):
+    audiobook = get_object_or_404(Audiobook, id=id, added_by=request.user)
+    
+    if request.method == "POST":
+        audiobook.is_active = True
+        audiobook.save()
+        audiobook.refresh_from_db()
+    
+    return redirect("lista_libro")
+
+
 
 # Parte de la lista de audiolibros 
 @login_required
 def mis_audiolibros_view(request):
     audiolibros = Audiobook.objects.filter(added_by=request.user)
-    
     return render(
         request,
         'administrador/Questions/inicio_preguntas.html',
@@ -267,7 +317,7 @@ def usuarios_audiobook(request):
         .filter(
             audiobook__added_by=request.user   # 🔥 CLAVE AQUÍ
         )
-        .values("nombre", "apellido", "correo")
+        .values("nombre", "apellido","audiobook__title","curso", "correo")
         .annotate(
             mejor_puntaje=Max("puntaje"),
             intentos=Count("id")
@@ -472,7 +522,7 @@ def vocabulary_details(request, vocab_id):
 
 # vistas para el usuario
 def dashboard_view(request):
-    audiobook = Audiobook.objects.all()[:10]
+    audiobook = Audiobook.objects.filter(is_active=True)[:10]
     context = {
         'titulo_pagina': 'Let´s Read Together',
         'audiolibro': audiobook,
@@ -484,10 +534,11 @@ def buscar_audiobooks(request):
     
     if query:
         audiobooks = Audiobook.objects.filter(
+             Q(is_active=True),
             Q(title__icontains=query) | Q(author_name__icontains=query)
         )[:20]  # Limitar a 20 resultados
     else:
-        audiobooks = Audiobook.objects.all()[:10]
+        audiobooks = Audiobook.objects.filter(is_active=True)[:10]
     
     results = []
     for libro in audiobooks:
@@ -496,21 +547,24 @@ def buscar_audiobooks(request):
             'title': libro.title,
             'author_name': libro.author_name,
             'cover_image': libro.cover_image.url if libro.cover_image else '',
+            'slug': libro.slug,
         })
     
     return JsonResponse({'audiobooks': results})
 
 # detalle de la pagina de usuario
-def detalle_view(request, id):
-    audiobook = get_object_or_404(Audiobook, id=id)
+def detalle_view(request, slug):
+    audiobook = get_object_or_404(Audiobook, slug=slug)
     preguntas = audiobook.questions.prefetch_related("options")
 
     # -----------------------------
     # 1. PROCESAR POST
     # -----------------------------
     if request.method == "POST":
+        es_practica = request.POST.get("es_practica") == "true"
         nombre = request.POST.get("nombre", "")
         apellido = request.POST.get("apellido", "")
+        curso = request.POST.get("curso", "")
         correo = request.POST.get("correo", "")
 
         puntaje, puntaje_real, puntaje_maximo, detalles = evaluar_preguntas(
@@ -518,16 +572,17 @@ def detalle_view(request, id):
             request.POST
         )
 
-        resultado = ResultadoCuestionario.objects.create(
-            audiobook=audiobook,
-            nombre=nombre,
-            apellido=apellido,
-            correo=correo,
-            puntaje=puntaje,
-        )
-
-        # Enviar correo al docente
-        enviar_resultado_cuestionario(resultado)
+        if not es_practica:
+            resultado = ResultadoCuestionario.objects.create(
+                audiobook=audiobook,
+                nombre=nombre,
+                apellido=apellido,
+                curso=curso,
+                correo=correo,
+                puntaje=puntaje,
+            )
+            # Enviar correo al docente
+            enviar_resultado_cuestionario(resultado,detalles)
 
         # -----------------------------
         # GUARDAR RESULTADO EN SESIÓN
@@ -537,10 +592,11 @@ def detalle_view(request, id):
             "puntaje_real": puntaje_real,
             "puntaje_maximo": puntaje_maximo,
             "detalles": detalles,
+            "es_practica": es_practica,
         }
 
         # REDIRIGIR PARA EVITAR DUPLICADOS AL RECARGAR
-        return redirect("detalle", id=id)
+        return redirect("detalle", slug=audiobook.slug)
 
     # -----------------------------
     # 2. PROCESAR GET (MOSTRAR RESULTADO)
@@ -571,8 +627,6 @@ def settings_view(request):
         user.last_name = request.POST.get("last_name")
         user.email = request.POST.get("email")
         user.save()
-
-        messages.success(request, "Datos actualizados correctamente")
         return redirect("settings")
 
     return render(request, "administrador/settings.html",{
@@ -587,11 +641,6 @@ def change_password(request):
         if form.is_valid():
             user = form.save()
             update_session_auth_hash(request, user)
-
-            messages.success(
-                request,
-                "✅ Contraseña cambiada correctamente"
-            )
 
             return redirect("settings")
     else:

@@ -7,6 +7,12 @@ urlpatterns = [
     path('audiolibros/nuevo/', views.nuevo_audiolibro_view, name='nuevo_audiolibro'),
     path('audiobooks/mis-audiolibros/',views.mis_audiolibros_view,name='mis_audiolibros'),
     path("usuarios/",views.usuarios_audiobook,name="usuarios"),
+    path("audiobooks/", views.lista_audiolibro_view, name="lista_libro"),
+
+    path('audiobook/<int:id>/edit/', views.edit_audiobook, name='edit_audiobook'),
+    path('audiobook/<int:id>/inactivate/', views.inactivate_audiobook, name='inactivate_audiobook'),
+    path('audiobook/<int:id>/reactivate/', views.reactivate_audiobook_view, name='reactivate_audiobook'),
+
     
     # Gestionar preguntas de un audiolibro
     path('audiobook/<int:audiobook_id>/questions/', views.manage_questions, name='manage_questions'),
@@ -31,7 +37,7 @@ urlpatterns = [
     
     # url para las personas que no necesitan iniciar sesion 
     path('let´s-read-Together/', views.dashboard_view, name="dashboard"),
-    path('detalle/<int:id>/', views.detalle_view, name="detalle"),
+    path('detalle/<slug:slug>/', views.detalle_view, name="detalle"),
     path('buscar/', views.buscar_audiobooks, name='buscar_audiobooks'),
 
     #url 

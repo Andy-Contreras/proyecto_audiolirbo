@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import FileExtensionValidator
 import os
+from django.utils.text import slugify
+import re
 # Create your models here.
 
 class Audiobook(models.Model):
@@ -44,11 +46,12 @@ class Audiobook(models.Model):
         null=True,  # Permite que registros antiguos no tengan PDF
         blank=True  # Permite que el formulario se envíe sin PDF si no es obligatorio
     )
+    is_active = models.BooleanField(default=True)
+    slug = models.SlugField(unique=True, blank=True)
     def is_video(self):
         video_extensions = ['.mp4', '.webm', '.ogg']
         ext = os.path.splitext(self.audio_file.name)[1].lower()
         return ext in video_extensions
-
     def is_audio(self):
         audio_extensions = ['.mp3', '.wav', '.ogg']
         ext = os.path.splitext(self.audio_file.name)[1].lower()
@@ -58,6 +61,20 @@ class Audiobook(models.Model):
         return f"{self.title} - {self.author_name} - {self.added_by}"
     
 
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            base_slug = slugify(self.title)
+            slug = base_slug
+            contador = 1
+
+            while Audiobook.objects.filter(slug=slug).exists():
+                slug = f"{base_slug}-{contador}"
+                contador += 1
+
+            self.slug = slug
+
+        super().save(*args, **kwargs)
+
 
 class Questions(models.Model):
     audiobooks = models.ForeignKey(
@@ -66,9 +83,20 @@ class Questions(models.Model):
         related_name="questions",
         verbose_name="Audiolibro"
     )
-    text = models.CharField(max_length=500, verbose_name="Texto de la pregunta")
+    text = models.TextField( verbose_name="Texto de la pregunta")
     created_at = models.DateTimeField(auto_now_add=True)
+    def save(self, *args, **kwargs):
+        if self.text:
+            # Reemplaza | por saltos de línea
+            self.text = self.text.replace('|', '\n')
 
+            # Asegura salto antes de numeraciones 1. 2. 3.
+            self.text = re.sub(r'\s*(\d+\.)', r'\n\1', self.text)
+
+            # Limpia saltos múltiples
+            self.text = re.sub(r'\n+', '\n', self.text).strip()
+
+        super().save(*args, **kwargs)
     class Meta:
         verbose_name = "Pregunta"
         verbose_name_plural = "Preguntas"
@@ -106,6 +134,9 @@ class ResultadoCuestionario(models.Model):
     audiobook = models.ForeignKey(Audiobook, on_delete=models.CASCADE)
     nombre = models.CharField(max_length=150)
     apellido = models.CharField(max_length=150)
+    # --- Nuevo campo ---
+    curso = models.CharField(max_length=100, blank=True, null=True) 
+    # -------------------
     correo = models.EmailField()
     puntaje = models.FloatField()
     creado_en = models.DateTimeField(auto_now_add=True)

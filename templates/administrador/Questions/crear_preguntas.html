@@ -7,7 +7,7 @@
 {% block content %}
 <div class="container">
     <div class="header">
-        <h1>Preguntas - {{ audiobook.title }}</h1>
+        <h1>Questions - {{ audiobook.title }}</h1>
     </div>
 
     <div id="alert-container"></div>
@@ -19,22 +19,22 @@
 
             <div class="form-group">
                 <label for="question_text">
-                    Pregunta:
-                    <span class="label-info">(Escribe la pregunta que deseas hacer)</span>
+                    Question:
+                    <span class="label-info">(Write the question you want to ask)</span>
                 </label>
                 <input type="text" id="question_text" name="question_text"
-                    placeholder="¿De qué materiales construyeron sus casas los tres cerditos, y en qué orden lo hicieron?"
+                    placeholder="What materials did the three little pigs use to build their houses, and in what order?"
                     required>
             </div>
 
             <div class="options-section">
-                <h3 class="options-section-title">Opciones de Respuesta</h3>
+                <h3 class="options-section-title">Answer Options</h3>
 
                 <div class="options-header">
-                    <div>Texto de la Opción</div>
-                    <div style="text-align: center;">¿Correcta?</div>
-                    <div>Justificación de la Respuesta</div>
-                    <div style="text-align: center;">Eliminar</div>
+                    <div>Option Text</div>
+                    <div style="text-align: center;">Correct?</div>
+                    <div>Answer Justification</div>
+                    <div style="text-align: center;">Delete</div>
                 </div>
 
                 <div class="options-container">
@@ -44,23 +44,23 @@
                 </div>
 
                 <button type="button" class="btn-add-option" onclick="addOption()">
-                    + Agregar Opción
+                    + Add Option
                 </button>
             </div>
 
             <div class="actions">
                 <button type="button" class="btn btn-secondary" onclick="resetForm()">
-                    Cancelar
+                    Cancel
                 </button>
                 <button type="submit" class="btn btn-primary">
-                    Guardar Pregunta
+                    Save Question
                 </button>
             </div>
         </form>
     </div>
 
     <div class="questions-list">
-        <h2 class="questions-list-title">Preguntas Guardadas ({{ questions.count }})</h2>
+        <h2 class="questions-list-title">Saved Questions ({{ questions.count }})</h2>
         <div id="questions-list-container">
             {% if questions %}
             {% for question in questions %}
@@ -81,10 +81,10 @@
                 </div>
                 <div class="actions">
                     <button class="btn btn-primary" data-question-id="{{ question.id }}" onclick="editQuestion(this)">
-                        ✏️ Editar
+                        ✏️ Edit
                     </button>
                     <button class="btn btn-remove" data-question-id="{{ question.id }}" onclick="deleteQuestion(this)">
-                        🗑️ Eliminar
+                        🗑️ Delete
                     </button>
                 </div>
             </div>
@@ -92,8 +92,8 @@
             {% else %}
             <div class="empty-state">
                 <div class="empty-state-icon">📝</div>
-                <p>No hay preguntas guardadas aún.</p>
-                <p style="font-size: 12px; margin-top: 5px;">Crea tu primera pregunta usando el formulario de arriba.
+                <p>No questions saved yet.</p>
+                <p style="font-size: 12px; margin-top: 5px;">Create your first question using the form above.
                 </p>
             </div>
             {% endif %}
@@ -104,29 +104,29 @@
 <div id="deleteQuestionModal" class="modal">
     <div class="modal-content modal-small">
         <div class="modal-header modal-header-danger">
-            <h2>🗑️ Eliminar Pregunta</h2>
+            <h2>🗑️ Delete Question</h2>
             <button class="modal-close" onclick="closeDeleteQuestionModal()">&times;</button>
         </div>
         <div class="modal-body">
             <div class="delete-warning">
                 <div class="warning-icon">⚠️</div>
                 <p class="warning-text">
-                    ¿Estás seguro de que deseas eliminar esta pregunta?
+                    Are you sure you want to delete this question?
                 </p>
                 <p class="question-preview" id="delete_question_preview"></p>
                 <p class="warning-subtext">
-                    Esta acción eliminará la pregunta y todas sus opciones de respuesta.
-                    <strong>No se puede deshacer.</strong>
+                    This action will delete the question and all its answer options.
+                    <strong>This cannot be undone.</strong>
                 </p>
             </div>
             <input type="hidden" id="delete_question_id">
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" onclick="closeDeleteQuestionModal()">
-                Cancelar
+                Cancel
             </button>
             <button type="button" class="btn btn-danger-full" onclick="confirmDeleteQuestion()">
-                Sí, Eliminar Pregunta
+                Yes, Delete Question
             </button>
         </div>
     </div>

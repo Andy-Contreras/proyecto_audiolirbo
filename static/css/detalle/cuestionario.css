@@ -7,19 +7,20 @@
 } /* Contenido del acordeon */
 .acordeon-content {
   max-height: 0;
-  max-width: 60rem;
+  width: 100%;
   overflow: hidden;
   opacity: 0;
-  transition: max-height 0.4s ease, opacity 0.3s ease;
+  transition:
+    max-height 0.4s ease,
+    opacity 0.3s ease;
 }
 .acordeon-content.activo {
-  max-height: 2000px;
+  max-height: 5000px;
   opacity: 1;
 } /* Rotar flecha */
 .acordeon-btn.activo .flecha {
   transform: rotate(180deg);
 } /* .acordeon-btn { border: 1px solid #374151; } /* Estilos para el cuestionario */
-
 
 .test {
   max-width: 60rem;
@@ -27,8 +28,6 @@
   display: flex;
   flex-direction: column;
 }
-
-
 
 .encabezado-test h2 {
   color: white;
@@ -46,6 +45,7 @@
   margin-bottom: 2rem;
   display: flex;
   flex-direction: column;
+  /* align-items: stretch; */
   align-items: flex-start;
 }
 .pregunta-titulo {
@@ -55,15 +55,17 @@
 }
 
 /* Contenedor de opciones */
-.opciones{
+.opciones {
   width: 100%;
-  
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
+
 /* Caja de cada opción */
 .opcion {
   display: flex;
   align-items: center;
-  gap: 10px;
   /* background: #f7eeee; */
   padding: 12px 15px;
   border-radius: 10px;
@@ -110,8 +112,30 @@
 }
 
 /* Botón */
+.botones-envio {
+  background: transparent;
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+  display: flex;
+  justify-content: center;
+  outline: none;
+  gap: 15px;
+  margin: 0;
+}
+.enviar-practica {
+  background: rgb(175, 151, 102);
+  color: #333;
+  border-radius: 8px;
+  padding: 10px 10px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+.enviar-practica:hover {
+  background: #e48a78;
+}
 .enviar-respuesta {
-  margin-top: 15px;
   background: #d4b881;
   color: #333;
   border-radius: 8px;
@@ -179,7 +203,9 @@
   background: #f7eeee;
   border: 1px solid rgba(139, 95, 91, 0.18);
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
-  transition: border-color 0.15s, box-shadow 0.15s;
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s;
 }
 
 .boton-modal {
@@ -199,7 +225,6 @@
   border: none;
   box-shadow: 0 8px 20px rgba(243, 163, 146, 0.25);
 }
-
 
 .boton-modal .cerrar {
   background: rgb(212, 184, 129);
@@ -258,6 +283,7 @@
   border: none;
   color: white;
   padding: 10px;
+  cursor: pointer;
 }
 
 #modalError .modal-content button:hover {

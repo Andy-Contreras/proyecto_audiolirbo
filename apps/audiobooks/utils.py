@@ -1,4 +1,7 @@
 from django.core.mail import send_mail
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 from django.conf import settings
 from django.utils import timezone
 def evaluar_preguntas(preguntas, respuestas_post):
@@ -71,7 +74,7 @@ def evaluar_preguntas(preguntas, respuestas_post):
 
 
 
-def enviar_resultado_cuestionario(resultado):
+def enviar_resultado_cuestionario(resultado, detalles):
     audiobook = resultado.audiobook
     docente = audiobook.added_by
 
@@ -79,36 +82,26 @@ def enviar_resultado_cuestionario(resultado):
         return
 
     asunto = f"Nuevo resultado - {audiobook.title}"
-
-    # Convertimos a hora local según TIME_ZONE
     fecha_local = timezone.localtime(resultado.creado_en)
 
-    mensaje = f"""
-Hola {docente.get_full_name() or docente.username},
+    contexto = {
+        "resultado": resultado,
+        "audiobook": audiobook,
+        "detalles": detalles,
+        "fecha": fecha_local.strftime('%d/%m/%Y %H:%M'),
+    }
 
-Un estudiante ha completado el cuestionario de tu audiolibro.
-
-📘 Audiolibro:
-{audiobook.title}
-
-👤 Estudiante:
-Nombre: {resultado.nombre} {resultado.apellido}
-Correo: {resultado.correo}
-
-📊 Resultado:
-Puntaje obtenido: {resultado.puntaje}/10
-
-📅 Fecha:
-{fecha_local.strftime('%d/%m/%Y %H:%M')}
-
-Saludos,
-Plataforma de Audiolibros
-"""
-
-    send_mail(
-        subject=asunto,
-        message=mensaje,
-        from_email=settings.DEFAULT_FROM_EMAIL,
-        recipient_list=[docente.email],
-        fail_silently=False,
+    html_content = render_to_string(
+        "emails/resultado_cuestionario.html",
+        contexto
     )
+    text_content = strip_tags(html_content)
+
+    email = EmailMultiAlternatives(
+        subject=asunto,
+        body=text_content,
+        from_email=settings.DEFAULT_FROM_EMAIL,
+        to=[docente.email],
+    )
+    email.attach_alternative(html_content, "text/html")
+    email.send()

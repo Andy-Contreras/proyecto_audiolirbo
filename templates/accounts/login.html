@@ -11,26 +11,31 @@
             <path d="M4 15v-3a8 8 0 0 1 16 0v3" />
         </svg> -->
         <canvas id="logoCanvas" width="60" height="60"></canvas>
-        <h1>Let´s Read Together</h1>
+        <h1>Let's Read Together</h1>
     </div>
     <div class="login-container">
         <h2>Bienvenido de nuevo</h2>
         {% if messages %}
-        <div class="alert">
-            {% for message in messages %}
+        {% for message in messages %}
+        {% if "login" in message.tags %}
+        <div class="alert alert-{{ message.level_tag }}">
             {{ message }}
-            {% endfor %}
         </div>
+        {% endif %}
+        {% endfor %}
         {% endif %}
         <form method="POST">
             {% csrf_token %}
-            <label>Usuario</label>
-            <input type="email" name="email" placeholder="Ingrese su correo">
-            <label>Contraseña</label>
-            <input type="password" name="password" placeholder="ingrese su contraseña">
-            <button type="submit">Ingresar</button>
+            <label>Email</label>
+            <input type="email" name="email" placeholder="Enter your email">
+            <label>Password</label>
+            <input type="password" name="password" placeholder="Enter your password">
+            <button type="submit">Sign In</button>
         </form>
-        <p>¿No tienes cuenta? <a href="{% url 'register' %}">Crear cuenta</a> </p>
+        <p style="margin-top: 10px;">
+            <a href="{% url 'password_reset' %}" style="font-size: 0.9em; color: #666;">¿Olvidaste tu contraseña?</a>
+        </p>
+        <p>¿No tienes cuenta? <a href="{% url 'register' %}">Create account</a> </p>
     </div>
 </div>
 

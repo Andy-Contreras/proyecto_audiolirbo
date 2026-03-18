@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            background: #ffffff;
+            margin: auto;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        h2 {
+            color: #2c3e50;
+        }
+
+        .info {
+            background: #f1f5f9;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+        }
+
+        .pregunta {
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .correcta {
+            color: #16a34a;
+            font-weight: bold;
+        }
+
+        .incorrecta {
+            color: #dc2626;
+            font-weight: bold;
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #6b7280;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <h2>📘 Resultado del cuestionario</h2>
+
+        <div class="info">
+            <strong>Audiolibro:</strong> {{ audiobook.title }}<br>
+            <strong>Estudiante:</strong> {{ resultado.nombre }} {{ resultado.apellido }}<br>
+            <strong>Curso:</strong> {{ resultado.curso }}<br>
+            <strong>Correo:</strong> {{ resultado.correo }}<br>
+            <strong>Puntaje:</strong> {{ resultado.puntaje }}/10<br>
+            <strong>Fecha:</strong> {{ fecha }}
+        </div>
+
+        <h3>📝 Detalle de respuestas</h3>
+
+        {% for d in detalles %}
+        <div class="pregunta">
+            <p><strong>{{ forloop.counter }}. {{ d.pregunta|linebreaksbr }}</strong></p>
+            <p><strong>Respuesta del estudiante:</strong> {{ d.respuesta }}</p>
+            <p><strong>Respuesta correcta:</strong> {{ d.respuesta_correcto }}</p>
+            {% if d.justificacion %}
+            <p><strong>Justificación:</strong><em>{{ d.justificacion }}</em></p>
+            {% endif %}
+        </div>
+        {% endfor %}
+
+        <div class="footer">
+            Plataforma de Audiolibros · Let's Read Together
+        </div>
+
+    </div>
+</body>
+
+</html>

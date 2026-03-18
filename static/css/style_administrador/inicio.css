@@ -2,7 +2,11 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
 }
 
 .container-dashboard {
@@ -103,7 +107,9 @@ body {
   font-size: 15px;
   font-weight: 500;
 
-  transition: background 0.2s, color 0.2s;
+  transition:
+    background 0.2s,
+    color 0.2s;
 }
 
 .menu a svg {
@@ -138,7 +144,9 @@ body {
   padding: 10px 14px;
   border-radius: 10px;
 
-  transition: background 0.2s, color 0.2s;
+  transition:
+    background 0.2s,
+    color 0.2s;
 }
 
 .sidebar-bottom a:hover {
@@ -336,7 +344,9 @@ body {
   display: flex;
   align-items: center;
   gap: 20px;
-  transition: transform 0.3s, box-shadow 0.3s;
+  transition:
+    transform 0.3s,
+    box-shadow 0.3s;
 }
 
 .card:hover {

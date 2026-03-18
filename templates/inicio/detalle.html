@@ -24,12 +24,70 @@
                 <path d="M5 12l6 -6" />
             </svg>
         </a>
-        <h1>Prática de Video/AudioLibro</h1>
+        <h1>Video/Audiobook Practice</h1>
     </div>
 </section>
 
+
+<!-- Esta seccion es de las indicaciones  -->
+<section class="indicaciones">
+    <button class="indicaciones-btn" id="indicacionesToggle">
+        General Reading Instructions
+        <span class="indicaciones-flecha">▼</span>
+    </button>
+
+    <div class="indicaciones-content" id="indicacionesContent">
+        <div class="indicaciones-box">
+            {% if libro.instruction %}
+            <p>
+                {{ libro.instruction }}
+            </p>
+            {% else %}
+            <p class="sin-instrucciones">
+                There are no instructions for this audiobook.
+            </p>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+
+<!-- Esta seccion le pertenece al glosario o vocabulario del audiolibro -->
+<section class="vocabulario">
+    <button class="acordeon-btn" id="toggleVocabulario">
+        Glossary / Vocabulary
+        <span class="flecha">▼</span>
+    </button>
+
+    <div class="acordeon-content" id="vocabularioContent">
+        <div class="vocabulario-lista">
+
+            {% for item in libro.vocabulario.all %}
+            <div class="vocab-box">
+                <h3 class="vocab-palabra">{{ item.palabra }}:</h3>
+
+                <p class="vocab-definicion">{{ item.definicion }}</p>
+
+                {% if item.ejemplo %}
+                <p class="vocab-ejemplo"><strong>Ejemplo:</strong> {{ item.ejemplo }}</p>
+                {% endif %}
+            </div>
+            {% empty %}
+            <div>
+                <p class="no-vocab">No se encontraron vocabularios para este audiolibro.</p>
+
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+</section>
+
+
+
 {% if libro.is_video %}
 <section class="reproductor-card">
+    <h3 class="title_video">{{libro.title}}</h3>
     <video controls width="80%" preload="metadata">
         <source src="{{ libro.audio_file.url }}" type="video/mp4">
         Tu navegador no soporta video.
@@ -90,88 +148,11 @@
 </section>
 {% endif %}
 
-<!-- Esta session es para el pdf -->
-<section class="indicaciones">
-    <button class="indicaciones-btn" id="indicacionesTogglePDF">
-        Lesson Plan
-        <span class="indicaciones-flecha">▼</span>
-    </button>
-
-    <div class="indicaciones-content" id="indicacionesContentPDF">
-        <div class="indicaciones-box">
-            {% if libro.pdf_file %}
-            <div class="pdf-container">
-                <iframe src="{{ libro.pdf_file.url }}" width="100%"
-                    height="600px" style="border: none; border-radius: 8px;">
-                </iframe>
-
-                <div style="margin-top: 10px; text-align: center;">
-                    <a href="{{ libro.pdf_file.url }}" target="_blank" class="btn btn-primary">
-                        📥 Descargar Lesson Plan
-                    </a>
-                </div>
-            </div>
-            {% else %}
-            <p style="color: #333">
-                No hay un Lesson Plan disponible para este audiolibro.
-            </p>
-            {% endif %}
-        </div>
-    </div>
-</section>
-<!-- Esta seccion es de las indicaciones  -->
-<section class="indicaciones">
-    <button class="indicaciones-btn" id="indicacionesToggle">
-        Indicaciones / Instrucciones generales
-        <span class="indicaciones-flecha">▼</span>
-    </button>
-
-    <div class="indicaciones-content" id="indicacionesContent">
-        <div class="indicaciones-box">
-            <p>
-                Una vez terminado de escuchar el audiolibro, por favor responde
-                el siguiente cuestionario. Si no entiendes algunas palabras,
-                puedes revisar el glosario.
-            </p>
-        </div>
-    </div>
-</section>
-
-<!-- Esta seccion le pertenece al glosario o vocabulario del audiolibro -->
-<section class="vocabulario">
-    <button class="acordeon-btn" id="toggleVocabulario">
-        Vocabulario / Glosario
-        <span class="flecha">▼</span>
-    </button>
-
-    <div class="acordeon-content" id="vocabularioContent">
-        <div class="vocabulario-lista">
-
-            {% for item in libro.vocabulario.all %}
-            <div class="vocab-box">
-                <h3 class="vocab-palabra">{{ item.palabra }}:</h3>
-
-                <p class="vocab-definicion">{{ item.definicion }}</p>
-
-                {% if item.ejemplo %}
-                <p class="vocab-ejemplo"><strong>Ejemplo:</strong> {{ item.ejemplo }}</p>
-                {% endif %}
-            </div>
-            {% empty %}
-            <div>
-                <p class="no-vocab">No se encontraron vocabularios para este audiolibro.</p>
-
-            </div>
-            {% endfor %}
-
-        </div>
-    </div>
-</section>
 <!-- Esta seccion le pertene al cuestionario donde mostramos las preguntas
 y respuestas -->
 <section class="test">
     <button class="acordeon-btn" id="toggleCuestionario">
-        Cuestionario
+        Quiz
         <span class="flecha">▼</span>
     </button>
 
@@ -183,24 +164,28 @@ y respuestas -->
                 {% if preguntas %}
                 {% for pregunta in preguntas %}
                 <div class="pregunta-box">
-                    <h3 class="pregunta-titulo">{{ forloop.counter }}. {{ pregunta.text }}</h3>
-                    {% for opcion in pregunta.options.all %}
-                    <section class="opciones">
+                    <h3 class="pregunta-titulo">{{ forloop.counter }}. {{ pregunta.text|linebreaksbr }}</h3>
+
+                    <section class="opciones">{% for opcion in pregunta.options.all %}
 
                         <label class="opcion">
                             <input type="radio" name="pregunta_{{ pregunta.id }}" value="{{ opcion.id }}">
                             <span class="texto-opcion">{{ opcion.text }}</span>
                         </label>
 
+                        {% endfor %}
                     </section>
-                    {% endfor %}
+
                 </div>
                 {% endfor %}
-
-                <button class="enviar-respuesta" type="button" id="btnAbrirModal">Enviar respuestas</button>
+                <div class="botones-envio">
+                    <button class="enviar-practica" id="btnPractica" type="submit" name="es_practica" value="true">Check
+                        Answers </button>
+                    <button class="enviar-respuesta" type="button" id="btnAbrirModal">Send by e-mail</button>
+                </div>
                 {% else %}
                 <div class="no-preguntas">
-                    <p>No hay preguntas disponibles.</p>
+                    <p>There are no questions available.</p>
                 </div>
                 {% endif %}
             </form>
@@ -208,41 +193,45 @@ y respuestas -->
     </div>
     <div id="modalDatos" class="modal-overlay">
         <div class="modal-content">
-            <h3>Ingresa tus datos</h3>
+            <h3>Enter your details</h3>
 
             <p id="mensajeError" class="error"></p>
 
-            <label>Nombre:</label>
-            <input type="text" id="nombre" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+" placeholder="Ingresar su Nombre">
+            <label>First Name:</label>
+            <input type="text" id="nombre" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+" placeholder="Enter your Name">
 
-            <label>Apellido:</label>
-            <input type="text" id="apellido" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+" placeholder="Ingresar su Apellido">
+            <label>Last Name:</label>
+            <input type="text" id="apellido" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+" placeholder="Enter your Last Name">
 
-            <label>Correo:</label>
-            <input type="email" id="correo" placeholder="Ingresar su correo">
+            <label>Course:</label>
+            <input type="text" id="curso" placeholder="Example: 4th Year B or Programming">
+
+            <label>Email:</label>
+            <input type="email" id="correo" placeholder="Enter your email">
             <div class="boton-modal">
-                <button id="enviarModal">Enviar</button>
-                <button id="cerrarModal" class="cerrar">Cancelar</button>
+                <button id="enviarModal">Submit</button>
+                <button id="cerrarModal" class="cerrar">Cancel</button>
             </div>
 
         </div>
     </div>
     <div id="modalError" class="modal-overlay">
         <div class="modal-content error">
-            <h3>Faltan preguntas por responder</h3>
-            <p>Por favor responde todas las preguntas antes de continuar.</p>
-            <button id="cerrarError" class="cerrar">Entendido</button>
+            <h3>There are unanswered questions.</h3>
+            <p>Please answer all questions before continuing.</p>
+            <button id="cerrarError" class="cerrar">Ok</button>
         </div>
     </div>
 </section>
 
-<!-- Esta seccion pertence a los resultados del Cuestionario -->
-{% if puntaje %}
 
+
+<!-- Esta seccion pertence a los resultados del Cuestionario -->
+{% if puntaje is not None %}
 <!-- Primera seccion pertenece a mostrar la calificacion -->
 <section class="resultado-content">
     <div>
-        <h2 class="resultado-titulo">Calificación Final</h2>
+        <h2 class="resultado-titulo">Final Grade</h2>
         <p class="resultado-puntaje">{{ puntaje }} / 10</p>
     </div>
 </section>
@@ -250,12 +239,12 @@ y respuestas -->
 <!-- Segunda seccion pertenece a mostrar las preguntas con las respuesta que son correctas -->
 <section class="revision-respuesta ">
     <div class="revision-container">
-        <h2>Revisión</h2>
+        <h2>Review</h2>
 
         {% for r in detalles %}
         <div class="pregunta-item">
             <p class="pregunta-titulo">
-                {{ forloop.counter }}. {{ r.pregunta }}
+                {{ forloop.counter }}. {{ r.pregunta|linebreaksbr }}
             </p>
 
             {% if r.correcta %}
@@ -274,11 +263,11 @@ y respuestas -->
                 <span class="icono">✔</span>
 
                 <div class="texto-respuesta">
-                    <span><strong>Respuesta Correcta:</strong> {{ r.respuesta_correcto }}</span>
+                    <span><strong>Correct Answer:</strong> {{ r.respuesta_correcto }}</span>
 
                     {% if r.justificacion %}
                     <p class="justificacion">
-                        <strong>Justificación:</strong> {{ r.justificacion }}
+                        <strong>Justification:</strong> {{ r.justificacion }}
                     </p>
                     {% endif %}
                 </div>
@@ -289,9 +278,41 @@ y respuestas -->
     </div>
 
 </section>
-
-
 {% endif %}
+
+
+<!-- Esta session es para el pdf -->
+<section class="indicaciones-pdf">
+    <button class="indicaciones-btn" id="indicacionesTogglePDF">
+        Lesson Plan
+        <span class="indicaciones-flecha">▼</span>
+    </button>
+
+    <div class="indicaciones-content" id="indicacionesContentPDF">
+        <div class="indicaciones-box">
+            {% if libro.pdf_file %}
+            <div class="pdf-container">
+                <iframe src="{{ libro.pdf_file.url }}" width="100%" height="400px"
+                    style="border: none; border-radius: 8px;">
+                </iframe>
+
+                <!-- <div style="margin-top: 10px; text-align: center;">
+                    <a href="{{ libro.pdf_file.url }}" target="_blank" class="btn btn-primary">
+                        📥 Descargar Lesson Plan
+                    </a>
+                </div> -->
+            </div>
+            {% else %}
+            <p style="color: #333">
+                There is no Lesson Plan available for this audiobook.
+            </p>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+
+
 
 {% endblock %}
 {% block scripts %}

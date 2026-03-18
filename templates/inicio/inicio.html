@@ -16,12 +16,12 @@
                 <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
                 <path d="M21 21l-6 -6" />
             </svg>
-            <input id="buscador" type="text" placeholder="Buscar un Audiolibro">
+            <input id="buscador" type="text" placeholder="Search an Audiobook">
         </div>
     </form>
 </section>
 <div class="seccion-audiolibro">
-    <h2>Audiolibros</h2>
+    <h2>Audiobooks</h2>
     <p id="sinResultados" class="no-resultados" style="display:none;">
         No se encontraron resultados.
     </p>
@@ -30,9 +30,9 @@
         <div class="book-card libro-item">
             <img src="{{ libro.cover_image.url }}" alt="{{ libro.title }}">
             <h3>{{ libro.title }}</h3>
-            <p>Autor: {{ libro.author_name }}</p>
-            <a href="{% url 'detalle' libro.id %}" class="detalle">
-                Detalle
+            <p>Author: {{ libro.author_name }}</p>
+            <a href="{% url 'detalle' libro.slug %}" class="detalle">
+                Detail
             </a>
         </div>
         {% endfor %}

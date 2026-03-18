@@ -25,11 +25,13 @@
   max-height: 0;
   overflow: hidden;
   opacity: 0;
-  transition: max-height 0.4s ease, opacity 0.3s ease;
+  transition:
+    max-height 0.4s ease,
+    opacity 0.3s ease;
 }
 
 .acordeon-content.abierto {
-  max-height: 1000px; /* suficiente para mostrar contenido */
+  max-height: max-content; /* suficiente para mostrar contenido */
   opacity: 1;
 }
 
@@ -94,7 +96,9 @@
   max-height: 0;
   overflow: hidden;
   opacity: 0;
-  transition: max-height 0.4s ease, opacity 0.3s ease;
+  transition:
+    max-height 0.4s ease,
+    opacity 0.3s ease;
 }
 
 .indicaciones-content.abierto {
@@ -118,6 +122,13 @@
   background: #d4b881;
 }
 
+.indicaciones-pdf {
+  max-width: 60rem;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
 /* ====== <= 768px ====== */
 @media (max-width: 768px) {
   .vocabulario,
@@ -126,7 +137,8 @@
   }
 
   .acordeon-btn,
-  .indicaciones-btn {
+  .indicaciones-btn,
+  .indicaciones-pdf {
     padding: 14px;
     font-size: 1rem;
   }
@@ -138,6 +150,10 @@
 
   .vocab-palabra {
     font-size: 1.15rem;
+  }
+  .indicaciones-pdf {
+    max-width: 95%;
+    padding: 0px 14px;
   }
 }
 
@@ -167,8 +183,6 @@
 
 /* ====== <= 480px ====== */
 @media (max-width: 480px) {
-
-
   .acordeon-btn,
   .indicaciones-btn {
     padding: 10px 12px;
@@ -191,7 +205,10 @@
   }
 
   .indicaciones-flecha {
-    transform: scale(0.9);
+    transition: transform 0.3s ease;
+  }
+  .indicaciones-pdf {
+    padding: 0px 10px;
   }
 }
 

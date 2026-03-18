@@ -40,7 +40,6 @@ body > div {
   width: 36px;
   height: 36px;
   color: #0f172a; /* azul docente */
-  
 }
 
 .cabecera-registro h1 {
@@ -81,7 +80,9 @@ body > div {
   color: #0f172a;
   font-size: 15px;
   outline: none;
-  transition: border 0.2s, box-shadow 0.2s;
+  transition:
+    border 0.2s,
+    box-shadow 0.2s;
 }
 
 .registro-container input::placeholder {
@@ -118,7 +119,9 @@ body > div {
   font-weight: 600;
   font-size: 16px;
   cursor: pointer;
-  transition: background 0.2s, transform 0.1s;
+  transition:
+    background 0.2s,
+    transform 0.1s;
 }
 
 .registro-container button:hover {
@@ -140,4 +143,24 @@ p a {
 
 p a:hover {
   text-decoration: underline;
+}
+
+.alert {
+  color: white; /* texto en blanco */
+  padding: 10px 15px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  font-weight: bold;
+  text-align: center;
+}
+.alert-success {
+  background-color: #31d61b;
+}
+
+/* Cuando el mensaje sea de ERROR (Rojo) */
+/* Nota: Django usa la etiqueta 'error', pero si configuraste MESSAGE_TAGS 
+   como 'danger', usa .alert-danger */
+.alert-error,
+.alert-danger {
+  background-color: #d61b1b; /* Rojo fuerte */
 }
