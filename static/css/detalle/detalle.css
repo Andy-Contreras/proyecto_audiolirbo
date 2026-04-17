@@ -1,3 +1,35 @@
+.detalle-container {
+  max-width: 60rem;
+  margin: 0 auto;
+  width: 100%;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  /* box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.35); */
+  border-radius: 20px;
+}
+.detalle-encabezado {
+  background: #8b5f5b;
+  display: flex;
+  position: relative;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 0;
+  border-radius: 10px;
+}
+
+.detalle-encabezado a {
+  position: absolute;
+  left: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.detalle-encabezado h1 {
+  color: white;
+  font-size: 1.2rem;
+  margin: 0;
+}
+
 .resultado-content {
   max-width: 22rem;
   margin: 16px auto;
@@ -20,6 +52,102 @@
   font-size: 2rem;
   font-weight: bold;
   color: white;
+}
+.reproductor-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 60rem;
+  margin: 0 auto;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.35);
+  border-radius: 20px;
+  background-color: #d4edbd;
+  padding: 25px;
+  margin-bottom: 20px !important;
+  gap: 20px;
+}
+.reproductor-card h3{
+  color: #8b5f5b;
+}
+.libro-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  img {
+    width: 100px;
+    height: 100px;
+    border-radius: 10px;
+    object-fit: cover;
+  }
+  h3 {
+    color: #8b5f5b;
+    font-size: 1.1rem;
+    margin-bottom: 4px;
+  }
+  p {
+    font-size: 0.9rem;
+    color: #8b5f5b;
+  }
+}
+
+.audio-progreso input {
+  width: 17rem;
+}
+
+.audio-progreso input[type="range"] {
+  appearance: none;
+  height: 4px;
+  background: #f6a192;
+  border-radius: 5px;
+}
+
+.audio-progreso input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  background: #f6a192;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.tiempo {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+  font-size: 0.85rem;
+  color: #9ca3af;
+}
+
+.controles {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.icon-btn {
+  width: 45px;
+  height: 45px;
+  background: transparent;
+  border: none;
+  color: #8b5f5b;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.play-btn {
+  width: 45px;
+  height: 45px;
+  background: #f6a192;
+  border-radius: 50%;
+  color: white;
+  font-size: 2rem;
+  cursor: pointer;
+  border: none;
+}
+.play-btn:hover {
+  background: #f6a192;
 }
 
 /* -------- RESPONSIVE -------- */
